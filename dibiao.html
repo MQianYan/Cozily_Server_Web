@@ -764,7 +764,6 @@
         <div class="nav">
             <a href="index.html">首页</a>
             <a href="dibiao.html" class="active">玩家地标</a>
-            <a href="paihangbang.html">排行榜</a>
             <a href="licheng.html">服务器历程</a>
             <a href="zonghe.html">综合导航</a>
             <a href="gengzhinan.html">梗指南</a>
@@ -834,170 +833,23 @@
                 </div>
             </div>
 
-            <!-- 卡片 2 - 中式园林 -->
-            <div class="landmark-card" data-category="建筑" data-title="江南水乡园林" data-author="Alex" data-likes="32">
-                <div class="landmark-image" style="background-image: linear-gradient(135deg, #d4fc79, #96e6a1);">
-                    <span class="landmark-category">🏗️ 建筑</span>
-                </div>
-                <div class="landmark-content">
-                    <div class="landmark-header">
-                        <span class="landmark-title">江南水乡园林</span>
-                        <span class="landmark-author"><i class="mdi mdi-account"></i> Alex</span>
-                    </div>
-                    <p class="landmark-description">小桥流水人家，亭台楼阁俱全，用了大量竹子、灯笼和瓦片，夜景尤其美丽。</p>
-                    <div class="coords-section">
-                        <span class="coords-display"><i class="mdi mdi-crosshairs-gps"></i> 890 70 -456</span>
-                        <button class="copy-btn" onclick="copyCoordinates(this, '890 70 -456')">
-                            <i class="mdi mdi-content-copy"></i> 复制
-                        </button>
-                    </div>
-                    <div class="landmark-footer">
-                        <div class="stats-group">
-                            <span class="stat-item"><i class="mdi mdi-eye-outline"></i> 189</span>
-                            <span class="stat-item"><i class="mdi mdi-comment-outline"></i> 8</span>
-                        </div>
-                        <button class="like-btn" onclick="toggleLike(this)">
-                            <i class="mdi mdi-heart-outline"></i> 32
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 卡片 3 - 红石机械 -->
-            <div class="landmark-card" data-category="红石机械" data-title="全自动刷石机" data-author="Redstone_God" data-likes="89">
-                <div class="landmark-image" style="background-image: linear-gradient(135deg, #f6d365, #fda085);">
-                    <span class="landmark-category">🔴 红石机械</span>
-                </div>
-                <div class="landmark-content">
-                    <div class="landmark-header">
-                        <span class="landmark-title">全自动刷石机</span>
-                        <span class="landmark-author"><i class="mdi mdi-account"></i> Redstone_God</span>
-                    </div>
-                    <p class="landmark-description">每小时产出上万圆石，带自动分类和储存系统，效率极高，完全生存可用。</p>
-                    <div class="coords-section">
-                        <span class="coords-display"><i class="mdi mdi-crosshairs-gps"></i> 1200 45 2340</span>
-                        <button class="copy-btn" onclick="copyCoordinates(this, '1200 45 2340')">
-                            <i class="mdi mdi-content-copy"></i> 复制
-                        </button>
-                    </div>
-                    <div class="landmark-footer">
-                        <div class="stats-group">
-                            <span class="stat-item"><i class="mdi mdi-eye-outline"></i> 567</span>
-                            <span class="stat-item"><i class="mdi mdi-comment-outline"></i> 34</span>
-                        </div>
-                        <button class="like-btn liked" onclick="toggleLike(this)">
-                            <i class="mdi mdi-heart"></i> 89
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 卡片 4 - 生电机械 -->
-            <div class="landmark-card" data-category="生电机械" data-title="全自动农场" data-author="Builder_99" data-likes="56">
-                <div class="landmark-image" style="background-image: linear-gradient(135deg, #a1c4fd, #c2e9fb);">
-                    <span class="landmark-category">⚡ 生电机械</span>
-                </div>
-                <div class="landmark-content">
-                    <div class="landmark-header">
-                        <span class="landmark-title">全自动农场</span>
-                        <span class="landmark-author"><i class="mdi mdi-account"></i> Builder_99</span>
-                    </div>
-                    <p class="landmark-description">全自动小麦/胡萝卜/土豆农场，带物品收集和储存系统，解放双手。</p>
-                    <div class="coords-section">
-                        <span class="coords-display"><i class="mdi mdi-crosshairs-gps"></i> -560 120 -890</span>
-                        <button class="copy-btn" onclick="copyCoordinates(this, '-560 120 -890')">
-                            <i class="mdi mdi-content-copy"></i> 复制
-                        </button>
-                    </div>
-                    <div class="landmark-footer">
-                        <div class="stats-group">
-                            <span class="stat-item"><i class="mdi mdi-eye-outline"></i> 312</span>
-                            <span class="stat-item"><i class="mdi mdi-comment-outline"></i> 15</span>
-                        </div>
-                        <button class="like-btn" onclick="toggleLike(this)">
-                            <i class="mdi mdi-heart-outline"></i> 56
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 卡片 5 - 趣味 -->
-            <div class="landmark-card" data-category="趣味" data-title="像素画 · 皮卡丘" data-author="Pixel_Artist" data-likes="112">
-                <div class="landmark-image" style="background-image: linear-gradient(135deg, #fbc2eb, #a6c1ee);">
-                    <span class="landmark-category">🎨 趣味</span>
-                </div>
-                <div class="landmark-content">
-                    <div class="landmark-header">
-                        <span class="landmark-title">像素画 · 皮卡丘</span>
-                        <span class="landmark-author"><i class="mdi mdi-account"></i> Pixel_Artist</span>
-                    </div>
-                    <p class="landmark-description">用羊毛像素块拼成的超大可动皮卡丘，眼睛会随红石信号闪烁。</p>
-                    <div class="coords-section">
-                        <span class="coords-display"><i class="mdi mdi-crosshairs-gps"></i> -1500 64 800</span>
-                        <button class="copy-btn" onclick="copyCoordinates(this, '-1500 64 800')">
-                            <i class="mdi mdi-content-copy"></i> 复制
-                        </button>
-                    </div>
-                    <div class="landmark-footer">
-                        <div class="stats-group">
-                            <span class="stat-item"><i class="mdi mdi-eye-outline"></i> 423</span>
-                            <span class="stat-item"><i class="mdi mdi-comment-outline"></i> 27</span>
-                        </div>
-                        <button class="like-btn liked" onclick="toggleLike(this)">
-                            <i class="mdi mdi-heart"></i> 112
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 卡片 6 - 建筑 -->
-            <div class="landmark-card" data-category="建筑" data-title="空中花园公寓" data-author="Archi_Duck" data-likes="41">
-                <div class="landmark-image" style="background-image: linear-gradient(135deg, #ff9a9e, #fecfef);">
-                    <span class="landmark-category">🏗️ 建筑</span>
-                </div>
-                <div class="landmark-content">
-                    <div class="landmark-header">
-                        <span class="landmark-title">空中花园公寓</span>
-                        <span class="landmark-author"><i class="mdi mdi-account"></i> Archi_Duck</span>
-                    </div>
-                    <p class="landmark-description">12层高的现代公寓楼，每层都有独立阳台和绿化，顶层有公共泳池和观景台。</p>
-                    <div class="coords-section">
-                        <span class="coords-display"><i class="mdi mdi-crosshairs-gps"></i> 450 70 -2300</span>
-                        <button class="copy-btn" onclick="copyCoordinates(this, '450 70 -2300')">
-                            <i class="mdi mdi-content-copy"></i> 复制
-                        </button>
-                    </div>
-                    <div class="landmark-footer">
-                        <div class="stats-group">
-                            <span class="stat-item"><i class="mdi mdi-eye-outline"></i> 178</span>
-                            <span class="stat-item"><i class="mdi mdi-comment-outline"></i> 9</span>
-                        </div>
-                        <button class="like-btn" onclick="toggleLike(this)">
-                            <i class="mdi mdi-heart-outline"></i> 41
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
         <!-- 提交作品卡片 - 类似主页combined-card风格 -->
         <div class="submit-card">
             <div class="submit-left">
                 <i class="mdi mdi-image-plus"></i>
                 <div class="submit-text">
                     <h3>想分享你的作品？</h3>
-                    <p>在游戏内使用 <code>/warp 提交</code> 或联系管理员，让你的建筑被更多人看见</p>
+                    <p>请联系管理员</p>
                 </div>
             </div>
-            <button class="submit-btn" onclick="alert('请在游戏内使用指令 /warp 提交 或联系管理员')">
+            <button class="submit-btn" onclick="alert('请联系管理员')">
                 <i class="mdi mdi-upload"></i> 提交作品
             </button>
         </div>
     </div>
 
-    <!-- 页脚 - 按照主页样式 -->
     <footer>
-        <p>© 2025 Cozily.top | mc.cozily.top | 交流群 919191 / 787878</p>
+        <p>© 2025 Cozily.top | Page for GitHub.io | QQ交流群:749543572</p>
     </footer>
 
     <script>

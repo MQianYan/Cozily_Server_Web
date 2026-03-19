@@ -610,7 +610,6 @@
         <div class="nav">
             <a href="index.html">首页</a>
             <a href="dibiao.html">玩家地标</a>
-            <a href="paihangbang.html">排行榜</a>
             <a href="licheng.html">服务器历程</a>
             <a href="zonghe.html" class="active">综合导航</a>
             <a href="gengzhinan.html">梗指南</a>
@@ -629,18 +628,18 @@
     <div class="main-content">
         <!-- 页面头部 -->
         <div class="page-header">
-            <h1>🎨 服务器素材</h1>
+            <h1>🎨 服务器素资源</h1>
             <div class="subtitle">资源包 · 地图 · 皮肤 · 红石蓝图 · 玩家作品</div>
         </div>
 
         <!-- 分类筛选 -->
         <div class="category-filter" id="categoryFilter">
-            <span class="filter-btn active" data-category="all">全部素材</span>
-            <span class="filter-btn" data-category="resourcepack">🎨 资源包</span>
-            <span class="filter-btn" data-category="map">🗺️ 地图</span>
-            <span class="filter-btn" data-category="skin">👤 皮肤</span>
-            <span class="filter-btn" data-category="redstone">🔴 红石蓝图</span>
-            <span class="filter-btn" data-category="screenshot">📸 截图</span>
+            <span class="filter-btn active" data-category="all">全部资源</span>
+            <span class="filter-btn" data-category="resourcepack">资源包</span>
+            <span class="filter-btn" data-category="map">地图</span>
+            <span class="filter-btn" data-category="skin">皮肤</span>
+            <span class="filter-btn" data-category="redstone">红石</span>
+            <span class="filter-btn" data-category="screenshot">截图</span>
         </div>
 
         <!-- 横向卡片网格 - 上面图片，下面介绍 -->
@@ -674,210 +673,6 @@
                 </div>
             </div>
 
-            <!-- 素材卡片 2 - 主城地图存档 -->
-            <div class="horizontal-card" data-category="map" data-title="主城·周年纪念版" data-author="Archi_Duck">
-                <div class="card-image" style="background-image: linear-gradient(135deg, #d4fc79, #96e6a1);">
-                    <span class="image-tag">精选地图</span>
-                    <span class="image-size">245 MB</span>
-                </div>
-                <div class="card-content">
-                    <div class="card-header">
-                        <span class="card-title">主城·周年纪念版</span>
-                        <span class="card-type"><i class="mdi mdi-map"></i> 地图</span>
-                    </div>
-                    <p class="card-description">两周年庆典主城地图，包含主建筑、活动广场、玩家合影区。由首席建筑师Archi_Duck设计制作。</p>
-                    <div class="material-info">
-                        <span class="info-item"><i class="mdi mdi-format-list-bulleted-type"></i> 版本: <strong>1.20.4</strong></span>
-                        <span class="info-item"><i class="mdi mdi-update"></i> 更新: <strong>2025.03.15</strong></span>
-                        <span class="info-item"><i class="mdi mdi-account"></i> 作者: <strong>Archi_Duck</strong></span>
-                    </div>
-                    <div class="card-footer">
-                        <div class="download-stats">
-                            <span class="stat"><i class="mdi mdi-download"></i> 856</span>
-                            <span class="stat"><i class="mdi mdi-star"></i> 4.9</span>
-                        </div>
-                        <button class="download-btn" onclick="handleDownload(this, '主城·周年纪念版')">
-                            <i class="mdi mdi-download"></i> 下载素材
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 素材卡片 3 - 腐竹皮肤合集 -->
-            <div class="horizontal-card" data-category="skin" data-title="腐竹·熊孩子皮肤包" data-author="sun_555">
-                <div class="card-image" style="background-image: linear-gradient(135deg, #f6d365, #fda085);">
-                    <span class="image-tag">皮肤</span>
-                    <span class="image-size">3.2 MB</span>
-                </div>
-                <div class="card-content">
-                    <div class="card-header">
-                        <span class="card-title">腐竹·熊孩子皮肤包</span>
-                        <span class="card-type"><i class="mdi mdi-account"></i> 皮肤</span>
-                    </div>
-                    <p class="card-description">腐竹sun_555的经典皮肤合集，包含"熊孩子腐竹""土豆服务器管理员""周年庆限定"三款皮肤。</p>
-                    <div class="material-info">
-                        <span class="info-item"><i class="mdi mdi-format-list-bulleted-type"></i> 格式: <strong>PNG/64x64</strong></span>
-                        <span class="info-item"><i class="mdi mdi-update"></i> 更新: <strong>2025.02.20</strong></span>
-                        <span class="info-item"><i class="mdi mdi-account"></i> 作者: <strong>sun_555</strong></span>
-                    </div>
-                    <div class="card-footer">
-                        <div class="download-stats">
-                            <span class="stat"><i class="mdi mdi-download"></i> 432</span>
-                            <span class="stat"><i class="mdi mdi-star"></i> 4.7</span>
-                        </div>
-                        <button class="download-btn" onclick="handleDownload(this, '腐竹·熊孩子皮肤包')">
-                            <i class="mdi mdi-download"></i> 下载素材
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 素材卡片 4 - 全自动刷石机蓝图 -->
-            <div class="horizontal-card" data-category="redstone" data-title="全自动刷石机 v3.0" data-author="Redstone_God">
-                <div class="card-image" style="background-image: linear-gradient(135deg, #fbc2eb, #a6c1ee);">
-                    <span class="image-tag">热门红石</span>
-                    <span class="image-size">1.8 MB</span>
-                </div>
-                <div class="card-content">
-                    <div class="card-header">
-                        <span class="card-title">全自动刷石机 v3.0</span>
-                        <span class="card-type"><i class="mdi mdi-github"></i> 红石蓝图</span>
-                    </div>
-                    <p class="card-description">Redstone_God设计的全自动刷石机，每小时产出2w+圆石，带自动分类和储存系统，生存可用。</p>
-                    <div class="material-info">
-                        <span class="info-item"><i class="mdi mdi-format-list-bulleted-type"></i> 版本: <strong>1.20-1.21</strong></span>
-                        <span class="info-item"><i class="mdi mdi-update"></i> 更新: <strong>2025.01.10</strong></span>
-                        <span class="info-item"><i class="mdi mdi-account"></i> 作者: <strong>Redstone_God</strong></span>
-                    </div>
-                    <div class="card-footer">
-                        <div class="download-stats">
-                            <span class="stat"><i class="mdi mdi-download"></i> 2.1k</span>
-                            <span class="stat"><i class="mdi mdi-star"></i> 5.0</span>
-                        </div>
-                        <button class="download-btn" onclick="handleDownload(this, '全自动刷石机 v3.0')">
-                            <i class="mdi mdi-download"></i> 下载素材
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 素材卡片 5 - 服务器截图合集 -->
-            <div class="horizontal-card" data-category="screenshot" data-title="2025春节活动截图" data-author="suzuka">
-                <div class="card-image" style="background-image: linear-gradient(135deg, #a1c4fd, #c2e9fb);">
-                    <span class="image-tag">活动记录</span>
-                    <span class="image-size">45 MB</span>
-                </div>
-                <div class="card-content">
-                    <div class="card-header">
-                        <span class="card-title">2025春节活动截图</span>
-                        <span class="card-type"><i class="mdi mdi-camera"></i> 截图</span>
-                    </div>
-                    <p class="card-description">2025年春节活动高清截图合集，包含玩家合影、建筑巡展、烟花表演等精彩瞬间，共47张图片。</p>
-                    <div class="material-info">
-                        <span class="info-item"><i class="mdi mdi-format-list-bulleted-type"></i> 格式: <strong>PNG/4K</strong></span>
-                        <span class="info-item"><i class="mdi mdi-update"></i> 更新: <strong>2025.02.15</strong></span>
-                        <span class="info-item"><i class="mdi mdi-account"></i> 作者: <strong>suzuka</strong></span>
-                    </div>
-                    <div class="card-footer">
-                        <div class="download-stats">
-                            <span class="stat"><i class="mdi mdi-download"></i> 324</span>
-                            <span class="stat"><i class="mdi mdi-star"></i> 4.8</span>
-                        </div>
-                        <button class="download-btn" onclick="handleDownload(this, '2025春节活动截图')">
-                            <i class="mdi mdi-download"></i> 下载素材
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 素材卡片 6 - 像素画·皮卡丘设计图 -->
-            <div class="horizontal-card" data-category="redstone" data-title="像素画·皮卡丘设计图" data-author="Pixel_Artist">
-                <div class="card-image" style="background-image: linear-gradient(135deg, #ff9a9e, #fecfef);">
-                    <span class="image-tag">像素艺术</span>
-                    <span class="image-size">0.8 MB</span>
-                </div>
-                <div class="card-content">
-                    <div class="card-header">
-                        <span class="card-title">像素画·皮卡丘设计图</span>
-                        <span class="card-type"><i class="mdi mdi-drawing"></i> 红石蓝图</span>
-                    </div>
-                    <p class="card-description">超大可动皮卡丘像素画设计图，包含红石电路图、方块配色表、灯光控制方案。</p>
-                    <div class="material-info">
-                        <span class="info-item"><i class="mdi mdi-format-list-bulleted-type"></i> 尺寸: <strong>128x128</strong></span>
-                        <span class="info-item"><i class="mdi mdi-update"></i> 更新: <strong>2024.12.01</strong></span>
-                        <span class="info-item"><i class="mdi mdi-account"></i> 作者: <strong>Pixel_Artist</strong></span>
-                    </div>
-                    <div class="card-footer">
-                        <div class="download-stats">
-                            <span class="stat"><i class="mdi mdi-download"></i> 567</span>
-                            <span class="stat"><i class="mdi mdi-star"></i> 4.9</span>
-                        </div>
-                        <button class="download-btn" onclick="handleDownload(this, '像素画·皮卡丘设计图')">
-                            <i class="mdi mdi-download"></i> 下载素材
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 素材卡片 7 - 江南园林地图包 -->
-            <div class="horizontal-card" data-category="map" data-title="江南水乡园林·地图包" data-author="Alex">
-                <div class="card-image" style="background-image: linear-gradient(135deg, #fccb90, #d57eeb);">
-                    <span class="image-tag">建筑大赛冠军</span>
-                    <span class="image-size">189 MB</span>
-                </div>
-                <div class="card-content">
-                    <div class="card-header">
-                        <span class="card-title">江南水乡园林·地图包</span>
-                        <span class="card-type"><i class="mdi mdi-map"></i> 地图</span>
-                    </div>
-                    <p class="card-description">建筑大赛冠军作品，小桥流水人家，亭台楼阁俱全，包含夜景灯光系统和红石机关。</p>
-                    <div class="material-info">
-                        <span class="info-item"><i class="mdi mdi-format-list-bulleted-type"></i> 版本: <strong>1.20.1</strong></span>
-                        <span class="info-item"><i class="mdi mdi-update"></i> 更新: <strong>2024.11.20</strong></span>
-                        <span class="info-item"><i class="mdi mdi-account"></i> 作者: <strong>Alex</strong></span>
-                    </div>
-                    <div class="card-footer">
-                        <div class="download-stats">
-                            <span class="stat"><i class="mdi mdi-download"></i> 723</span>
-                            <span class="stat"><i class="mdi mdi-star"></i> 4.9</span>
-                        </div>
-                        <button class="download-btn" onclick="handleDownload(this, '江南水乡园林·地图包')">
-                            <i class="mdi mdi-download"></i> 下载素材
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 素材卡片 8 - 梗指南表情包 -->
-            <div class="horizontal-card" data-category="screenshot" data-title="服务器梗指南·表情包" data-author="全体玩家">
-                <div class="card-image" style="background-image: linear-gradient(135deg, #ffecd2, #fcb69f);">
-                    <span class="image-tag">玩家创作</span>
-                    <span class="image-size">12 MB</span>
-                </div>
-                <div class="card-content">
-                    <div class="card-header">
-                        <span class="card-title">服务器梗指南·表情包</span>
-                        <span class="card-type"><i class="mdi mdi-emoticon"></i> 截图</span>
-                    </div>
-                    <p class="card-description">玩家自制表情包合集，包含"腐竹是熊孩子""土豆服务器""/warp厕所"等经典梗图，共32张。</p>
-                    <div class="material-info">
-                        <span class="info-item"><i class="mdi mdi-format-list-bulleted-type"></i> 格式: <strong>PNG/GIF</strong></span>
-                        <span class="info-item"><i class="mdi mdi-update"></i> 更新: <strong>2025.03.10</strong></span>
-                        <span class="info-item"><i class="mdi mdi-account"></i> 作者: <strong>全体玩家</strong></span>
-                    </div>
-                    <div class="card-footer">
-                        <div class="download-stats">
-                            <span class="stat"><i class="mdi mdi-download"></i> 1.5k</span>
-                            <span class="stat"><i class="mdi mdi-star"></i> 4.9</span>
-                        </div>
-                        <button class="download-btn" onclick="handleDownload(this, '服务器梗指南·表情包')">
-                            <i class="mdi mdi-download"></i> 下载素材
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
         <!-- 上传素材卡片 -->
         <div class="upload-card">
             <div class="upload-left">
@@ -887,7 +682,7 @@
                     <p>有好的资源包、地图、皮肤或红石设计？上传分享给其他玩家</p>
                 </div>
             </div>
-            <button class="upload-btn" onclick="alert('请联系管理员或发送至邮箱：sucai@cozily.top')">
+            <button class="upload-btn" onclick="alert('请联系管理员 并且务必保证该资源经过原作授权')">
                 <i class="mdi mdi-cloud-upload"></i> 上传素材
             </button>
         </div>
@@ -895,7 +690,7 @@
 
     <!-- 页脚 - 按照主页样式 -->
     <footer>
-        <p>© 2025 Cozily.top | mc.cozily.top | 交流群 919191 / 787878</p>
+        <p>© 2025 Cozily.top | Page for GitHub.io | QQ交流群:749543572</p>
     </footer>
 
     <script>
