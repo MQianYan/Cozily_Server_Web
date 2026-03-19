@@ -1,0 +1,1145 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5, user-scalable=yes">
+    <title>玩家地标 - 鼠鼠安乐窝 | Minecraft服务器</title>
+    <meta name="description" content="鼠鼠安乐窝 - 高质量Minecraft生电服务器，mc.cozily.top">
+    <meta name="keywords" content="鼠鼠安乐窝,Minecraft,服务器,我的世界,生电,mc.cozily.top">
+    <meta name="author" content="鼠鼠安乐窝">
+
+    <!-- 字体 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;700&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+
+    <!-- 图标库：Material Design Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@mdi/font@7.4.47/css/materialdesignicons.min.css">
+
+    <style>
+        :root {
+            --primary:    #D7BDE2;      /* 淡紫主色 */
+            --primary-d:  #A084DC;      /* 深紫 */
+            --primary-l:  #E6D0F2;      /* 浅紫 */
+            --bg:         #F8F5FC;      /* 背景 */
+            --card-bg:    rgba(255,255,255,0.78);
+            --text:       #2D1B47;
+            --text-light: #5A4A6E;
+            --border:     rgba(161,132,220,0.28);
+            --shadow:     0 8px 32px rgba(161,132,220,0.18);
+            --success:    #4caf50;
+            --error:      #f44336;
+            --warning:    #ff9800;
+            --liked:      #ff6b6b;
+        }
+
+        [data-theme="dark"] {
+            --primary:    #A084DC;
+            --primary-d:  #7B5EB8;
+            --primary-l:  #D7BDE2;
+            --bg:         #1A1425;
+            --card-bg:    rgba(42,33,64,0.82);
+            --text:       #E3D8F2;
+            --text-light: #C4B3E0;
+            --border:     rgba(177,156,217,0.20);
+            --shadow:     0 8px 32px rgba(0,0,0,0.50);
+            --success:    #66bb6a;
+            --error:      #ef5350;
+            --warning:    #ffa726;
+            --liked:      #ff8787;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans SC', 'Quicksand', system-ui, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            transition: background 0.4s, color 0.4s;
+        }
+
+        /* ===== 顶部栏 - 完全按照主页样式 ===== */
+        .top-bar {
+            background: var(--card-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            box-shadow: var(--shadow);
+            border-bottom: 1px solid var(--border);
+            padding: 0.5rem 1.5rem;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary), var(--primary-d));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .logo i {
+            font-size: 2rem;
+            color: var(--primary);
+        }
+
+        /* 导航容器 - 紧凑间距 */
+        .nav {
+            display: flex;
+            list-style: none;
+            gap: 0.3rem;
+            flex-wrap: wrap;
+        }
+
+        /* 毛玻璃按钮效果 - 每个导航链接 */
+        .nav a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1rem;
+            transition: all 0.3s cubic-bezier(0.2, 0, 0, 1);
+            position: relative;
+            padding: 0.4rem 0.8rem;
+            border-radius: 999px;
+            background: transparent;
+            border: 1px solid transparent;
+            white-space: nowrap;
+        }
+
+        .nav a:hover {
+            background: rgba(215, 189, 226, 0.15);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1px solid rgba(215, 189, 226, 0.3);
+            color: var(--primary-d);
+            transform: translateY(-1px);
+            box-shadow: 0 2px 8px rgba(161, 132, 220, 0.15);
+        }
+
+        .nav a.active {
+            color: var(--primary-d);
+            background: rgba(215, 189, 226, 0.1);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            border: 1px solid rgba(215, 189, 226, 0.2);
+        }
+
+        .nav a.active::after {
+            content: "";
+            position: absolute;
+            bottom: 0px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 16px;
+            height: 2px;
+            background: var(--primary);
+            border-radius: 2px;
+        }
+
+        .right-tools {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .theme-toggle, .join-btn {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-light);
+            transition: all 0.3s;
+        }
+
+        .theme-toggle:hover {
+            color: var(--primary-d);
+            transform: scale(1.1);
+        }
+
+        .join-btn {
+            background: var(--primary);
+            color: var(--text);
+            padding: 0.5rem 1.2rem;
+            border-radius: 999px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            text-decoration: none;
+        }
+
+        .join-btn:hover {
+            background: var(--primary-d);
+            transform: translateY(-1px);
+            box-shadow: var(--shadow);
+        }
+
+        /* ===== 顶部栏结束 ===== */
+
+        /* ===== 主内容 - 按照主页样式重新设计 ===== */
+        .main-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 3rem 2.5rem 4rem;
+        }
+
+        /* 页面头部 - 类似主页的hero风格 */
+        .page-hero {
+            text-align: center;
+            padding: 2rem 0 3rem;
+        }
+
+        .page-hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 0.8rem;
+            background: linear-gradient(135deg, var(--primary), var(--primary-d));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .page-hero .subtitle {
+            font-size: 1.2rem;
+            color: var(--text-light);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* 统计卡片 - 类似主页的combined-card风格 */
+        .stats-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--border);
+            border-radius: 36px;
+            box-shadow: var(--shadow);
+            margin: 2rem auto 3rem;
+            padding: 1.5rem 2rem;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-around;
+            gap: 2rem;
+            width: fit-content;
+            max-width: 100%;
+        }
+
+        .stat-block {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .stat-block i {
+            font-size: 2.5rem;
+            color: var(--primary);
+            background: rgba(160, 132, 220, 0.1);
+            padding: 0.8rem;
+            border-radius: 50%;
+        }
+
+        .stat-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--primary-d);
+            line-height: 1.2;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: var(--text-light);
+        }
+
+        /* 筛选栏 - 类似主页的card-bottom风格 */
+        .filter-section {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--border);
+            border-radius: 999px;
+            padding: 0.4rem;
+            margin: 2rem 0 3rem;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.5rem;
+        }
+
+        .filter-tabs {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.3rem;
+            padding: 0.2rem;
+        }
+
+        .filter-tab {
+            padding: 0.5rem 1.5rem;
+            border-radius: 999px;
+            color: var(--text-light);
+            cursor: pointer;
+            transition: all 0.2s;
+            font-weight: 500;
+            font-size: 0.95rem;
+            background: transparent;
+            border: 1px solid transparent;
+        }
+
+        .filter-tab:hover {
+            background: rgba(215, 189, 226, 0.15);
+            color: var(--primary-d);
+        }
+
+        .filter-tab.active {
+            background: var(--primary);
+            color: var(--text);
+        }
+
+        .search-wrapper {
+            display: flex;
+            align-items: center;
+            background: rgba(160, 132, 220, 0.08);
+            border-radius: 999px;
+            padding: 0.2rem 0.2rem 0.2rem 1.2rem;
+            border: 1px solid var(--border);
+            min-width: 260px;
+        }
+
+        .search-wrapper i {
+            color: var(--text-light);
+            font-size: 1.2rem;
+        }
+
+        .search-wrapper input {
+            background: none;
+            border: none;
+            padding: 0.5rem 0.8rem;
+            color: var(--text);
+            font-size: 0.95rem;
+            width: 100%;
+        }
+
+        .search-wrapper input:focus {
+            outline: none;
+        }
+
+        .search-wrapper input::placeholder {
+            color: var(--text-light);
+            opacity: 0.6;
+        }
+
+        .search-wrapper button {
+            background: var(--primary);
+            border: none;
+            border-radius: 999px;
+            padding: 0.5rem 1.5rem;
+            color: var(--text);
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+
+        .search-wrapper button:hover {
+            background: var(--primary-d);
+            transform: translateY(-1px);
+            box-shadow: var(--shadow);
+        }
+
+        /* 地标卡片网格 - 类似主页的features-grid风格 */
+        .landmarks-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .landmark-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--border);
+            border-radius: 32px;
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .landmark-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(160, 132, 220, 0.3);
+            border-color: var(--primary);
+        }
+
+        .landmark-card.hidden {
+            display: none;
+        }
+
+        .landmark-image {
+            height: 180px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            display: flex;
+            align-items: flex-end;
+            justify-content: flex-start;
+            padding: 1rem;
+        }
+
+        .landmark-category {
+            background: var(--primary-d);
+            color: white;
+            padding: 0.3rem 1.2rem;
+            border-radius: 999px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .landmark-content {
+            padding: 1.8rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .landmark-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .landmark-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-d);
+        }
+
+        .landmark-author {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+            color: var(--text-light);
+            font-size: 0.9rem;
+            background: rgba(160, 132, 220, 0.1);
+            padding: 0.3rem 0.8rem;
+            border-radius: 999px;
+        }
+
+        .landmark-author i {
+            font-size: 1rem;
+            color: var(--primary);
+        }
+
+        .landmark-description {
+            color: var(--text);
+            line-height: 1.6;
+            font-size: 0.95rem;
+            opacity: 0.9;
+        }
+
+        /* 坐标卡片 - 类似主页的card-bottom风格 */
+        .coords-section {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.8rem;
+            background: rgba(160, 132, 220, 0.06);
+            border-radius: 32px;
+            padding: 0.8rem 1.2rem;
+            border: 1px dashed var(--border);
+            margin: 0.5rem 0;
+        }
+
+        .coords-display {
+            font-family: 'Courier New', monospace;
+            font-weight: 600;
+            color: var(--primary-d);
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .coords-display i {
+            color: var(--primary);
+        }
+
+        .copy-btn {
+            background: var(--primary);
+            border: none;
+            border-radius: 30px;
+            padding: 0.4rem 1.2rem;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            transition: all 0.2s;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+        }
+
+        .copy-btn:hover {
+            background: var(--primary-d);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+        }
+
+        .copy-btn.copied {
+            background: var(--success);
+            color: white;
+        }
+
+        .copy-btn i {
+            font-size: 1rem;
+        }
+
+        .landmark-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: 0.5rem;
+            padding-top: 0.8rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .stats-group {
+            display: flex;
+            gap: 1.2rem;
+        }
+
+        .stat-item {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        .stat-item i {
+            color: var(--primary);
+        }
+
+        .like-btn {
+            background: none;
+            border: 1px solid var(--border);
+            border-radius: 30px;
+            padding: 0.3rem 1.2rem;
+            color: var(--text-light);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+            transition: all 0.2s;
+            font-weight: 500;
+        }
+
+        .like-btn:hover {
+            background: rgba(255, 107, 107, 0.1);
+            color: var(--liked);
+            border-color: var(--liked);
+        }
+
+        .like-btn.liked {
+            background: var(--liked);
+            color: white;
+            border-color: var(--liked);
+        }
+
+        .like-btn.liked i {
+            color: white;
+        }
+
+        /* 无结果提示 */
+        .no-results {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 4rem;
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            border-radius: 48px;
+            border: 1px solid var(--border);
+            color: var(--text-light);
+            font-size: 1.2rem;
+        }
+
+        .no-results i {
+            font-size: 4rem;
+            color: var(--primary-d);
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        /* 提交卡片 - 类似主页的combined-card风格 */
+        .submit-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--border);
+            border-radius: 48px;
+            box-shadow: var(--shadow);
+            margin: 4rem auto 2rem;
+            padding: 2rem 2.5rem;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 2rem;
+            max-width: 900px;
+        }
+
+        .submit-left {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .submit-left i {
+            font-size: 3rem;
+            color: var(--primary-d);
+            background: rgba(160, 132, 220, 0.1);
+            padding: 1rem;
+            border-radius: 50%;
+        }
+
+        .submit-text h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-d);
+            margin-bottom: 0.3rem;
+        }
+
+        .submit-text p {
+            color: var(--text-light);
+        }
+
+        .submit-text code {
+            background: rgba(160, 132, 220, 0.2);
+            padding: 0.2rem 0.5rem;
+            border-radius: 6px;
+            color: var(--primary-d);
+        }
+
+        .submit-btn {
+            background: var(--primary);
+            border: none;
+            border-radius: 999px;
+            padding: 1rem 2.5rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text);
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            white-space: nowrap;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .submit-btn:hover {
+            background: var(--primary-d);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+        }
+
+        .submit-btn i {
+            font-size: 1.3rem;
+        }
+
+        /* 页脚 - 完全按照主页样式 */
+        footer {
+            text-align: center;
+            padding: 4rem 0 2.5rem;
+            color: var(--text-light);
+            border-top: 1px solid var(--border);
+        }
+
+        /* 加载动画 */
+        .loading {
+            animation: pulse 1.5s infinite;
+            opacity: 0.6;
+        }
+        
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+
+        /* 移动端优化 - 按照主页样式 */
+        @media (max-width: 768px) {
+            .top-bar {
+                padding: 0.4rem 1rem;
+            }
+            .nav {
+                gap: 0.2rem;
+                justify-content: center;
+            }
+            .nav a {
+                padding: 0.3rem 0.6rem;
+                font-size: 0.9rem;
+            }
+
+            .page-hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .stats-card {
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 1.5rem;
+            }
+
+            .filter-section {
+                border-radius: 40px;
+                flex-direction: column;
+                padding: 0.8rem;
+            }
+            .filter-tabs {
+                justify-content: center;
+                width: 100%;
+            }
+            .search-wrapper {
+                width: 100%;
+            }
+
+            .landmarks-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .submit-card {
+                flex-direction: column;
+                text-align: center;
+                padding: 1.5rem;
+            }
+            .submit-left {
+                flex-direction: column;
+                text-align: center;
+            }
+            .submit-btn {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .coords-section {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .copy-btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 顶部栏 - 按照主页样式 -->
+    <div class="top-bar">
+        <div class="logo"><i class="1"></i> Cozily</div>
+
+        <div class="nav">
+            <a href="index.html">首页</a>
+            <a href="dibiao.html" class="active">玩家地标</a>
+            <a href="paihangbang.html">排行榜</a>
+            <a href="licheng.html">服务器历程</a>
+            <a href="zonghe.html">综合导航</a>
+            <a href="gengzhinan.html">梗指南</a>
+            <a href="tuandui.html">团队介绍</a>
+            <a href="faq.html">常见问题</a>
+            <a href="t.html">测试界面</a>
+        </div>
+
+        <div class="right-tools">
+            <button class="theme-toggle" title="切换日夜模式"><i class="mdi mdi-weather-night"></i></button>
+            <a href="https://qm.qq.com/q/VTUeknT88Q" target="_blank" class="join-btn">加入交流群</a>
+        </div>
+    </div>
+
+    <!-- 主内容 - 按照主页样式重新设计 -->
+    <div class="main-content">
+        <!-- 页面头部 - 类似主页hero风格 -->
+        <div class="page-hero">
+            <h1>🗺️ 玩家地标</h1>
+            <div class="subtitle">分享你的建筑、红石机械与创意作品 · 让更多人看见</div>
+        </div>
+
+        <!-- 筛选栏 - 类似主页card-bottom风格 -->
+        <div class="filter-section">
+            <div class="filter-tabs" id="filterTabs">
+                <span class="filter-tab active" data-category="all">全部</span>
+                <span class="filter-tab" data-category="建筑">🏗️ 建筑</span>
+                <span class="filter-tab" data-category="红石机械">🔴 红石机械</span>
+                <span class="filter-tab" data-category="生电机械">⚡ 生电机械</span>
+                <span class="filter-tab" data-category="趣味">🎨 趣味</span>
+            </div>
+            <div class="search-wrapper">
+                <i class="mdi mdi-magnify"></i>
+                <input type="text" id="searchInput" placeholder="搜索作品或作者...">
+                <button id="searchBtn">搜索</button>
+            </div>
+        </div>
+
+        <!-- 地标卡片网格 -->
+        <div class="landmarks-grid" id="landmarksGrid">
+            <!-- 卡片 1 - 现代别墅 -->
+            <div class="landmark-card" data-category="建筑" data-title="湖畔现代别墅" data-author="Steve" data-likes="45">
+                <div class="landmark-image" style="background-image: linear-gradient(135deg, #a8ede0, #fed6e3);">
+                    <span class="landmark-category">🏗️ 建筑</span>
+                </div>
+                <div class="landmark-content">
+                    <div class="landmark-header">
+                        <span class="landmark-title">湖畔现代别墅</span>
+                        <span class="landmark-author"><i class="mdi mdi-account"></i> Steve</span>
+                    </div>
+                    <p class="landmark-description">坐落在雪山脚下的现代别墅，全玻璃幕墙设计，带无边泳池和地下车库。</p>
+                    <div class="coords-section">
+                        <span class="coords-display"><i class="mdi mdi-crosshairs-gps"></i> -234 65 1234</span>
+                        <button class="copy-btn" onclick="copyCoordinates(this, '-234 65 1234')">
+                            <i class="mdi mdi-content-copy"></i> 复制
+                        </button>
+                    </div>
+                    <div class="landmark-footer">
+                        <div class="stats-group">
+                            <span class="stat-item"><i class="mdi mdi-eye-outline"></i> 234</span>
+                            <span class="stat-item"><i class="mdi mdi-comment-outline"></i> 12</span>
+                        </div>
+                        <button class="like-btn" onclick="toggleLike(this)">
+                            <i class="mdi mdi-heart-outline"></i> 45
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 卡片 2 - 中式园林 -->
+            <div class="landmark-card" data-category="建筑" data-title="江南水乡园林" data-author="Alex" data-likes="32">
+                <div class="landmark-image" style="background-image: linear-gradient(135deg, #d4fc79, #96e6a1);">
+                    <span class="landmark-category">🏗️ 建筑</span>
+                </div>
+                <div class="landmark-content">
+                    <div class="landmark-header">
+                        <span class="landmark-title">江南水乡园林</span>
+                        <span class="landmark-author"><i class="mdi mdi-account"></i> Alex</span>
+                    </div>
+                    <p class="landmark-description">小桥流水人家，亭台楼阁俱全，用了大量竹子、灯笼和瓦片，夜景尤其美丽。</p>
+                    <div class="coords-section">
+                        <span class="coords-display"><i class="mdi mdi-crosshairs-gps"></i> 890 70 -456</span>
+                        <button class="copy-btn" onclick="copyCoordinates(this, '890 70 -456')">
+                            <i class="mdi mdi-content-copy"></i> 复制
+                        </button>
+                    </div>
+                    <div class="landmark-footer">
+                        <div class="stats-group">
+                            <span class="stat-item"><i class="mdi mdi-eye-outline"></i> 189</span>
+                            <span class="stat-item"><i class="mdi mdi-comment-outline"></i> 8</span>
+                        </div>
+                        <button class="like-btn" onclick="toggleLike(this)">
+                            <i class="mdi mdi-heart-outline"></i> 32
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 卡片 3 - 红石机械 -->
+            <div class="landmark-card" data-category="红石机械" data-title="全自动刷石机" data-author="Redstone_God" data-likes="89">
+                <div class="landmark-image" style="background-image: linear-gradient(135deg, #f6d365, #fda085);">
+                    <span class="landmark-category">🔴 红石机械</span>
+                </div>
+                <div class="landmark-content">
+                    <div class="landmark-header">
+                        <span class="landmark-title">全自动刷石机</span>
+                        <span class="landmark-author"><i class="mdi mdi-account"></i> Redstone_God</span>
+                    </div>
+                    <p class="landmark-description">每小时产出上万圆石，带自动分类和储存系统，效率极高，完全生存可用。</p>
+                    <div class="coords-section">
+                        <span class="coords-display"><i class="mdi mdi-crosshairs-gps"></i> 1200 45 2340</span>
+                        <button class="copy-btn" onclick="copyCoordinates(this, '1200 45 2340')">
+                            <i class="mdi mdi-content-copy"></i> 复制
+                        </button>
+                    </div>
+                    <div class="landmark-footer">
+                        <div class="stats-group">
+                            <span class="stat-item"><i class="mdi mdi-eye-outline"></i> 567</span>
+                            <span class="stat-item"><i class="mdi mdi-comment-outline"></i> 34</span>
+                        </div>
+                        <button class="like-btn liked" onclick="toggleLike(this)">
+                            <i class="mdi mdi-heart"></i> 89
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 卡片 4 - 生电机械 -->
+            <div class="landmark-card" data-category="生电机械" data-title="全自动农场" data-author="Builder_99" data-likes="56">
+                <div class="landmark-image" style="background-image: linear-gradient(135deg, #a1c4fd, #c2e9fb);">
+                    <span class="landmark-category">⚡ 生电机械</span>
+                </div>
+                <div class="landmark-content">
+                    <div class="landmark-header">
+                        <span class="landmark-title">全自动农场</span>
+                        <span class="landmark-author"><i class="mdi mdi-account"></i> Builder_99</span>
+                    </div>
+                    <p class="landmark-description">全自动小麦/胡萝卜/土豆农场，带物品收集和储存系统，解放双手。</p>
+                    <div class="coords-section">
+                        <span class="coords-display"><i class="mdi mdi-crosshairs-gps"></i> -560 120 -890</span>
+                        <button class="copy-btn" onclick="copyCoordinates(this, '-560 120 -890')">
+                            <i class="mdi mdi-content-copy"></i> 复制
+                        </button>
+                    </div>
+                    <div class="landmark-footer">
+                        <div class="stats-group">
+                            <span class="stat-item"><i class="mdi mdi-eye-outline"></i> 312</span>
+                            <span class="stat-item"><i class="mdi mdi-comment-outline"></i> 15</span>
+                        </div>
+                        <button class="like-btn" onclick="toggleLike(this)">
+                            <i class="mdi mdi-heart-outline"></i> 56
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 卡片 5 - 趣味 -->
+            <div class="landmark-card" data-category="趣味" data-title="像素画 · 皮卡丘" data-author="Pixel_Artist" data-likes="112">
+                <div class="landmark-image" style="background-image: linear-gradient(135deg, #fbc2eb, #a6c1ee);">
+                    <span class="landmark-category">🎨 趣味</span>
+                </div>
+                <div class="landmark-content">
+                    <div class="landmark-header">
+                        <span class="landmark-title">像素画 · 皮卡丘</span>
+                        <span class="landmark-author"><i class="mdi mdi-account"></i> Pixel_Artist</span>
+                    </div>
+                    <p class="landmark-description">用羊毛像素块拼成的超大可动皮卡丘，眼睛会随红石信号闪烁。</p>
+                    <div class="coords-section">
+                        <span class="coords-display"><i class="mdi mdi-crosshairs-gps"></i> -1500 64 800</span>
+                        <button class="copy-btn" onclick="copyCoordinates(this, '-1500 64 800')">
+                            <i class="mdi mdi-content-copy"></i> 复制
+                        </button>
+                    </div>
+                    <div class="landmark-footer">
+                        <div class="stats-group">
+                            <span class="stat-item"><i class="mdi mdi-eye-outline"></i> 423</span>
+                            <span class="stat-item"><i class="mdi mdi-comment-outline"></i> 27</span>
+                        </div>
+                        <button class="like-btn liked" onclick="toggleLike(this)">
+                            <i class="mdi mdi-heart"></i> 112
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 卡片 6 - 建筑 -->
+            <div class="landmark-card" data-category="建筑" data-title="空中花园公寓" data-author="Archi_Duck" data-likes="41">
+                <div class="landmark-image" style="background-image: linear-gradient(135deg, #ff9a9e, #fecfef);">
+                    <span class="landmark-category">🏗️ 建筑</span>
+                </div>
+                <div class="landmark-content">
+                    <div class="landmark-header">
+                        <span class="landmark-title">空中花园公寓</span>
+                        <span class="landmark-author"><i class="mdi mdi-account"></i> Archi_Duck</span>
+                    </div>
+                    <p class="landmark-description">12层高的现代公寓楼，每层都有独立阳台和绿化，顶层有公共泳池和观景台。</p>
+                    <div class="coords-section">
+                        <span class="coords-display"><i class="mdi mdi-crosshairs-gps"></i> 450 70 -2300</span>
+                        <button class="copy-btn" onclick="copyCoordinates(this, '450 70 -2300')">
+                            <i class="mdi mdi-content-copy"></i> 复制
+                        </button>
+                    </div>
+                    <div class="landmark-footer">
+                        <div class="stats-group">
+                            <span class="stat-item"><i class="mdi mdi-eye-outline"></i> 178</span>
+                            <span class="stat-item"><i class="mdi mdi-comment-outline"></i> 9</span>
+                        </div>
+                        <button class="like-btn" onclick="toggleLike(this)">
+                            <i class="mdi mdi-heart-outline"></i> 41
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 提交作品卡片 - 类似主页combined-card风格 -->
+        <div class="submit-card">
+            <div class="submit-left">
+                <i class="mdi mdi-image-plus"></i>
+                <div class="submit-text">
+                    <h3>想分享你的作品？</h3>
+                    <p>在游戏内使用 <code>/warp 提交</code> 或联系管理员，让你的建筑被更多人看见</p>
+                </div>
+            </div>
+            <button class="submit-btn" onclick="alert('请在游戏内使用指令 /warp 提交 或联系管理员')">
+                <i class="mdi mdi-upload"></i> 提交作品
+            </button>
+        </div>
+    </div>
+
+    <!-- 页脚 - 按照主页样式 -->
+    <footer>
+        <p>© 2025 Cozily.top | mc.cozily.top | 交流群 919191 / 787878</p>
+    </footer>
+
+    <script>
+        // ===== 日夜模式切换 - 完全按照主页 =====
+        const themeToggle = document.querySelector('.theme-toggle');
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+        themeToggle.innerHTML = savedTheme === 'dark' ? '<i class="mdi mdi-white-balance-sunny"></i>' : '<i class="mdi mdi-weather-night"></i>';
+
+        themeToggle.addEventListener('click', () => {
+            let theme = document.documentElement.getAttribute('data-theme');
+            theme = theme === 'dark' ? 'light' : 'dark';
+            document.documentElement.setAttribute('data-theme', theme);
+            localStorage.setItem('theme', theme);
+            themeToggle.innerHTML = theme === 'dark' ? '<i class="mdi mdi-white-balance-sunny"></i>' : '<i class="mdi mdi-weather-night"></i>';
+        });
+
+        // ===== 复制坐标功能 =====
+        window.copyCoordinates = function(btn, coords) {
+            navigator.clipboard.writeText(coords).then(() => {
+                const originalText = btn.innerHTML;
+                btn.classList.add('copied');
+                btn.innerHTML = '<i class="mdi mdi-check"></i> 已复制';
+                setTimeout(() => {
+                    btn.classList.remove('copied');
+                    btn.innerHTML = originalText;
+                }, 1500);
+            }).catch(() => {
+                alert('复制失败，请手动复制坐标: ' + coords);
+            });
+        };
+
+        // ===== 点赞功能 =====
+        window.toggleLike = function(btn) {
+            btn.classList.toggle('liked');
+            const icon = btn.querySelector('i');
+            
+            let count = parseInt(btn.innerText.match(/\d+/)?.[0] || '0');
+            
+            if (btn.classList.contains('liked')) {
+                icon.className = 'mdi mdi-heart';
+                count += 1;
+            } else {
+                icon.className = 'mdi mdi-heart-outline';
+                count -= 1;
+            }
+            
+            btn.innerHTML = `${icon.outerHTML} ${count}`;
+            
+            // 更新总点赞数
+            updateTotalLikes();
+        };
+
+        // ===== 更新总点赞数 =====
+        function updateTotalLikes() {
+            const likeButtons = document.querySelectorAll('.like-btn');
+            let total = 0;
+            likeButtons.forEach(btn => {
+                const count = parseInt(btn.innerText.match(/\d+/)?.[0] || '0');
+                total += count;
+            });
+            document.getElementById('totalLikes').textContent = total;
+        }
+
+        // ===== 筛选和搜索功能 =====
+        const filterTabs = document.querySelectorAll('.filter-tab');
+        const searchInput = document.getElementById('searchInput');
+        const searchBtn = document.getElementById('searchBtn');
+        const landmarks = document.querySelectorAll('.landmark-card');
+        
+        // 初始化统计
+        document.getElementById('totalLandmarks').textContent = landmarks.length;
+        
+        const authors = new Set();
+        landmarks.forEach(card => {
+            const author = card.dataset.author;
+            if (author) authors.add(author);
+        });
+        document.getElementById('totalAuthors').textContent = authors.size;
+        
+        updateTotalLikes();
+
+        function filterLandmarks() {
+            const activeCategory = document.querySelector('.filter-tab.active')?.dataset.category || 'all';
+            const searchTerm = searchInput.value.toLowerCase().trim();
+
+            landmarks.forEach(card => {
+                const category = card.dataset.category;
+                const title = card.dataset.title.toLowerCase();
+                const author = card.dataset.author.toLowerCase();
+                
+                let categoryMatch = activeCategory === 'all' || category === activeCategory;
+                
+                let searchMatch = true;
+                if (searchTerm !== '') {
+                    searchMatch = title.includes(searchTerm) || author.includes(searchTerm);
+                }
+                
+                if (categoryMatch && searchMatch) {
+                    card.classList.remove('hidden');
+                } else {
+                    card.classList.add('hidden');
+                }
+            });
+            
+            // 检查是否没有结果
+            const visibleCount = Array.from(landmarks).filter(card => !card.classList.contains('hidden')).length;
+            const emptyState = document.querySelector('.no-results');
+            
+            if (visibleCount === 0) {
+                if (!emptyState) {
+                    const grid = document.getElementById('landmarksGrid');
+                    const emptyDiv = document.createElement('div');
+                    emptyDiv.className = 'no-results';
+                    emptyDiv.innerHTML = '<i class="mdi mdi-image-off"></i>没有找到符合条件的作品';
+                    grid.appendChild(emptyDiv);
+                }
+            } else {
+                if (emptyState) {
+                    emptyState.remove();
+                }
+            }
+        }
+
+        filterTabs.forEach(tab => {
+            tab.addEventListener('click', function() {
+                filterTabs.forEach(t => t.classList.remove('active'));
+                this.classList.add('active');
+                filterLandmarks();
+            });
+        });
+
+        searchBtn.addEventListener('click', filterLandmarks);
+        
+        searchInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                filterLandmarks();
+            }
+        });
+
+        // 初始化显示
+        filterLandmarks();
+    </script>
+</body>
+</html>

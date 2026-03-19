@@ -1,0 +1,871 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5, user-scalable=yes">
+    <title>常见问题 - 鼠鼠安乐窝 | Minecraft服务器</title>
+    <meta name="description" content="鼠鼠安乐窝 - 高质量Minecraft生电服务器，mc.cozily.top">
+    <meta name="keywords" content="鼠鼠安乐窝,Minecraft,服务器,我的世界,生电,mc.cozily.top">
+    <meta name="author" content="鼠鼠安乐窝">
+
+    <!-- 字体 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;700&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+
+    <!-- 图标库：Material Design Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@mdi/font@7.4.47/css/materialdesignicons.min.css">
+
+    <style>
+        :root {
+            --primary:    #D7BDE2;      /* 淡紫主色 */
+            --primary-d:  #A084DC;      /* 深紫 */
+            --primary-l:  #E6D0F2;      /* 浅紫 */
+            --bg:         #F8F5FC;      /* 背景 */
+            --card-bg:    rgba(255,255,255,0.78);
+            --text:       #2D1B47;
+            --text-light: #5A4A6E;
+            --border:     rgba(161,132,220,0.28);
+            --shadow:     0 8px 32px rgba(161,132,220,0.18);
+        }
+
+        [data-theme="dark"] {
+            --primary:    #A084DC;
+            --primary-d:  #7B5EB8;
+            --primary-l:  #D7BDE2;
+            --bg:         #1A1425;
+            --card-bg:    rgba(42,33,64,0.82);
+            --text:       #E3D8F2;
+            --text-light: #C4B3E0;
+            --border:     rgba(177,156,217,0.20);
+            --shadow:     0 8px 32px rgba(0,0,0,0.50);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans SC', 'Quicksand', system-ui, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            transition: background 0.4s, color 0.4s;
+        }
+
+        /* 顶部磨砂栏 - 添加毛玻璃按钮效果 */
+        .top-bar {
+            background: var(--card-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            box-shadow: var(--shadow);
+            border-bottom: 1px solid var(--border);
+            padding: 0.5rem 1.5rem;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary), var(--primary-d));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .logo i {
+            font-size: 2rem;
+            color: var(--primary);
+        }
+
+        /* 导航容器 - 紧凑间距 + 毛玻璃按钮 */
+        .nav {
+            display: flex;
+            list-style: none;
+            gap: 0.3rem;
+            flex-wrap: wrap;
+        }
+
+        .nav a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1rem;
+            transition: all 0.3s cubic-bezier(0.2, 0, 0, 1);
+            position: relative;
+            padding: 0.4rem 0.8rem;
+            border-radius: 999px;
+            background: transparent;
+            border: 1px solid transparent;
+            white-space: nowrap;
+        }
+
+        .nav a:hover {
+            background: rgba(215, 189, 226, 0.15);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1px solid rgba(215, 189, 226, 0.3);
+            color: var(--primary-d);
+            transform: translateY(-1px);
+            box-shadow: 0 2px 8px rgba(161, 132, 220, 0.15);
+        }
+
+        .nav a.active {
+            color: var(--primary-d);
+            background: rgba(215, 189, 226, 0.1);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            border: 1px solid rgba(215, 189, 226, 0.2);
+        }
+
+        .nav a.active::after {
+            content: "";
+            position: absolute;
+            bottom: 0px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 16px;
+            height: 2px;
+            background: var(--primary);
+            border-radius: 2px;
+        }
+
+        .right-tools {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .theme-toggle, .join-btn {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-light);
+            transition: all 0.3s;
+        }
+
+        .theme-toggle:hover {
+            color: var(--primary-d);
+            transform: scale(1.1);
+        }
+
+        .join-btn {
+            background: var(--primary);
+            color: var(--text);
+            padding: 0.5rem 1.2rem;
+            border-radius: 999px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            text-decoration: none;
+        }
+
+        .join-btn:hover {
+            background: var(--primary-d);
+            transform: translateY(-1px);
+            box-shadow: var(--shadow);
+        }
+
+        /* ===== FAQ 页面样式 ===== */
+        .main-content {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 4rem 2rem 5rem;
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .page-header h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary), var(--primary-d));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1rem;
+        }
+
+        .page-header .subhead {
+            font-size: 1.2rem;
+            color: var(--text-light);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* FAQ 分类导航 */
+        .faq-categories {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 0.8rem;
+            margin-bottom: 3rem;
+        }
+
+        .category-btn {
+            background: var(--card-bg);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1px solid var(--border);
+            border-radius: 999px;
+            padding: 0.6rem 1.5rem;
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: var(--text-light);
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .category-btn i {
+            font-size: 1.2rem;
+            color: var(--primary);
+        }
+
+        .category-btn:hover {
+            background: rgba(215, 189, 226, 0.2);
+            backdrop-filter: blur(12px);
+            border-color: var(--primary);
+            color: var(--primary-d);
+            transform: translateY(-2px);
+        }
+
+        .category-btn.active {
+            background: var(--primary);
+            border-color: var(--primary-d);
+            color: var(--text);
+        }
+
+        .category-btn.active i {
+            color: var(--text);
+        }
+
+        /* FAQ 列表 */
+        .faq-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
+        }
+
+        /* FAQ 卡片 - 毛玻璃效果 */
+        .faq-item {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .faq-item:hover {
+            border-color: var(--primary);
+            box-shadow: var(--shadow);
+            transform: translateY(-2px);
+        }
+
+        /* 问题区域 */
+        .faq-question {
+            padding: 1.5rem 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .question-left {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            flex: 1;
+        }
+
+        .question-icon {
+            width: 32px;
+            height: 32px;
+            background: rgba(215, 189, 226, 0.15);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary-d);
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+
+        .question-text {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--text);
+            line-height: 1.4;
+        }
+
+        .category-tag {
+            background: rgba(215, 189, 226, 0.1);
+            border: 1px solid var(--border);
+            border-radius: 999px;
+            padding: 0.3rem 1rem;
+            font-size: 0.8rem;
+            color: var(--text-light);
+            margin-left: 1rem;
+            white-space: nowrap;
+        }
+
+        .toggle-icon {
+            font-size: 1.8rem;
+            color: var(--primary);
+            transition: transform 0.3s;
+            flex-shrink: 0;
+        }
+
+        .faq-item.active .toggle-icon {
+            transform: rotate(180deg);
+        }
+
+        /* 答案区域 */
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+            background: rgba(160, 132, 220, 0.03);
+            border-top: 1px solid transparent;
+        }
+
+        .faq-item.active .faq-answer {
+            max-height: 500px;
+            border-top-color: var(--border);
+        }
+
+        .answer-content {
+            padding: 0 2rem 1.5rem 5rem; /* 5rem 对齐问题区域的图标位置 */
+        }
+
+        .answer-text {
+            color: var(--text-light);
+            line-height: 1.7;
+            margin-bottom: 1rem;
+        }
+
+        .answer-text p {
+            margin-bottom: 0.8rem;
+        }
+
+        .answer-text code {
+            background: rgba(160, 132, 220, 0.1);
+            padding: 0.2rem 0.5rem;
+            border-radius: 6px;
+            font-family: monospace;
+            color: var(--primary-d);
+            border: 1px solid var(--border);
+        }
+
+        .answer-text ul {
+            margin-left: 1.5rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .answer-text li {
+            margin-bottom: 0.3rem;
+        }
+
+        .answer-note {
+            background: rgba(215, 189, 226, 0.1);
+            border-left: 3px solid var(--primary);
+            padding: 0.8rem 1.2rem;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            color: var(--text);
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .answer-note i {
+            color: var(--primary);
+            font-size: 1.2rem;
+        }
+
+        /* 搜索框 */
+        .faq-search {
+            margin-bottom: 2rem;
+            position: relative;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 1.2rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-light);
+            font-size: 1.2rem;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 1rem 1rem 1rem 3rem;
+            background: var(--card-bg);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1px solid var(--border);
+            border-radius: 999px;
+            font-size: 1rem;
+            color: var(--text);
+            transition: all 0.3s;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: var(--shadow);
+        }
+
+        .search-input::placeholder {
+            color: var(--text-light);
+            opacity: 0.6;
+        }
+
+        /* 页脚 */
+        footer {
+            text-align: center;
+            padding: 3rem 2rem 2rem;
+            color: var(--text-light);
+            border-top: 1px solid var(--border);
+        }
+
+        /* 移动端适配 */
+        @media (max-width: 768px) {
+            .top-bar {
+                padding: 0.4rem 1rem;
+            }
+            .nav {
+                gap: 0.2rem;
+                justify-content: center;
+            }
+            .nav a {
+                padding: 0.3rem 0.6rem;
+                font-size: 0.9rem;
+            }
+            .main-content {
+                padding: 3rem 1rem;
+            }
+            .page-header h1 {
+                font-size: 2.5rem;
+            }
+            .page-header .subhead {
+                font-size: 1rem;
+            }
+            .faq-question {
+                padding: 1.2rem 1.5rem;
+            }
+            .question-text {
+                font-size: 1rem;
+            }
+            .category-tag {
+                display: none; /* 移动端隐藏分类标签 */
+            }
+            .answer-content {
+                padding: 0 1.5rem 1.2rem 4rem;
+            }
+            .question-icon {
+                width: 28px;
+                height: 28px;
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 顶部栏 - 毛玻璃按钮效果 -->
+    <div class="top-bar">
+        <div class="logo"><i class="1"></i> Cozily</div>
+
+        <div class="nav">
+            <a href="index.html">首页</a>
+            <a href="dibiao.html">玩家地标</a>
+            <a href="paihangbang.html">排行榜</a>
+            <a href="licheng.html">服务器历程</a>
+            <a href="zonghe.html">综合导航</a>
+            <a href="gengzhinan.html">梗指南</a>
+            <a href="tuandui.html">团队介绍</a>
+            <a href="faq.html" class="active">常见问题</a>
+            <a href="t.html">测试界面</a>
+        </div>
+
+        <div class="right-tools">
+            <button class="theme-toggle" id="themeToggle" title="切换日夜模式"><i class="mdi mdi-weather-night"></i></button>
+            <a href="https://qm.qq.com/q/VTUeknT88Q" target="_blank" class="join-btn">加入交流群</a>
+        </div>
+    </div>
+
+    <!-- 主内容 - FAQ页面 -->
+    <div class="main-content">
+        <div class="page-header">
+            <h1>常见问题</h1>
+            <div class="subhead">找到答案，快速上手服务器</div>
+        </div>
+
+        <!-- 搜索框 -->
+        <div class="faq-search">
+            <i class="mdi mdi-magnify search-icon"></i>
+            <input type="text" class="search-input" id="faqSearch" placeholder="搜索问题...">
+        </div>
+
+        <!-- 分类导航 -->
+        <div class="faq-categories" id="faqCategories">
+            <button class="category-btn active" data-category="all">
+                <i class="mdi mdi-view-grid"></i> 全部
+            </button>
+            <button class="category-btn" data-category="join">
+                <i class="mdi mdi-login"></i> 加入游戏
+            </button>
+            <button class="category-btn" data-category="play">
+                <i class="mdi mdi-pickaxe"></i> 玩法相关
+            </button>
+            <button class="category-btn" data-category="account">
+                <i class="mdi mdi-account"></i> 账户管理
+            </button>
+            <button class="category-btn" data-category="rule">
+                <i class="mdi mdi-shield"></i> 服务器规则
+            </button>
+        </div>
+
+        <!-- FAQ列表 -->
+        <div class="faq-list" id="faqList">
+            <!-- 加入游戏类问题 -->
+            <div class="faq-item" data-category="join">
+                <div class="faq-question">
+                    <div class="question-left">
+                        <div class="question-icon">
+                            <i class="mdi mdi-help"></i>
+                        </div>
+                        <span class="question-text">如何加入服务器？需要正版 Minecraft 吗？</span>
+                    </div>
+                    <span class="category-tag">加入游戏</span>
+                    <i class="mdi mdi-chevron-down toggle-icon"></i>
+                </div>
+                <div class="faq-answer">
+                    <div class="answer-content">
+                        <div class="answer-text">
+                            <p>服务器支持 <strong>离线登录</strong>，无论您是否有正版 Minecraft 都可以加入！</p>
+                            <p>加入步骤：</p>
+                            <ul>
+                                <li>1. 启动 Minecraft（任何版本均可）</li>
+                                <li>2. 点击「多人游戏」</li>
+                                <li>3. 点击「添加服务器」</li>
+                                <li>4. 在服务器地址输入：<code>mc.cozily.top</code></li>
+                                <li>5. 点击「完成」并加入</li>
+                            </ul>
+                        </div>
+                        <div class="answer-note">
+                            <i class="mdi mdi-information"></i>
+                            <span>首次进入请使用 <code>/register 密码 密码</code> 注册账号</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 注册登录问题 -->
+            <div class="faq-item" data-category="account">
+                <div class="faq-question">
+                    <div class="question-left">
+                        <div class="question-icon">
+                            <i class="mdi mdi-help"></i>
+                        </div>
+                        <span class="question-text">如何注册和登录？忘记密码怎么办？</span>
+                    </div>
+                    <span class="category-tag">账户管理</span>
+                    <i class="mdi mdi-chevron-down toggle-icon"></i>
+                </div>
+                <div class="faq-answer">
+                    <div class="answer-content">
+                        <div class="answer-text">
+                            <p><strong>首次进入：</strong></p>
+                            <ul>
+                                <li>注册：<code>/register 你的密码 重复密码</code></li>
+                                <li>例如：<code>/register 123456 123456</code></li>
+                            </ul>
+                            <p><strong>再次进入：</strong></p>
+                            <ul>
+                                <li>登录：<code>/login 你的密码</code></li>
+                            </ul>
+                            <p><strong>忘记密码：</strong> 请联系管理群的管理员进行重置，需要提供注册时的证据。</p>
+                        </div>
+                        <div class="answer-note">
+                            <i class="mdi mdi-alert"></i>
+                            <span>请务必牢记密码！服务器无法直接查看您的密码</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 玩法相关 -->
+            <div class="faq-item" data-category="play">
+                <div class="faq-question">
+                    <div class="question-left">
+                        <div class="question-icon">
+                            <i class="mdi mdi-help"></i>
+                        </div>
+                        <span class="question-text">服务器有什么玩法？是生电服务器吗？</span>
+                    </div>
+                    <span class="category-tag">玩法相关</span>
+                    <i class="mdi mdi-chevron-down toggle-icon"></i>
+                </div>
+                <div class="faq-answer">
+                    <div class="answer-content">
+                        <div class="answer-text">
+                            <p>是的！鼠鼠安乐窝是 <strong>纯生电服务器</strong>，保留原版生存体验。</p>
+                            <p>主要特点：</p>
+                            <ul>
+                                <li>✔️ 原版生存机制，无魔改</li>
+                                <li>✔️ 支持红石机器、生电农场</li>
+                                <li>✔️ 定期清理区块，保持流畅</li>
+                                <li>✔️ 玩家地标系统，展示你的建筑</li>
+                                <li>✔️ 每周活动（建筑比赛、挖矿竞赛）</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 服务器规则 -->
+            <div class="faq-item" data-category="rule">
+                <div class="faq-question">
+                    <div class="question-left">
+                        <div class="question-icon">
+                            <i class="mdi mdi-help"></i>
+                        </div>
+                        <span class="question-text">服务器有哪些禁止事项？</span>
+                    </div>
+                    <span class="category-tag">服务器规则</span>
+                    <i class="mdi mdi-chevron-down toggle-icon"></i>
+                </div>
+                <div class="faq-answer">
+                    <div class="answer-content">
+                        <div class="answer-text">
+                            <p>为了维护良好游戏环境，请遵守以下规则：</p>
+                            <ul>
+                                <li>🚫 禁止使用作弊客户端、外挂</li>
+                                <li>🚫 禁止破坏他人建筑（熊孩子行为）</li>
+                                <li>🚫 禁止恶意卡服、刷物品bug</li>
+                                <li>🚫 禁止言语辱骂、人身攻击</li>
+                                <li>✅ 欢迎建造、交流、互助</li>
+                            </ul>
+                        </div>
+                        <div class="answer-note">
+                            <i class="mdi mdi-gavel"></i>
+                            <span>违规者视情节轻重给予警告、封禁处理</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 服务器状态 -->
+            <div class="faq-item" data-category="join">
+                <div class="faq-question">
+                    <div class="question-left">
+                        <div class="question-icon">
+                            <i class="mdi mdi-help"></i>
+                        </div>
+                        <span class="question-text">服务器开服时间？会不定期维护吗？</span>
+                    </div>
+                    <span class="category-tag">加入游戏</span>
+                    <i class="mdi mdi-chevron-down toggle-icon"></i>
+                </div>
+                <div class="faq-answer">
+                    <div class="answer-content">
+                        <div class="answer-text">
+                            <p>服务器为 <strong>24/7 全天候开放</strong>，但可能会在以下情况进行维护：</p>
+                            <ul>
+                                <li>📅 每周二凌晨 3:00-4:00 例行重启（清理缓存）</li>
+                                <li>🔧 版本更新时短暂停机</li>
+                                <li>⚡ 突发技术问题紧急修复</li>
+                            </ul>
+                            <p>维护通知会提前在 QQ 群公告发布，建议加群获取最新消息。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 地标系统 -->
+            <div class="faq-item" data-category="play">
+                <div class="faq-question">
+                    <div class="question-left">
+                        <div class="question-icon">
+                            <i class="mdi mdi-help"></i>
+                        </div>
+                        <span class="question-text">如何申请玩家地标？</span>
+                    </div>
+                    <span class="category-tag">玩法相关</span>
+                    <i class="mdi mdi-chevron-down toggle-icon"></i>
+                </div>
+                <div class="faq-answer">
+                    <div class="answer-content">
+                        <div class="answer-text">
+                            <p>玩家地标用于展示您的建筑、农场或重要地点。</p>
+                            <p><strong>申请方法：</strong></p>
+                            <ul>
+                                <li>1. 在游戏内使用 <code>/dibiao 申请</code> 提交坐标</li>
+                                <li>2. 附上简短的建筑介绍</li>
+                                <li>3. 管理员审核通过后，会显示在地标列表</li>
+                            </ul>
+                            <p>地标要求：具有观赏性或功能性，拒绝随意插桩。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 多账号 -->
+            <div class="faq-item" data-category="account">
+                <div class="faq-question">
+                    <div class="question-left">
+                        <div class="question-icon">
+                            <i class="mdi mdi-help"></i>
+                        </div>
+                        <span class="question-text">可以创建多个账号吗？</span>
+                    </div>
+                    <span class="category-tag">账户管理</span>
+                    <i class="mdi mdi-chevron-down toggle-icon"></i>
+                </div>
+                <div class="faq-answer">
+                    <div class="answer-content">
+                        <div class="answer-text">
+                            <p>允许创建小号，但请注意：</p>
+                            <ul>
+                                <li>每个玩家最多 <strong>3个账号</strong></li>
+                                <li>禁止用小号进行违规行为（如恶意破坏、绕过封禁）</li>
+                                <li>主号和小号共用同一 IP，违规将一并处理</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 页脚 -->
+    <footer>
+        <p>© 2025 Cozily.top | mc.cozily.top | 交流群 919191 / 787878</p>
+    </footer>
+
+    <script>
+        (function() {
+            // ----- 主题切换 -----
+            const themeToggle = document.getElementById('themeToggle');
+            const root = document.documentElement;
+            const themeIcon = themeToggle.querySelector('i');
+
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            if (savedTheme === 'dark') {
+                root.setAttribute('data-theme', 'dark');
+                themeIcon.classList.remove('mdi-weather-night');
+                themeIcon.classList.add('mdi-white-balance-sunny');
+            } else {
+                root.setAttribute('data-theme', 'light');
+                themeIcon.classList.add('mdi-weather-night');
+                themeIcon.classList.remove('mdi-white-balance-sunny');
+            }
+
+            themeToggle.addEventListener('click', () => {
+                const currentTheme = root.getAttribute('data-theme') || 'light';
+                const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+                root.setAttribute('data-theme', newTheme);
+                localStorage.setItem('theme', newTheme);
+
+                if (newTheme === 'dark') {
+                    themeIcon.classList.remove('mdi-weather-night');
+                    themeIcon.classList.add('mdi-white-balance-sunny');
+                } else {
+                    themeIcon.classList.remove('mdi-white-balance-sunny');
+                    themeIcon.classList.add('mdi-weather-night');
+                }
+            });
+
+            // ----- FAQ 交互：展开/折叠 -----
+            const faqItems = document.querySelectorAll('.faq-item');
+            
+            faqItems.forEach(item => {
+                const question = item.querySelector('.faq-question');
+                
+                question.addEventListener('click', () => {
+                    // 先关闭其他（可选，如果想要手风琴效果就取消注释）
+                    // faqItems.forEach(otherItem => {
+                    //     if (otherItem !== item && otherItem.classList.contains('active')) {
+                    //         otherItem.classList.remove('active');
+                    //     }
+                    // });
+                    
+                    item.classList.toggle('active');
+                });
+            });
+
+            // 默认展开第一个
+            if (faqItems.length > 0) {
+                faqItems[0].classList.add('active');
+            }
+
+            // ----- 分类筛选 -----
+            const categoryBtns = document.querySelectorAll('.category-btn');
+            const faqList = document.getElementById('faqList');
+            
+            categoryBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    // 更新按钮状态
+                    categoryBtns.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    
+                    const category = btn.dataset.category;
+                    
+                    // 筛选FAQ项目
+                    faqItems.forEach(item => {
+                        if (category === 'all' || item.dataset.category === category) {
+                            item.style.display = 'block';
+                        } else {
+                            item.style.display = 'none';
+                        }
+                    });
+                });
+            });
+
+            // ----- 搜索功能 -----
+            const searchInput = document.getElementById('faqSearch');
+            
+            searchInput.addEventListener('input', (e) => {
+                const searchTerm = e.target.value.toLowerCase().trim();
+                
+                faqItems.forEach(item => {
+                    const questionText = item.querySelector('.question-text').textContent.toLowerCase();
+                    const answerText = item.querySelector('.answer-text').textContent.toLowerCase();
+                    
+                    if (questionText.includes(searchTerm) || answerText.includes(searchTerm)) {
+                        item.style.display = 'block';
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+                
+                // 搜索时重置分类按钮
+                categoryBtns.forEach(btn => btn.classList.remove('active'));
+                document.querySelector('[data-category="all"]').classList.add('active');
+            });
+        })();
+    </script>
+</body>
+</html>

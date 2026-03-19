@@ -1,0 +1,974 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5, user-scalable=yes">
+    <title>素材展示 - 鼠鼠安乐窝 | Minecraft服务器</title>
+    <meta name="description" content="鼠鼠安乐窝 - 高质量Minecraft生电服务器，mc.cozily.top">
+    <meta name="keywords" content="鼠鼠安乐窝,Minecraft,服务器,我的世界,生电,mc.cozily.top">
+    <meta name="author" content="鼠鼠安乐窝">
+
+    <!-- 字体 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;700&family=Noto+Sans+SC:wght@400;500;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- 图标库：Material Design Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@mdi/font@7.4.47/css/materialdesignicons.min.css">
+
+    <style>
+        :root {
+            --primary:    #D7BDE2;      /* 淡紫主色 */
+            --primary-d:  #A084DC;      /* 深紫 */
+            --primary-l:  #E6D0F2;      /* 浅紫 */
+            --bg:         #F8F5FC;      /* 背景 */
+            --card-bg:    rgba(255,255,255,0.78);
+            --text:       #2D1B47;
+            --text-light: #5A4A6E;
+            --border:     rgba(161,132,220,0.28);
+            --shadow:     0 8px 32px rgba(161,132,220,0.18);
+            --success:    #4caf50;
+            --error:      #f44336;
+            --warning:    #ff9800;
+        }
+
+        [data-theme="dark"] {
+            --primary:    #A084DC;
+            --primary-d:  #7B5EB8;
+            --primary-l:  #D7BDE2;
+            --bg:         #1A1425;
+            --card-bg:    rgba(42,33,64,0.82);
+            --text:       #E3D8F2;
+            --text-light: #C4B3E0;
+            --border:     rgba(177,156,217,0.20);
+            --shadow:     0 8px 32px rgba(0,0,0,0.50);
+            --success:    #66bb6a;
+            --error:      #ef5350;
+            --warning:    #ffa726;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', 'Noto Sans SC', 'Quicksand', system-ui, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            transition: background 0.4s, color 0.4s;
+            line-height: 1.5;
+        }
+
+        /* ===== 顶部栏 - 按照主页样式 ===== */
+        .top-bar {
+            background: var(--card-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            box-shadow: var(--shadow);
+            border-bottom: 1px solid var(--border);
+            padding: 0.5rem 1.5rem;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary), var(--primary-d));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .logo i {
+            font-size: 2rem;
+            color: var(--primary);
+        }
+
+        /* 导航容器 - 紧凑间距 */
+        .nav {
+            display: flex;
+            list-style: none;
+            gap: 0.3rem;
+            flex-wrap: wrap;
+        }
+
+        /* 毛玻璃按钮效果 - 每个导航链接 */
+        .nav a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1rem;
+            transition: all 0.3s cubic-bezier(0.2, 0, 0, 1);
+            position: relative;
+            padding: 0.4rem 0.8rem;
+            border-radius: 999px;
+            background: transparent;
+            border: 1px solid transparent;
+            white-space: nowrap;
+        }
+
+        .nav a:hover {
+            background: rgba(215, 189, 226, 0.15);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1px solid rgba(215, 189, 226, 0.3);
+            color: var(--primary-d);
+            transform: translateY(-1px);
+            box-shadow: 0 2px 8px rgba(161, 132, 220, 0.15);
+        }
+
+        .nav a.active {
+            color: var(--primary-d);
+            background: rgba(215, 189, 226, 0.1);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            border: 1px solid rgba(215, 189, 226, 0.2);
+        }
+
+        .nav a.active::after {
+            content: "";
+            position: absolute;
+            bottom: 0px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 16px;
+            height: 2px;
+            background: var(--primary);
+            border-radius: 2px;
+        }
+
+        .right-tools {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .theme-toggle, .join-btn {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-light);
+            transition: all 0.3s;
+        }
+
+        .theme-toggle:hover {
+            color: var(--primary-d);
+            transform: scale(1.1);
+        }
+
+        .join-btn {
+            background: var(--primary);
+            color: var(--text);
+            padding: 0.5rem 1.2rem;
+            border-radius: 999px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            text-decoration: none;
+        }
+
+        .join-btn:hover {
+            background: var(--primary-d);
+            transform: translateY(-1px);
+            box-shadow: var(--shadow);
+        }
+        /* ===== 顶部栏结束 ===== */
+
+        /* ===== 主内容 - 素材展示页面 ===== */
+        .main-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 3rem 2.5rem 4rem;
+        }
+
+        /* 页面头部 */
+        .page-header {
+            text-align: center;
+            padding: 2rem 0 3rem;
+        }
+
+        .page-header h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary), var(--primary-d));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1rem;
+            letter-spacing: -0.02em;
+        }
+
+        .page-header .subtitle {
+            font-size: 1.2rem;
+            color: var(--text-light);
+            max-width: 600px;
+            margin: 0 auto;
+            font-weight: 400;
+        }
+
+        /* 分类筛选 - 简洁风格 */
+        .category-filter {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 0.8rem;
+            margin: 2rem 0 3rem;
+        }
+
+        .filter-btn {
+            padding: 0.5rem 1.5rem;
+            border-radius: 999px;
+            background: var(--card-bg);
+            backdrop-filter: blur(8px);
+            border: 1px solid var(--border);
+            color: var(--text-light);
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .filter-btn:hover {
+            background: rgba(215, 189, 226, 0.2);
+            color: var(--primary-d);
+            border-color: var(--primary);
+        }
+
+        .filter-btn.active {
+            background: var(--primary);
+            color: var(--text);
+            border-color: var(--primary-d);
+        }
+
+        /* ===== 横向卡片网格 ===== */
+        .showcase-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        /* 横向卡片 - 上面图片，下面介绍 */
+        .horizontal-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--border);
+            border-radius: 28px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: all 0.3s;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .horizontal-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--primary);
+            box-shadow: 0 20px 40px rgba(160, 132, 220, 0.3);
+        }
+
+        /* 图片区域 - 固定高度，可放置实际图片 */
+        .card-image {
+            width: 100%;
+            height: 200px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            padding: 1rem;
+            transition: transform 0.3s;
+        }
+
+        .horizontal-card:hover .card-image {
+            transform: scale(1.02);
+        }
+
+        .image-tag {
+            background: var(--primary-d);
+            color: white;
+            padding: 0.3rem 1rem;
+            border-radius: 999px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .image-size {
+            background: rgba(0,0,0,0.5);
+            color: white;
+            padding: 0.3rem 1rem;
+            border-radius: 999px;
+            font-size: 0.8rem;
+            backdrop-filter: blur(4px);
+        }
+
+        /* 内容区域 */
+        .card-content {
+            padding: 1.8rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+        }
+
+        .card-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-d);
+            line-height: 1.3;
+        }
+
+        .card-type {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+            background: rgba(160, 132, 220, 0.1);
+            padding: 0.3rem 1rem;
+            border-radius: 999px;
+            color: var(--primary-d);
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        .card-type i {
+            font-size: 1rem;
+        }
+
+        .card-description {
+            color: var(--text-light);
+            line-height: 1.7;
+            font-size: 0.95rem;
+            margin: 0.2rem 0;
+        }
+
+        /* 素材信息行 */
+        .material-info {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.2rem;
+            background: rgba(160, 132, 220, 0.04);
+            border-radius: 20px;
+            padding: 0.8rem 1.2rem;
+            border: 1px solid var(--border);
+            margin: 0.5rem 0;
+        }
+
+        .info-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        .info-item i {
+            color: var(--primary);
+            font-size: 1.1rem;
+        }
+
+        .info-item strong {
+            color: var(--primary-d);
+            font-weight: 600;
+        }
+
+        /* 下载按钮区域 */
+        .card-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: 0.5rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .download-stats {
+            display: flex;
+            gap: 1.2rem;
+        }
+
+        .stat {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        .stat i {
+            color: var(--primary);
+        }
+
+        .download-btn {
+            background: var(--primary);
+            border: none;
+            border-radius: 30px;
+            padding: 0.5rem 1.5rem;
+            color: var(--text);
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.2s;
+            text-decoration: none;
+        }
+
+        .download-btn:hover {
+            background: var(--primary-d);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+        }
+
+        .download-btn i {
+            font-size: 1.1rem;
+        }
+
+        .download-btn.downloaded {
+            background: var(--success);
+            color: white;
+        }
+
+        /* 无结果提示 */
+        .no-results {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 4rem;
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            border-radius: 48px;
+            border: 1px solid var(--border);
+            color: var(--text-light);
+            font-size: 1.2rem;
+        }
+
+        .no-results i {
+            font-size: 4rem;
+            color: var(--primary-d);
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        /* 上传素材卡片 */
+        .upload-card {
+            background: linear-gradient(135deg, var(--card-bg) 0%, rgba(160, 132, 220, 0.15) 100%);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--border);
+            border-radius: 48px;
+            padding: 2.5rem;
+            margin: 4rem 0 2rem;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 2rem;
+        }
+
+        .upload-left {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .upload-left i {
+            font-size: 3rem;
+            color: var(--primary-d);
+            background: rgba(160, 132, 220, 0.1);
+            padding: 1rem;
+            border-radius: 50%;
+        }
+
+        .upload-text h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-d);
+            margin-bottom: 0.3rem;
+        }
+
+        .upload-text p {
+            color: var(--text-light);
+        }
+
+        .upload-btn {
+            background: var(--primary);
+            border: none;
+            border-radius: 999px;
+            padding: 1rem 2.5rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text);
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            white-space: nowrap;
+        }
+
+        .upload-btn:hover {
+            background: var(--primary-d);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+        }
+
+        /* 页脚 */
+        footer {
+            text-align: center;
+            padding: 4rem 0 2.5rem;
+            color: var(--text-light);
+            border-top: 1px solid var(--border);
+        }
+
+        /* 移动端优化 */
+        @media (max-width: 768px) {
+            .top-bar {
+                padding: 0.4rem 1rem;
+            }
+            .nav {
+                gap: 0.2rem;
+                justify-content: center;
+            }
+            .nav a {
+                padding: 0.3rem 0.6rem;
+                font-size: 0.9rem;
+            }
+
+            .page-header h1 {
+                font-size: 2.5rem;
+            }
+
+            .showcase-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .card-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .material-info {
+                flex-direction: column;
+                gap: 0.8rem;
+            }
+
+            .card-footer {
+                flex-direction: column;
+                gap: 1rem;
+                align-items: flex-start;
+            }
+
+            .download-btn {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .upload-card {
+                flex-direction: column;
+                text-align: center;
+                padding: 1.5rem;
+            }
+            .upload-left {
+                flex-direction: column;
+                text-align: center;
+            }
+            .upload-btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 顶部栏 - 按照主页样式 -->
+    <div class="top-bar">
+        <div class="logo"><i class="1"></i> Cozily</div>
+
+        <div class="nav">
+            <a href="index.html">首页</a>
+            <a href="dibiao.html">玩家地标</a>
+            <a href="paihangbang.html">排行榜</a>
+            <a href="licheng.html">服务器历程</a>
+            <a href="zonghe.html" class="active">综合导航</a>
+            <a href="gengzhinan.html">梗指南</a>
+            <a href="tuandui.html">团队介绍</a>
+            <a href="faq.html">常见问题</a>
+            <a href="t.html">测试界面</a>
+        </div>
+
+        <div class="right-tools">
+            <button class="theme-toggle" title="切换日夜模式"><i class="mdi mdi-weather-night"></i></button>
+            <a href="https://qm.qq.com/q/VTUeknT88Q" target="_blank" class="join-btn">加入交流群</a>
+        </div>
+    </div>
+
+    <!-- 主内容 - 素材展示页面 -->
+    <div class="main-content">
+        <!-- 页面头部 -->
+        <div class="page-header">
+            <h1>🎨 服务器素材</h1>
+            <div class="subtitle">资源包 · 地图 · 皮肤 · 红石蓝图 · 玩家作品</div>
+        </div>
+
+        <!-- 分类筛选 -->
+        <div class="category-filter" id="categoryFilter">
+            <span class="filter-btn active" data-category="all">全部素材</span>
+            <span class="filter-btn" data-category="resourcepack">🎨 资源包</span>
+            <span class="filter-btn" data-category="map">🗺️ 地图</span>
+            <span class="filter-btn" data-category="skin">👤 皮肤</span>
+            <span class="filter-btn" data-category="redstone">🔴 红石蓝图</span>
+            <span class="filter-btn" data-category="screenshot">📸 截图</span>
+        </div>
+
+        <!-- 横向卡片网格 - 上面图片，下面介绍 -->
+        <div class="showcase-grid" id="showcaseGrid">
+            <!-- 素材卡片 1 - 服务器资源包 -->
+            <div class="horizontal-card" data-category="resourcepack" data-title="鼠鼠安乐窝·官方资源包" data-author="Cozily Team">
+                <div class="card-image" style="background-image: linear-gradient(135deg, #a8ede0, #fed6e3);">
+                    <span class="image-tag">官方出品</span>
+                    <span class="image-size">16.8 MB</span>
+                </div>
+                <div class="card-content">
+                    <div class="card-header">
+                        <span class="card-title">鼠鼠安乐窝·官方资源包</span>
+                        <span class="card-type"><i class="mdi mdi-package"></i> 资源包</span>
+                    </div>
+                    <p class="card-description">服务器定制资源包，优化视觉体验，增强生电玩法识别度。包含高清纹理、生电机器材质高亮、优化性能。</p>
+                    <div class="material-info">
+                        <span class="info-item"><i class="mdi mdi-format-list-bulleted-type"></i> 版本: <strong>1.20-1.21</strong></span>
+                        <span class="info-item"><i class="mdi mdi-update"></i> 更新: <strong>2025.03.01</strong></span>
+                        <span class="info-item"><i class="mdi mdi-account"></i> 作者: <strong>Cozily Team</strong></span>
+                    </div>
+                    <div class="card-footer">
+                        <div class="download-stats">
+                            <span class="stat"><i class="mdi mdi-download"></i> 1.2k</span>
+                            <span class="stat"><i class="mdi mdi-star"></i> 4.8</span>
+                        </div>
+                        <button class="download-btn" onclick="handleDownload(this, '鼠鼠安乐窝·官方资源包')">
+                            <i class="mdi mdi-download"></i> 下载素材
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 素材卡片 2 - 主城地图存档 -->
+            <div class="horizontal-card" data-category="map" data-title="主城·周年纪念版" data-author="Archi_Duck">
+                <div class="card-image" style="background-image: linear-gradient(135deg, #d4fc79, #96e6a1);">
+                    <span class="image-tag">精选地图</span>
+                    <span class="image-size">245 MB</span>
+                </div>
+                <div class="card-content">
+                    <div class="card-header">
+                        <span class="card-title">主城·周年纪念版</span>
+                        <span class="card-type"><i class="mdi mdi-map"></i> 地图</span>
+                    </div>
+                    <p class="card-description">两周年庆典主城地图，包含主建筑、活动广场、玩家合影区。由首席建筑师Archi_Duck设计制作。</p>
+                    <div class="material-info">
+                        <span class="info-item"><i class="mdi mdi-format-list-bulleted-type"></i> 版本: <strong>1.20.4</strong></span>
+                        <span class="info-item"><i class="mdi mdi-update"></i> 更新: <strong>2025.03.15</strong></span>
+                        <span class="info-item"><i class="mdi mdi-account"></i> 作者: <strong>Archi_Duck</strong></span>
+                    </div>
+                    <div class="card-footer">
+                        <div class="download-stats">
+                            <span class="stat"><i class="mdi mdi-download"></i> 856</span>
+                            <span class="stat"><i class="mdi mdi-star"></i> 4.9</span>
+                        </div>
+                        <button class="download-btn" onclick="handleDownload(this, '主城·周年纪念版')">
+                            <i class="mdi mdi-download"></i> 下载素材
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 素材卡片 3 - 腐竹皮肤合集 -->
+            <div class="horizontal-card" data-category="skin" data-title="腐竹·熊孩子皮肤包" data-author="sun_555">
+                <div class="card-image" style="background-image: linear-gradient(135deg, #f6d365, #fda085);">
+                    <span class="image-tag">皮肤</span>
+                    <span class="image-size">3.2 MB</span>
+                </div>
+                <div class="card-content">
+                    <div class="card-header">
+                        <span class="card-title">腐竹·熊孩子皮肤包</span>
+                        <span class="card-type"><i class="mdi mdi-account"></i> 皮肤</span>
+                    </div>
+                    <p class="card-description">腐竹sun_555的经典皮肤合集，包含"熊孩子腐竹""土豆服务器管理员""周年庆限定"三款皮肤。</p>
+                    <div class="material-info">
+                        <span class="info-item"><i class="mdi mdi-format-list-bulleted-type"></i> 格式: <strong>PNG/64x64</strong></span>
+                        <span class="info-item"><i class="mdi mdi-update"></i> 更新: <strong>2025.02.20</strong></span>
+                        <span class="info-item"><i class="mdi mdi-account"></i> 作者: <strong>sun_555</strong></span>
+                    </div>
+                    <div class="card-footer">
+                        <div class="download-stats">
+                            <span class="stat"><i class="mdi mdi-download"></i> 432</span>
+                            <span class="stat"><i class="mdi mdi-star"></i> 4.7</span>
+                        </div>
+                        <button class="download-btn" onclick="handleDownload(this, '腐竹·熊孩子皮肤包')">
+                            <i class="mdi mdi-download"></i> 下载素材
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 素材卡片 4 - 全自动刷石机蓝图 -->
+            <div class="horizontal-card" data-category="redstone" data-title="全自动刷石机 v3.0" data-author="Redstone_God">
+                <div class="card-image" style="background-image: linear-gradient(135deg, #fbc2eb, #a6c1ee);">
+                    <span class="image-tag">热门红石</span>
+                    <span class="image-size">1.8 MB</span>
+                </div>
+                <div class="card-content">
+                    <div class="card-header">
+                        <span class="card-title">全自动刷石机 v3.0</span>
+                        <span class="card-type"><i class="mdi mdi-github"></i> 红石蓝图</span>
+                    </div>
+                    <p class="card-description">Redstone_God设计的全自动刷石机，每小时产出2w+圆石，带自动分类和储存系统，生存可用。</p>
+                    <div class="material-info">
+                        <span class="info-item"><i class="mdi mdi-format-list-bulleted-type"></i> 版本: <strong>1.20-1.21</strong></span>
+                        <span class="info-item"><i class="mdi mdi-update"></i> 更新: <strong>2025.01.10</strong></span>
+                        <span class="info-item"><i class="mdi mdi-account"></i> 作者: <strong>Redstone_God</strong></span>
+                    </div>
+                    <div class="card-footer">
+                        <div class="download-stats">
+                            <span class="stat"><i class="mdi mdi-download"></i> 2.1k</span>
+                            <span class="stat"><i class="mdi mdi-star"></i> 5.0</span>
+                        </div>
+                        <button class="download-btn" onclick="handleDownload(this, '全自动刷石机 v3.0')">
+                            <i class="mdi mdi-download"></i> 下载素材
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 素材卡片 5 - 服务器截图合集 -->
+            <div class="horizontal-card" data-category="screenshot" data-title="2025春节活动截图" data-author="suzuka">
+                <div class="card-image" style="background-image: linear-gradient(135deg, #a1c4fd, #c2e9fb);">
+                    <span class="image-tag">活动记录</span>
+                    <span class="image-size">45 MB</span>
+                </div>
+                <div class="card-content">
+                    <div class="card-header">
+                        <span class="card-title">2025春节活动截图</span>
+                        <span class="card-type"><i class="mdi mdi-camera"></i> 截图</span>
+                    </div>
+                    <p class="card-description">2025年春节活动高清截图合集，包含玩家合影、建筑巡展、烟花表演等精彩瞬间，共47张图片。</p>
+                    <div class="material-info">
+                        <span class="info-item"><i class="mdi mdi-format-list-bulleted-type"></i> 格式: <strong>PNG/4K</strong></span>
+                        <span class="info-item"><i class="mdi mdi-update"></i> 更新: <strong>2025.02.15</strong></span>
+                        <span class="info-item"><i class="mdi mdi-account"></i> 作者: <strong>suzuka</strong></span>
+                    </div>
+                    <div class="card-footer">
+                        <div class="download-stats">
+                            <span class="stat"><i class="mdi mdi-download"></i> 324</span>
+                            <span class="stat"><i class="mdi mdi-star"></i> 4.8</span>
+                        </div>
+                        <button class="download-btn" onclick="handleDownload(this, '2025春节活动截图')">
+                            <i class="mdi mdi-download"></i> 下载素材
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 素材卡片 6 - 像素画·皮卡丘设计图 -->
+            <div class="horizontal-card" data-category="redstone" data-title="像素画·皮卡丘设计图" data-author="Pixel_Artist">
+                <div class="card-image" style="background-image: linear-gradient(135deg, #ff9a9e, #fecfef);">
+                    <span class="image-tag">像素艺术</span>
+                    <span class="image-size">0.8 MB</span>
+                </div>
+                <div class="card-content">
+                    <div class="card-header">
+                        <span class="card-title">像素画·皮卡丘设计图</span>
+                        <span class="card-type"><i class="mdi mdi-drawing"></i> 红石蓝图</span>
+                    </div>
+                    <p class="card-description">超大可动皮卡丘像素画设计图，包含红石电路图、方块配色表、灯光控制方案。</p>
+                    <div class="material-info">
+                        <span class="info-item"><i class="mdi mdi-format-list-bulleted-type"></i> 尺寸: <strong>128x128</strong></span>
+                        <span class="info-item"><i class="mdi mdi-update"></i> 更新: <strong>2024.12.01</strong></span>
+                        <span class="info-item"><i class="mdi mdi-account"></i> 作者: <strong>Pixel_Artist</strong></span>
+                    </div>
+                    <div class="card-footer">
+                        <div class="download-stats">
+                            <span class="stat"><i class="mdi mdi-download"></i> 567</span>
+                            <span class="stat"><i class="mdi mdi-star"></i> 4.9</span>
+                        </div>
+                        <button class="download-btn" onclick="handleDownload(this, '像素画·皮卡丘设计图')">
+                            <i class="mdi mdi-download"></i> 下载素材
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 素材卡片 7 - 江南园林地图包 -->
+            <div class="horizontal-card" data-category="map" data-title="江南水乡园林·地图包" data-author="Alex">
+                <div class="card-image" style="background-image: linear-gradient(135deg, #fccb90, #d57eeb);">
+                    <span class="image-tag">建筑大赛冠军</span>
+                    <span class="image-size">189 MB</span>
+                </div>
+                <div class="card-content">
+                    <div class="card-header">
+                        <span class="card-title">江南水乡园林·地图包</span>
+                        <span class="card-type"><i class="mdi mdi-map"></i> 地图</span>
+                    </div>
+                    <p class="card-description">建筑大赛冠军作品，小桥流水人家，亭台楼阁俱全，包含夜景灯光系统和红石机关。</p>
+                    <div class="material-info">
+                        <span class="info-item"><i class="mdi mdi-format-list-bulleted-type"></i> 版本: <strong>1.20.1</strong></span>
+                        <span class="info-item"><i class="mdi mdi-update"></i> 更新: <strong>2024.11.20</strong></span>
+                        <span class="info-item"><i class="mdi mdi-account"></i> 作者: <strong>Alex</strong></span>
+                    </div>
+                    <div class="card-footer">
+                        <div class="download-stats">
+                            <span class="stat"><i class="mdi mdi-download"></i> 723</span>
+                            <span class="stat"><i class="mdi mdi-star"></i> 4.9</span>
+                        </div>
+                        <button class="download-btn" onclick="handleDownload(this, '江南水乡园林·地图包')">
+                            <i class="mdi mdi-download"></i> 下载素材
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 素材卡片 8 - 梗指南表情包 -->
+            <div class="horizontal-card" data-category="screenshot" data-title="服务器梗指南·表情包" data-author="全体玩家">
+                <div class="card-image" style="background-image: linear-gradient(135deg, #ffecd2, #fcb69f);">
+                    <span class="image-tag">玩家创作</span>
+                    <span class="image-size">12 MB</span>
+                </div>
+                <div class="card-content">
+                    <div class="card-header">
+                        <span class="card-title">服务器梗指南·表情包</span>
+                        <span class="card-type"><i class="mdi mdi-emoticon"></i> 截图</span>
+                    </div>
+                    <p class="card-description">玩家自制表情包合集，包含"腐竹是熊孩子""土豆服务器""/warp厕所"等经典梗图，共32张。</p>
+                    <div class="material-info">
+                        <span class="info-item"><i class="mdi mdi-format-list-bulleted-type"></i> 格式: <strong>PNG/GIF</strong></span>
+                        <span class="info-item"><i class="mdi mdi-update"></i> 更新: <strong>2025.03.10</strong></span>
+                        <span class="info-item"><i class="mdi mdi-account"></i> 作者: <strong>全体玩家</strong></span>
+                    </div>
+                    <div class="card-footer">
+                        <div class="download-stats">
+                            <span class="stat"><i class="mdi mdi-download"></i> 1.5k</span>
+                            <span class="stat"><i class="mdi mdi-star"></i> 4.9</span>
+                        </div>
+                        <button class="download-btn" onclick="handleDownload(this, '服务器梗指南·表情包')">
+                            <i class="mdi mdi-download"></i> 下载素材
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 上传素材卡片 -->
+        <div class="upload-card">
+            <div class="upload-left">
+                <i class="mdi mdi-upload"></i>
+                <div class="upload-text">
+                    <h3>分享你的素材</h3>
+                    <p>有好的资源包、地图、皮肤或红石设计？上传分享给其他玩家</p>
+                </div>
+            </div>
+            <button class="upload-btn" onclick="alert('请联系管理员或发送至邮箱：sucai@cozily.top')">
+                <i class="mdi mdi-cloud-upload"></i> 上传素材
+            </button>
+        </div>
+    </div>
+
+    <!-- 页脚 - 按照主页样式 -->
+    <footer>
+        <p>© 2025 Cozily.top | mc.cozily.top | 交流群 919191 / 787878</p>
+    </footer>
+
+    <script>
+        // ===== 日夜模式切换 - 完全按照主页 =====
+        const themeToggle = document.querySelector('.theme-toggle');
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+        themeToggle.innerHTML = savedTheme === 'dark' ? '<i class="mdi mdi-white-balance-sunny"></i>' : '<i class="mdi mdi-weather-night"></i>';
+
+        themeToggle.addEventListener('click', () => {
+            let theme = document.documentElement.getAttribute('data-theme');
+            theme = theme === 'dark' ? 'light' : 'dark';
+            document.documentElement.setAttribute('data-theme', theme);
+            localStorage.setItem('theme', theme);
+            themeToggle.innerHTML = theme === 'dark' ? '<i class="mdi mdi-white-balance-sunny"></i>' : '<i class="mdi mdi-weather-night"></i>';
+        });
+
+        // ===== 下载功能 =====
+        window.handleDownload = function(btn, fileName) {
+            const originalText = btn.innerHTML;
+            btn.classList.add('downloaded');
+            btn.innerHTML = '<i class="mdi mdi-check"></i> 已下载';
+            
+            // 模拟下载，实际使用中可以替换为真实下载链接
+            setTimeout(() => {
+                btn.classList.remove('downloaded');
+                btn.innerHTML = originalText;
+            }, 2000);
+            
+            // 这里可以添加真实的下载逻辑
+            console.log(`下载素材: ${fileName}`);
+        };
+
+        // ===== 分类筛选功能 =====
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const materialCards = document.querySelectorAll('.horizontal-card');
+
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                // 更新按钮状态
+                filterBtns.forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                
+                const category = this.dataset.category;
+                
+                // 筛选卡片
+                materialCards.forEach(card => {
+                    if (category === 'all' || card.dataset.category === category) {
+                        card.style.display = 'flex';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+                
+                // 检查是否没有结果
+                const visibleCards = Array.from(materialCards).filter(card => card.style.display !== 'none');
+                const noResults = document.querySelector('.no-results');
+                
+                if (visibleCards.length === 0) {
+                    if (!noResults) {
+                        const grid = document.getElementById('showcaseGrid');
+                        const emptyDiv = document.createElement('div');
+                        emptyDiv.className = 'no-results';
+                        emptyDiv.innerHTML = '<i class="mdi mdi-folder-off"></i>暂无此类素材';
+                        grid.appendChild(emptyDiv);
+                    }
+                } else {
+                    if (noResults) {
+                        noResults.remove();
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>

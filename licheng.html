@@ -1,0 +1,859 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5, user-scalable=yes">
+    <title>服务器历程 - 鼠鼠安乐窝 | Minecraft服务器</title>
+    <meta name="description" content="鼠鼠安乐窝 - 高质量Minecraft生电服务器，mc.cozily.top">
+    <meta name="keywords" content="鼠鼠安乐窝,Minecraft,服务器,我的世界,生电,mc.cozily.top">
+    <meta name="author" content="鼠鼠安乐窝">
+
+    <!-- 字体 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;700&family=Noto+Sans+SC:wght@400;500;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- 图标库：Material Design Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@mdi/font@7.4.47/css/materialdesignicons.min.css">
+
+    <style>
+        :root {
+            --primary:    #D7BDE2;      /* 淡紫主色 */
+            --primary-d:  #A084DC;      /* 深紫 */
+            --primary-l:  #E6D0F2;      /* 浅紫 */
+            --bg:         #F8F5FC;      /* 背景 */
+            --card-bg:    rgba(255,255,255,0.78);
+            --text:       #2D1B47;
+            --text-light: #5A4A6E;
+            --border:     rgba(161,132,220,0.28);
+            --shadow:     0 8px 32px rgba(161,132,220,0.18);
+            --success:    #4caf50;
+            --error:      #f44336;
+            --warning:    #ff9800;
+            --timeline-line: #D7BDE2;
+            --milestone-1: #a8ede0;
+            --milestone-2: #d4fc79;
+            --milestone-3: #f6d365;
+            --milestone-4: #fbc2eb;
+            --milestone-5: #a1c4fd;
+        }
+
+        [data-theme="dark"] {
+            --primary:    #A084DC;
+            --primary-d:  #7B5EB8;
+            --primary-l:  #D7BDE2;
+            --bg:         #1A1425;
+            --card-bg:    rgba(42,33,64,0.82);
+            --text:       #E3D8F2;
+            --text-light: #C4B3E0;
+            --border:     rgba(177,156,217,0.20);
+            --shadow:     0 8px 32px rgba(0,0,0,0.50);
+            --success:    #66bb6a;
+            --error:      #ef5350;
+            --warning:    #ffa726;
+            --timeline-line: #7B5EB8;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', 'Noto Sans SC', 'Quicksand', system-ui, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            transition: background 0.4s, color 0.4s;
+            line-height: 1.5;
+        }
+
+        /* ===== 顶部栏 - 按照主页样式 ===== */
+        .top-bar {
+            background: var(--card-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            box-shadow: var(--shadow);
+            border-bottom: 1px solid var(--border);
+            padding: 0.5rem 1.5rem;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary), var(--primary-d));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .logo i {
+            font-size: 2rem;
+            color: var(--primary);
+        }
+
+        /* 导航容器 - 紧凑间距 */
+        .nav {
+            display: flex;
+            list-style: none;
+            gap: 0.3rem;
+            flex-wrap: wrap;
+        }
+
+        /* 毛玻璃按钮效果 - 每个导航链接 */
+        .nav a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1rem;
+            transition: all 0.3s cubic-bezier(0.2, 0, 0, 1);
+            position: relative;
+            padding: 0.4rem 0.8rem;
+            border-radius: 999px;
+            background: transparent;
+            border: 1px solid transparent;
+            white-space: nowrap;
+        }
+
+        .nav a:hover {
+            background: rgba(215, 189, 226, 0.15);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1px solid rgba(215, 189, 226, 0.3);
+            color: var(--primary-d);
+            transform: translateY(-1px);
+            box-shadow: 0 2px 8px rgba(161, 132, 220, 0.15);
+        }
+
+        .nav a.active {
+            color: var(--primary-d);
+            background: rgba(215, 189, 226, 0.1);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            border: 1px solid rgba(215, 189, 226, 0.2);
+        }
+
+        .nav a.active::after {
+            content: "";
+            position: absolute;
+            bottom: 0px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 16px;
+            height: 2px;
+            background: var(--primary);
+            border-radius: 2px;
+        }
+
+        .right-tools {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .theme-toggle, .join-btn {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-light);
+            transition: all 0.3s;
+        }
+
+        .theme-toggle:hover {
+            color: var(--primary-d);
+            transform: scale(1.1);
+        }
+
+        .join-btn {
+            background: var(--primary);
+            color: var(--text);
+            padding: 0.5rem 1.2rem;
+            border-radius: 999px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            text-decoration: none;
+        }
+
+        .join-btn:hover {
+            background: var(--primary-d);
+            transform: translateY(-1px);
+            box-shadow: var(--shadow);
+        }
+        /* ===== 顶部栏结束 ===== */
+
+        /* ===== 主内容 - 高级历程页面 ===== */
+        .main-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 3rem 2.5rem 4rem;
+        }
+
+        /* 页面头部 - 高级感 */
+        .page-header {
+            text-align: center;
+            padding: 2rem 0 4rem;
+            position: relative;
+        }
+
+        .page-header h1 {
+            font-size: 4rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary), var(--primary-d));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1rem;
+            letter-spacing: -0.02em;
+        }
+
+        .page-header .subtitle {
+            font-size: 1.2rem;
+            color: var(--text-light);
+            max-width: 600px;
+            margin: 0 auto;
+            font-weight: 400;
+            position: relative;
+        }
+
+        .page-header .subtitle::before,
+        .page-header .subtitle::after {
+            content: "";
+            position: absolute;
+            top: 50%;
+            width: 40px;
+            height: 1px;
+            background: var(--border);
+        }
+
+        .page-header .subtitle::before {
+            left: -50px;
+        }
+
+        .page-header .subtitle::after {
+            right: -50px;
+        }
+
+        @media (max-width: 768px) {
+            .page-header .subtitle::before,
+            .page-header .subtitle::after {
+                display: none;
+            }
+        }
+
+        /* 时间轴 - 高级设计 */
+        .timeline-container {
+            position: relative;
+            margin: 2rem 0 5rem;
+            padding: 2rem 0;
+        }
+
+        .timeline-container::before {
+            content: "";
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(180deg, 
+                transparent 0%, 
+                var(--timeline-line) 10%, 
+                var(--timeline-line) 90%, 
+                transparent 100%);
+            transform: translateX(-50%);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 4rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        .timeline-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .timeline-item:nth-child(odd) {
+            flex-direction: row-reverse;
+        }
+
+        .timeline-content {
+            width: 45%;
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--border);
+            border-radius: 28px;
+            padding: 2rem;
+            box-shadow: var(--shadow);
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .timeline-content:hover {
+            transform: scale(1.02);
+            border-color: var(--primary);
+            box-shadow: 0 20px 40px rgba(160, 132, 220, 0.25);
+        }
+
+        .timeline-content::before {
+            content: "";
+            position: absolute;
+            top: 30px;
+            width: 30px;
+            height: 30px;
+            background: var(--card-bg);
+            border: 2px solid var(--primary);
+            border-radius: 50%;
+            z-index: 2;
+        }
+
+        .timeline-item:nth-child(odd) .timeline-content::before {
+            left: -45px;
+        }
+
+        .timeline-item:nth-child(even) .timeline-content::before {
+            right: -45px;
+        }
+
+        .timeline-item:nth-child(odd) .timeline-content::after {
+            content: "";
+            position: absolute;
+            top: 38px;
+            left: -15px;
+            width: 15px;
+            height: 2px;
+            background: var(--primary);
+        }
+
+        .timeline-item:nth-child(even) .timeline-content::after {
+            content: "";
+            position: absolute;
+            top: 38px;
+            right: -15px;
+            width: 15px;
+            height: 2px;
+            background: var(--primary);
+        }
+
+        .timeline-date {
+            display: inline-block;
+            background: var(--primary);
+            color: var(--text);
+            padding: 0.3rem 1.2rem;
+            border-radius: 999px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            border: 1px solid var(--border);
+        }
+
+        .timeline-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary-d);
+            margin-bottom: 0.8rem;
+            line-height: 1.3;
+        }
+
+        .timeline-description {
+            color: var(--text-light);
+            line-height: 1.7;
+            margin-bottom: 1.2rem;
+        }
+
+        .timeline-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .timeline-tag {
+            background: rgba(160, 132, 220, 0.1);
+            padding: 0.2rem 1rem;
+            border-radius: 999px;
+            font-size: 0.8rem;
+            color: var(--primary-d);
+            border: 1px solid var(--border);
+        }
+
+        .timeline-image {
+            width: 45%;
+            height: 200px;
+            background-size: cover;
+            background-position: center;
+            border-radius: 28px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow);
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: rgba(160, 132, 220, 0.1);
+        }
+
+        .timeline-image i {
+            font-size: 4rem;
+            color: var(--primary);
+            opacity: 0.5;
+        }
+
+        .timeline-image:hover {
+            transform: scale(1.02);
+            border-color: var(--primary);
+        }
+
+        /* 合影特制卡片 */
+        .photo-special {
+            background: linear-gradient(135deg, rgba(215, 189, 226, 0.2), rgba(160, 132, 220, 0.2));
+            border: 2px solid var(--primary);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .photo-special::before {
+            content: "📸";
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 2rem;
+            opacity: 0.3;
+            transform: rotate(15deg);
+        }
+
+        /* 里程碑卡片 */
+        .milestones-title {
+            text-align: center;
+            margin: 5rem 0 3rem;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary-d);
+            position: relative;
+        }
+
+        .milestones-title::after {
+            content: "";
+            position: absolute;
+            bottom: -1rem;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--primary-d));
+            border-radius: 3px;
+        }
+
+        .milestones-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+            margin: 3rem 0;
+        }
+
+        .milestone-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            padding: 1.8rem 1.2rem;
+            box-shadow: var(--shadow);
+            transition: all 0.3s;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .milestone-card:nth-child(1) {
+            border-top: 3px solid var(--milestone-1);
+        }
+        .milestone-card:nth-child(2) {
+            border-top: 3px solid var(--milestone-2);
+        }
+        .milestone-card:nth-child(3) {
+            border-top: 3px solid var(--milestone-3);
+        }
+        .milestone-card:nth-child(4) {
+            border-top: 3px solid var(--milestone-4);
+        }
+
+        .milestone-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(160, 132, 220, 0.3);
+        }
+
+        .milestone-icon {
+            font-size: 2.5rem;
+            color: var(--primary-d);
+            margin-bottom: 1rem;
+        }
+
+        .milestone-date {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .milestone-card h3 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 0.5rem;
+        }
+
+        .milestone-card p {
+            color: var(--text-light);
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        /* 数据统计卡片 */
+        .stats-showcase {
+            background: linear-gradient(135deg, var(--card-bg) 0%, rgba(160, 132, 220, 0.15) 100%);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--border);
+            border-radius: 48px;
+            padding: 2.5rem;
+            margin: 4rem 0;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+
+        .stat-block {
+            text-align: center;
+        }
+
+        .stat-block .stat-icon {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-block .stat-value {
+            font-size: 2.8rem;
+            font-weight: 800;
+            color: var(--primary-d);
+            line-height: 1.2;
+            margin-bottom: 0.2rem;
+        }
+
+        .stat-block .stat-label {
+            font-size: 1rem;
+            color: var(--text-light);
+            font-weight: 500;
+        }
+
+        /* 页脚 - 按照主页样式 */
+        footer {
+            text-align: center;
+            padding: 4rem 0 2.5rem;
+            color: var(--text-light);
+            border-top: 1px solid var(--border);
+        }
+
+        /* 响应式 */
+        @media (max-width: 992px) {
+            .milestones-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .stats-showcase {
+                grid-template-columns: repeat(2, 1fr);
+                padding: 2rem;
+            }
+
+            .timeline-container::before {
+                left: 30px;
+            }
+
+            .timeline-item {
+                flex-direction: column !important;
+                margin-left: 60px;
+            }
+
+            .timeline-content {
+                width: 100%;
+                margin-bottom: 1.5rem;
+            }
+
+            .timeline-content::before {
+                left: -45px !important;
+                right: auto !important;
+            }
+
+            .timeline-content::after {
+                left: -15px !important;
+                right: auto !important;
+            }
+
+            .timeline-image {
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .top-bar {
+                padding: 0.4rem 1rem;
+            }
+            .nav {
+                gap: 0.2rem;
+                justify-content: center;
+            }
+            .nav a {
+                padding: 0.3rem 0.6rem;
+                font-size: 0.9rem;
+            }
+
+            .page-header h1 {
+                font-size: 2.8rem;
+            }
+
+            .milestones-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .stats-showcase {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+                padding: 1.5rem;
+            }
+
+            .timeline-title {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 顶部栏 - 按照主页样式 -->
+    <div class="top-bar">
+        <div class="logo"><i class="1"></i> Cozily</div>
+
+        <div class="nav">
+            <a href="index.html">首页</a>
+            <a href="dibiao.html">玩家地标</a>
+            <a href="paihangbang.html">排行榜</a>
+            <a href="licheng.html" class="active">服务器历程</a>
+            <a href="zonghe.html">综合导航</a>
+            <a href="gengzhinan.html">梗指南</a>
+            <a href="tuandui.html">团队介绍</a>
+            <a href="faq.html">常见问题</a>
+            <a href="t.html">测试界面</a>
+        </div>
+
+        <div class="right-tools">
+            <button class="theme-toggle" title="切换日夜模式"><i class="mdi mdi-weather-night"></i></button>
+            <a href="https://qm.qq.com/q/VTUeknT88Q" target="_blank" class="join-btn">加入交流群</a>
+        </div>
+    </div>
+
+    <!-- 主内容 - 服务器历程 -->
+    <div class="main-content">
+        <!-- 页面头部 -->
+        <div class="page-header">
+            <h1>服务器历程</h1>
+            <div class="subtitle">23333</div>
+        </div>
+
+        <!-- 时间轴 - 根据实际时间线 -->
+        <div class="timeline-container">
+            <!-- 时间轴项 1: 2025.08.29 确定开服计划 -->
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <span class="timeline-date">2025.08.29</span>
+                    <h2 class="timeline-title">🚀 开服计划确定</h2>
+                    <p class="timeline-description">经过前期筹备，正式确定开服计划。创始团队讨论决定服务器定位为生电纯净服，确定核心玩法和发展方向。鼠鼠安乐窝的种子在这一天种下。</p>
+                    <div class="timeline-tags">
+                        <span class="timeline-tag">#开服计划</span>
+                        <span class="timeline-tag">#创始团队</span>
+                        <span class="timeline-tag">#生电定位</span>
+                    </div>
+                </div>
+                <div class="timeline-image" style="background-image: linear-gradient(135deg, #a8ede0, #fed6e3);">
+                    <i class="mdi mdi-calendar-check"></i>
+                </div>
+            </div>
+
+            <!-- 时间轴项 2: 2025.09.03 开测试服 -->
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <span class="timeline-date">2025.09.03</span>
+                    <h2 class="timeline-title">🧪 测试服开启</h2>
+                    <p class="timeline-description">测试服正式上线，邀请首批玩家进行内部测试。主要测试服务器稳定性、插件兼容性和核心玩法。测试期间发现了多处需要优化的地方，为正式开服做准备。</p>
+                    <div class="timeline-tags">
+                        <span class="timeline-tag">#测试服</span>
+                        <span class="timeline-tag">#内部测试</span>
+                        <span class="timeline-tag">#稳定性</span>
+                    </div>
+                </div>
+                <div class="timeline-image" style="background-image: linear-gradient(135deg, #d4fc79, #96e6a1);">
+                    <i class="mdi mdi-flask"></i>
+                </div>
+            </div>
+
+            <!-- 时间轴项 3: 2025.09.08 发布群公告并确定基础玩法 -->
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <span class="timeline-date">2025.09.08</span>
+                    <h2 class="timeline-title">📢 群公告发布 & 基础玩法确定</h2>
+                    <p class="timeline-description">正式在QQ群发布服务器公告，公布服务器规则、基础玩法和开服计划。确定了生电核心玩法、地标系统框架和经济系统雏形，玩家反响热烈。</p>
+                    <div class="timeline-tags">
+                        <span class="timeline-tag">#群公告</span>
+                        <span class="timeline-tag">#基础玩法</span>
+                        <span class="timeline-tag">#规则公布</span>
+                    </div>
+                </div>
+                <div class="timeline-image" style="background-image: linear-gradient(135deg, #f6d365, #fda085);">
+                    <i class="mdi mdi-bullhorn"></i>
+                </div>
+            </div>
+
+            <!-- 时间轴项 4: 2025.10.10 建内部群 -->
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <span class="timeline-date">2025.10.10</span>
+                    <h2 class="timeline-title">👥 内部群建立</h2>
+                    <p class="timeline-description">建立核心玩家内部群，邀请活跃测试玩家加入。内部群用于讨论服务器发展方向、测试新功能、收集反馈意见，为后续正式开服储备核心玩家。</p>
+                    <div class="timeline-tags">
+                        <span class="timeline-tag">#内部群</span>
+                        <span class="timeline-tag">#核心玩家</span>
+                        <span class="timeline-tag">#反馈收集</span>
+                    </div>
+                </div>
+                <div class="timeline-image" style="background-image: linear-gradient(135deg, #fbc2eb, #a6c1ee);">
+                    <i class="mdi mdi-account-group"></i>
+                </div>
+            </div>
+
+            <!-- 时间轴项 5: 2025.10.06 第一次合影（注意这个日期早于内部群，有特殊性） -->
+            <div class="timeline-item">
+                <div class="timeline-content photo-special">
+                    <span class="timeline-date">📸 2025.10.06</span>
+                    <h2 class="timeline-title">第一次全体合影</h2>
+                    <p class="timeline-description">在测试服进行了第一次全体玩家合影！虽然当时内部群还未建立，但测试玩家们已经聚集在主城，留下了服务器历史上的第一张全家福。这张照片后来成为服务器文化的珍贵记忆。</p>
+                    <div class="timeline-tags">
+                        <span class="timeline-tag">#第一次合影</span>
+                        <span class="timeline-tag">#全家福</span>
+                        <span class="timeline-tag">#珍贵记忆</span>
+                    </div>
+                </div>
+                <div class="timeline-image" style="background-image: linear-gradient(135deg, #ff9a9e, #fecfef);">
+                    <i class="mdi mdi-camera"></i>
+                </div>
+            </div>
+
+            <!-- 时间轴项 6: 2025.10月中旬至十月末 更新大量插件 -->
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <span class="timeline-date">2025.10.15 - 2025.10.30</span>
+                    <h2 class="timeline-title">⚙️ 大规模插件更新</h2>
+                    <p class="timeline-description">十月中下旬进行了大规模插件更新，累计更新插件30+个。主要包括：地标系统优化、经济系统完善、权限组重构、防熊插件升级、红石机器性能优化等。服务器体验大幅提升。</p>
+                    <div class="timeline-tags">
+                        <span class="timeline-tag">#插件更新</span>
+                        <span class="timeline-tag">#系统优化</span>
+                        <span class="timeline-tag">#性能提升</span>
+                        <span class="timeline-tag">#30+插件</span>
+                    </div>
+                </div>
+                <div class="timeline-image" style="background-image: linear-gradient(135deg, #a1c4fd, #c2e9fb);">
+                    <i class="mdi mdi-puzzle"></i>
+                </div>
+            </div>
+        </div>
+
+        <!-- 里程碑卡片 - 关键节点 -->
+        <h2 class="milestones-title">关键节点</h2>
+        <div class="milestones-grid">
+            <div class="milestone-card">
+                <div class="milestone-icon"><i class="mdi mdi-calendar-start"></i></div>
+                <div class="milestone-date">2025.08.29</div>
+                <h3>开服计划确定</h3>
+                <p>创始团队确定服务器定位和发展方向</p>
+            </div>
+            <div class="milestone-card">
+                <div class="milestone-icon"><i class="mdi mdi-test-tube"></i></div>
+                <div class="milestone-date">2025.09.03</div>
+                <h3>测试服开启</h3>
+                <p>首批玩家进入测试，为正式开服做准备</p>
+            </div>
+            <div class="milestone-card">
+                <div class="milestone-icon"><i class="mdi mdi-camera"></i></div>
+                <div class="milestone-date">2025.10.06</div>
+                <h3>第一次合影</h3>
+                <p>服务器历史上第一张全家福</p>
+            </div>
+            <div class="milestone-card">
+                <div class="milestone-icon"><i class="mdi mdi-account-group"></i></div>
+                <div class="milestone-date">2025.10.10</div>
+                <h3>内部群建立</h3>
+                <p>核心玩家聚集，共商发展</p>
+            </div>
+        </div>
+
+        <!-- 数据统计 -->
+        <div class="stats-showcase">
+            <div class="stat-block">
+                <div class="stat-icon"><i class="mdi mdi-calendar-clock"></i></div>
+                <div class="stat-value">67</div>
+                <div class="stat-label">筹备天数</div>
+            </div>
+            <div class="stat-block">
+                <div class="stat-icon"><i class="mdi mdi-puzzle"></i></div>
+                <div class="stat-value">30+</div>
+                <div class="stat-label">插件更新</div>
+            </div>
+            <div class="stat-block">
+                <div class="stat-icon"><i class="mdi mdi-camera"></i></div>
+                <div class="stat-value">1</div>
+                <div class="stat-label">首次合影</div>
+            </div>
+        </div>
+
+        <!-- 后续展望 -->
+        <div style="background: var(--card-bg); backdrop-filter: blur(12px); border: 1px solid var(--border); border-radius: 32px; padding: 2.5rem; margin-top: 3rem; text-align: center;">
+            <i class="mdi mdi-rocket-launch" style="font-size: 3rem; color: var(--primary); margin-bottom: 1rem;"></i>
+            <h2 style="font-size: 2rem; color: var(--primary-d); margin-bottom: 1rem;">正式开服即将到来</h2>
+            <p style="color: var(--text-light); max-width: 600px; margin: 0 auto; line-height: 1.8;">筹备工作进入最后阶段，更多精彩即将呈现。感谢所有参与测试的玩家，你们的反馈让服务器变得更好。鼠鼠安乐窝，期待与你相遇！</p>
+        </div>
+    </div>
+
+    <!-- 页脚 - 按照主页样式 -->
+    <footer>
+        <p>© 2025 Cozily.top | mc.cozily.top | 交流群 919191 / 787878</p>
+    </footer>
+
+    <script>
+        // 日夜模式切换 - 完全按照主页
+        const themeToggle = document.querySelector('.theme-toggle');
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+        themeToggle.innerHTML = savedTheme === 'dark' ? '<i class="mdi mdi-white-balance-sunny"></i>' : '<i class="mdi mdi-weather-night"></i>';
+
+        themeToggle.addEventListener('click', () => {
+            let theme = document.documentElement.getAttribute('data-theme');
+            theme = theme === 'dark' ? 'light' : 'dark';
+            document.documentElement.setAttribute('data-theme', theme);
+            localStorage.setItem('theme', theme);
+            themeToggle.innerHTML = theme === 'dark' ? '<i class="mdi mdi-white-balance-sunny"></i>' : '<i class="mdi mdi-weather-night"></i>';
+        });
+    </script>
+</body>
+</html>

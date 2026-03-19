@@ -1,0 +1,1046 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5, user-scalable=yes">
+    <title>梗指南 - 鼠鼠安乐窝 | Minecraft服务器</title>
+    <meta name="description" content="鼠鼠安乐窝 - 高质量Minecraft生电服务器，mc.cozily.top">
+    <meta name="keywords" content="鼠鼠安乐窝,Minecraft,服务器,我的世界,生电,mc.cozily.top">
+    <meta name="author" content="鼠鼠安乐窝">
+
+    <!-- 字体 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;700&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+
+    <!-- 图标库：Material Design Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@mdi/font@7.4.47/css/materialdesignicons.min.css">
+
+    <style>
+        :root {
+            --primary:    #D7BDE2;      /* 淡紫主色 */
+            --primary-d:  #A084DC;      /* 深紫 */
+            --primary-l:  #E6D0F2;      /* 浅紫 */
+            --bg:         #F8F5FC;      /* 背景 */
+            --card-bg:    rgba(255,255,255,0.78);
+            --text:       #2D1B47;
+            --text-light: #5A4A6E;
+            --border:     rgba(161,132,220,0.28);
+            --shadow:     0 8px 32px rgba(161,132,220,0.18);
+            --success:    #4caf50;
+            --error:      #f44336;
+            --warning:    #ff9800;
+        }
+
+        [data-theme="dark"] {
+            --primary:    #A084DC;
+            --primary-d:  #7B5EB8;
+            --primary-l:  #D7BDE2;
+            --bg:         #1A1425;
+            --card-bg:    rgba(42,33,64,0.82);
+            --text:       #E3D8F2;
+            --text-light: #C4B3E0;
+            --border:     rgba(177,156,217,0.20);
+            --shadow:     0 8px 32px rgba(0,0,0,0.50);
+            --success:    #66bb6a;
+            --error:      #ef5350;
+            --warning:    #ffa726;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans SC', 'Quicksand', system-ui, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            transition: background 0.4s, color 0.4s;
+        }
+
+        /* ===== 顶部栏 - 完全按照主页样式 ===== */
+        .top-bar {
+            background: var(--card-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            box-shadow: var(--shadow);
+            border-bottom: 1px solid var(--border);
+            padding: 0.5rem 1.5rem;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary), var(--primary-d));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .logo i {
+            font-size: 2rem;
+            color: var(--primary);
+        }
+
+        /* 导航容器 - 紧凑间距 */
+        .nav {
+            display: flex;
+            list-style: none;
+            gap: 0.3rem;
+            flex-wrap: wrap;
+        }
+
+        /* 毛玻璃按钮效果 - 每个导航链接 */
+        .nav a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1rem;
+            transition: all 0.3s cubic-bezier(0.2, 0, 0, 1);
+            position: relative;
+            padding: 0.4rem 0.8rem;
+            border-radius: 999px;
+            background: transparent;
+            border: 1px solid transparent;
+            white-space: nowrap;
+        }
+
+        .nav a:hover {
+            background: rgba(215, 189, 226, 0.15);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1px solid rgba(215, 189, 226, 0.3);
+            color: var(--primary-d);
+            transform: translateY(-1px);
+            box-shadow: 0 2px 8px rgba(161, 132, 220, 0.15);
+        }
+
+        .nav a.active {
+            color: var(--primary-d);
+            background: rgba(215, 189, 226, 0.1);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            border: 1px solid rgba(215, 189, 226, 0.2);
+        }
+
+        .nav a.active::after {
+            content: "";
+            position: absolute;
+            bottom: 0px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 16px;
+            height: 2px;
+            background: var(--primary);
+            border-radius: 2px;
+        }
+
+        .right-tools {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .theme-toggle, .join-btn {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-light);
+            transition: all 0.3s;
+        }
+
+        .theme-toggle:hover {
+            color: var(--primary-d);
+            transform: scale(1.1);
+        }
+
+        .join-btn {
+            background: var(--primary);
+            color: var(--text);
+            padding: 0.5rem 1.2rem;
+            border-radius: 999px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            text-decoration: none;
+        }
+
+        .join-btn:hover {
+            background: var(--primary-d);
+            transform: translateY(-1px);
+            box-shadow: var(--shadow);
+        }
+        /* ===== 顶部栏结束 ===== */
+
+        /* ===== 主内容 - 按照主页样式设计 ===== */
+        .main-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 6rem 2.5rem 4rem;
+        }
+
+        /* 页面头部 - 类似主页hero风格 */
+        .page-hero {
+            text-align: center;
+            padding: 5rem 0 6rem;
+        }
+
+        .page-hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 0.8rem;
+            background: linear-gradient(135deg, var(--primary), var(--primary-d));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .page-hero .subtitle {
+            font-size: 1.2rem;
+            color: var(--text-light);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* 分类筛选 - 类似主页card-bottom风格 */
+        .meme-categories {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--border);
+            border-radius: 999px;
+            padding: 0.4rem;
+            margin: 2rem auto 3rem;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: center;
+            gap: 0.3rem;
+            width: fit-content;
+            max-width: 100%;
+        }
+
+        .category-tab {
+            padding: 0.5rem 1.5rem;
+            border-radius: 999px;
+            color: var(--text-light);
+            cursor: pointer;
+            transition: all 0.2s;
+            font-weight: 500;
+            font-size: 0.95rem;
+            background: transparent;
+            border: 1px solid transparent;
+        }
+
+        .category-tab:hover {
+            background: rgba(215, 189, 226, 0.15);
+            color: var(--primary-d);
+        }
+
+        .category-tab.active {
+            background: var(--primary);
+            color: var(--text);
+        }
+
+        /* 梗指南卡片网格 */
+        .memes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(500px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        /* 梗卡片 - 图文结合，类似主页combined-card风格 */
+        .meme-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--border);
+            border-radius: 32px;
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .meme-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 20px 40px rgba(160, 132, 220, 0.3);
+            border-color: var(--primary);
+        }
+
+        .meme-card.hidden {
+            display: none;
+        }
+
+        /* 图片区域 - 可放置梗图 */
+        .meme-image {
+            width: 100%;
+            height: 200px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            padding: 1rem;
+        }
+
+        .meme-category {
+            background: var(--primary-d);
+            color: white;
+            padding: 0.3rem 1.2rem;
+            border-radius: 999px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .meme-year {
+            background: rgba(0,0,0,0.5);
+            color: white;
+            padding: 0.3rem 1rem;
+            border-radius: 999px;
+            font-size: 0.8rem;
+            backdrop-filter: blur(4px);
+        }
+
+        /* 内容区域 */
+        .meme-content {
+            padding: 1.8rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .meme-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+        }
+
+        .meme-title {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--primary-d);
+        }
+
+        .meme-origin {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+            color: var(--text-light);
+            font-size: 0.9rem;
+            background: rgba(160, 132, 220, 0.1);
+            padding: 0.3rem 0.8rem;
+            border-radius: 999px;
+        }
+
+        .meme-origin i {
+            font-size: 1rem;
+            color: var(--primary);
+        }
+
+        /* 梗的介绍文字 */
+        .meme-description {
+            color: var(--text);
+            line-height: 1.7;
+            font-size: 1rem;
+        }
+
+        .meme-description p {
+            margin-bottom: 0.8rem;
+        }
+
+        /* 梗的用法/例句 */
+        .meme-usage {
+            background: rgba(160, 132, 220, 0.06);
+            border-radius: 24px;
+            padding: 1rem 1.5rem;
+            border: 1px dashed var(--border);
+            margin: 0.5rem 0;
+        }
+
+        .usage-label {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--primary-d);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .usage-label i {
+            font-size: 1.2rem;
+        }
+
+        .usage-text {
+            color: var(--text-light);
+            font-style: italic;
+            line-height: 1.6;
+        }
+
+        /* 梗的标签 */
+        .meme-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .tag {
+            background: rgba(160, 132, 220, 0.1);
+            padding: 0.3rem 1rem;
+            border-radius: 999px;
+            font-size: 0.8rem;
+            color: var(--primary-d);
+            border: 1px solid var(--border);
+        }
+
+        /* 互动按钮区域 - 类似主页card-bottom风格 */
+        .meme-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: 0.5rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .interaction-group {
+            display: flex;
+            gap: 1.2rem;
+        }
+
+        .interaction-item {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        .interaction-item i {
+            color: var(--primary);
+            font-size: 1.1rem;
+        }
+
+        .share-btn {
+            background: none;
+            border: 1px solid var(--border);
+            border-radius: 30px;
+            padding: 0.3rem 1.2rem;
+            color: var(--text-light);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+            transition: all 0.2s;
+            font-weight: 500;
+        }
+
+        .share-btn:hover {
+            background: rgba(160, 132, 220, 0.1);
+            color: var(--primary-d);
+            border-color: var(--primary);
+        }
+
+        /* 无结果提示 */
+        .no-results {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 4rem;
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            border-radius: 48px;
+            border: 1px solid var(--border);
+            color: var(--text-light);
+            font-size: 1.2rem;
+        }
+
+        .no-results i {
+            font-size: 4rem;
+            color: var(--primary-d);
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        /* 提交梗卡片 - 类似主页combined-card风格 */
+        .submit-meme-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--border);
+            border-radius: 48px;
+            box-shadow: var(--shadow);
+            margin: 4rem auto 2rem;
+            padding: 2rem 2.5rem;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 2rem;
+            max-width: 900px;
+        }
+
+        .submit-left {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .submit-left i {
+            font-size: 3rem;
+            color: var(--primary-d);
+            background: rgba(160, 132, 220, 0.1);
+            padding: 1rem;
+            border-radius: 50%;
+        }
+
+        .submit-text h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-d);
+            margin-bottom: 0.3rem;
+        }
+
+        .submit-text p {
+            color: var(--text-light);
+        }
+
+        .submit-btn {
+            background: var(--primary);
+            border: none;
+            border-radius: 999px;
+            padding: 1rem 2.5rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text);
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            white-space: nowrap;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .submit-btn:hover {
+            background: var(--primary-d);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+        }
+
+        .submit-btn i {
+            font-size: 1.3rem;
+        }
+
+        /* 页脚 - 完全按照主页样式 */
+        footer {
+            text-align: center;
+            padding: 4rem 0 2.5rem;
+            color: var(--text-light);
+            border-top: 1px solid var(--border);
+        }
+
+        /* 移动端优化 - 按照主页样式 */
+        @media (max-width: 768px) {
+            .top-bar {
+                padding: 0.4rem 1rem;
+            }
+            .nav {
+                gap: 0.2rem;
+                justify-content: center;
+            }
+            .nav a {
+                padding: 0.3rem 0.6rem;
+                font-size: 0.9rem;
+            }
+
+            .page-hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .memes-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .meme-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .meme-image {
+                height: 160px;
+            }
+
+            .submit-meme-card {
+                flex-direction: column;
+                text-align: center;
+                padding: 1.5rem;
+            }
+            .submit-left {
+                flex-direction: column;
+                text-align: center;
+            }
+            .submit-btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 顶部栏 - 按照主页样式 -->
+    <div class="top-bar">
+        <div class="logo"><i class="1."></i> Cozily</div>
+
+        <div class="nav">
+            <a href="index.html">首页</a>
+            <a href="dibiao.html">玩家地标</a>
+            <a href="paihangbang.html">排行榜</a>
+            <a href="licheng.html">服务器历程</a>
+            <a href="zonghe.html">综合导航</a>
+            <a href="gengzhinan.html" class="active">梗指南</a>
+            <a href="tuandui.html">团队介绍</a>
+            <a href="faq.html">常见问题</a>
+            <a href="t.html">测试界面</a>
+        </div>
+
+        <div class="right-tools">
+            <button class="theme-toggle" title="切换日夜模式"><i class="mdi mdi-weather-night"></i></button>
+            <a href="https://qm.qq.com/q/VTUeknT88Q" target="_blank" class="join-btn">加入交流群</a>
+        </div>
+    </div>
+
+    <!-- 主内容 - 梗指南页面 -->
+    <div class="main-content">
+        <!-- 页面头部 - 类似主页hero风格 -->
+        <div class="page-hero">
+            <h1>📚 梗指南</h1>
+            <div class="subtitle">服务器内部梗 · 玩家黑话 · 社区文化百科</div>
+        </div>
+
+        <!-- 分类筛选 - 类似主页card-bottom风格 -->
+        <div class="meme-categories" id="memeCategories">
+            <span class="category-tab active" data-category="all">全部梗</span>
+            <span class="category-tab" data-category="人物">👤 人物梗</span>
+            <span class="category-tab" data-category="事件">📅 事件梗</span>
+            <span class="category-tab" data-category="建筑">🏗️ 建筑梗</span>
+            <span class="category-tab" data-category="指令">⌨️ 指令梗</span>
+            <span class="category-tab" data-category="经典">🏆 经典梗</span>
+        </div>
+
+        <!-- 梗指南卡片网格 -->
+        <div class="memes-grid" id="memesGrid">
+            <!-- 梗卡片 1 - 腐竹是熊孩子 -->
+            <div class="meme-card" data-category="人物" data-title="腐竹是熊孩子" data-author="服务器">
+                <div class="meme-image" style="background-image: linear-gradient(135deg, #f6d365, #fda085); background-color: #f6d365;">
+                    <!-- 这里可以放实际图片，例如：<img src="images/fuzhu.jpg" alt="腐竹熊孩子"> -->
+                    <span class="meme-category">👤 人物梗</span>
+                    <span class="meme-year">2024</span>
+                </div>
+                <div class="meme-content">
+                    <div class="meme-header">
+                        <span class="meme-title">腐竹就是熊孩子</span>
+                        <span class="meme-origin"><i class="mdi mdi-server"></i> 服务器起源</span>
+                    </div>
+                    <div class="meme-description">
+                        <p>服务器创始人兼腐竹在开服初期，为了测试服务器稳定性，用自己的小号炸了主城三次。从此获得了"熊孩子腐竹"的荣誉称号，每次服务器出问题都会被玩家调侃"腐竹又在熊了"。</p>
+                    </div>
+                    <div class="meme-usage">
+                        <div class="usage-label">
+                            <i class="mdi mdi-format-quote-open"></i> 经典例句
+                        </div>
+                        <div class="usage-text">"服务器又卡了？腐竹是不是又在底下熊呢？"<br>"今天服务器这么稳，腐竹居然没熊？"</div>
+                    </div>
+                    <div class="meme-tags">
+                        <span class="tag">#腐竹</span>
+                        <span class="tag">#熊孩子</span>
+                        <span class="tag">#开服趣事</span>
+                    </div>
+                    <div class="meme-footer">
+                        <div class="interaction-group">
+                            <span class="interaction-item"><i class="mdi mdi-eye-outline"></i> 1.2k</span>
+                            <span class="interaction-item"><i class="mdi mdi-comment-outline"></i> 45</span>
+                        </div>
+                        <button class="share-btn" onclick="shareMeme(this, '腐竹就是熊孩子')">
+                            <i class="mdi mdi-share-variant"></i> 分享
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 梗卡片 2 - 土豆服务器 -->
+            <div class="meme-card" data-category="经典" data-title="土豆服务器" data-author="玩家共创">
+                <div class="meme-image" style="background-image: linear-gradient(135deg, #a8ede0, #fed6e3); background-color: #a8ede0;">
+                    <span class="meme-category">🏆 经典梗</span>
+                    <span class="meme-year">2023</span>
+                </div>
+                <div class="meme-content">
+                    <div class="meme-header">
+                        <span class="meme-title">土豆服务器</span>
+                        <span class="meme-origin"><i class="mdi mdi-chip"></i> 硬件梗</span>
+                    </div>
+                    <div class="meme-description">
+                        <p>服务器初期使用一台旧电脑托管，配置极低，经常卡顿。玩家戏称服务器是用土豆驱动的，后来即使升级了硬件，"土豆服务器"的称呼也保留了下来，成为服务器的标志性梗。</p>
+                    </div>
+                    <div class="meme-usage">
+                        <div class="usage-label">
+                            <i class="mdi mdi-format-quote-open"></i> 经典例句
+                        </div>
+                        <div class="usage-text">"今天土豆比较新鲜，服务器居然不卡了"<br>"土豆服务器名不虚传，又熟了（卡顿）"</div>
+                    </div>
+                    <div class="meme-tags">
+                        <span class="tag">#土豆</span>
+                        <span class="tag">#卡顿</span>
+                        <span class="tag">#硬件梗</span>
+                    </div>
+                    <div class="meme-footer">
+                        <div class="interaction-group">
+                            <span class="interaction-item"><i class="mdi mdi-eye-outline"></i> 2.3k</span>
+                            <span class="interaction-item"><i class="mdi mdi-comment-outline"></i> 78</span>
+                        </div>
+                        <button class="share-btn" onclick="shareMeme(this, '土豆服务器')">
+                            <i class="mdi mdi-share-variant"></i> 分享
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 梗卡片 3 - 地标审核玄学 -->
+            <div class="meme-card" data-category="事件" data-title="地标审核玄学" data-author="建筑组">
+                <div class="meme-image" style="background-image: linear-gradient(135deg, #d4fc79, #96e6a1); background-color: #d4fc79;">
+                    <span class="meme-category">📅 事件梗</span>
+                    <span class="meme-year">2024</span>
+                </div>
+                <div class="meme-content">
+                    <div class="meme-header">
+                        <span class="meme-title">地标审核玄学</span>
+                        <span class="meme-origin"><i class="mdi mdi-map-marker"></i> 地标系统</span>
+                    </div>
+                    <div class="meme-description">
+                        <p>玩家发现地标审核通过率与提交时间有关：周二下午提交通过率最高，周五晚上容易被拒。后来管理员承认是因为周二值班的是好脾气的运营，周五是暴躁的技术。从此玩家开始研究"审核玄学"。</p>
+                    </div>
+                    <div class="meme-usage">
+                        <div class="usage-label">
+                            <i class="mdi mdi-format-quote-open"></i> 经典例句
+                        </div>
+                        <div class="usage-text">"今天周二，赶紧提交地标，玄学时间到！"<br>"我周五晚上提交的，果然被拒了，玄学诚不我欺"</div>
+                    </div>
+                    <div class="meme-tags">
+                        <span class="tag">#玄学</span>
+                        <span class="tag">#审核</span>
+                        <span class="tag">#周二玄学</span>
+                    </div>
+                    <div class="meme-footer">
+                        <div class="interaction-group">
+                            <span class="interaction-item"><i class="mdi mdi-eye-outline"></i> 892</span>
+                            <span class="interaction-item"><i class="mdi mdi-comment-outline"></i> 34</span>
+                        </div>
+                        <button class="share-btn" onclick="shareMeme(this, '地标审核玄学')">
+                            <i class="mdi mdi-share-variant"></i> 分享
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 梗卡片 4 - /warp 厕所 -->
+            <div class="meme-card" data-category="指令" data-title="/warp 厕所" data-author="玩家集体">
+                <div class="meme-image" style="background-image: linear-gradient(135deg, #fbc2eb, #a6c1ee); background-color: #fbc2eb;">
+                    <span class="meme-category">⌨️ 指令梗</span>
+                    <span class="meme-year">2023</span>
+                </div>
+                <div class="meme-content">
+                    <div class="meme-header">
+                        <span class="meme-title">/warp 厕所</span>
+                        <span class="meme-origin"><i class="mdi mdi-console"></i> 指令梗</span>
+                    </div>
+                    <div class="meme-description">
+                        <p>服务器有个神秘的传送点叫"/warp 厕所"，据说是某位玩家在主城地下建了一个豪华公厕。后来这个传送点成了玩家集合、交易、聊天的热门地点，"去厕所"成了"去集合"的代名词。</p>
+                    </div>
+                    <div class="meme-usage">
+                        <div class="usage-label">
+                            <i class="mdi mdi-format-quote-open"></i> 经典例句
+                        </div>
+                        <div class="usage-text">"大家厕所集合，准备打龙了"<br>"我刚从厕所出来，你们在哪？"</div>
+                    </div>
+                    <div class="meme-tags">
+                        <span class="tag">#warp</span>
+                        <span class="tag">#厕所</span>
+                        <span class="tag">#集合点</span>
+                    </div>
+                    <div class="meme-footer">
+                        <div class="interaction-group">
+                            <span class="interaction-item"><i class="mdi mdi-eye-outline"></i> 1.5k</span>
+                            <span class="interaction-item"><i class="mdi mdi-comment-outline"></i> 56</span>
+                        </div>
+                        <button class="share-btn" onclick="shareMeme(this, '/warp 厕所')">
+                            <i class="mdi mdi-share-variant"></i> 分享
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 梗卡片 5 - 建筑大师の诅咒 -->
+            <div class="meme-card" data-category="人物" data-title="建筑大师の诅咒" data-author="Archi_Duck">
+                <div class="meme-image" style="background-image: linear-gradient(135deg, #ff9a9e, #fecfef); background-color: #ff9a9e;">
+                    <span class="meme-category">👤 人物梗</span>
+                    <span class="meme-year">2024</span>
+                </div>
+                <div class="meme-content">
+                    <div class="meme-header">
+                        <span class="meme-title">建筑大师の诅咒</span>
+                        <span class="meme-origin"><i class="mdi mdi-account"></i> Archi_Duck</span>
+                    </div>
+                    <div class="meme-description">
+                        <p>建筑组大佬Archi_Duck每次建完一个大型建筑，服务器就会在24小时内崩溃一次。玩家戏称这是"建筑大师的诅咒"，后来发现是因为他建的建筑太大，加载时导致内存溢出。现在每次他发建筑预告，玩家就开始备份物资。</p>
+                    </div>
+                    <div class="meme-usage">
+                        <div class="usage-label">
+                            <i class="mdi mdi-format-quote-open"></i> 经典例句
+                        </div>
+                        <div class="usage-text">"Archi_Duck又发预告了，大家快备份！"<br>"诅咒应验了，服务器又崩了，一定是大师完工了"</div>
+                    </div>
+                    <div class="meme-tags">
+                        <span class="tag">#建筑大师</span>
+                        <span class="tag">#诅咒</span>
+                        <span class="tag">#服务器崩溃</span>
+                    </div>
+                    <div class="meme-footer">
+                        <div class="interaction-group">
+                            <span class="interaction-item"><i class="mdi mdi-eye-outline"></i> 734</span>
+                            <span class="interaction-item"><i class="mdi mdi-comment-outline"></i> 28</span>
+                        </div>
+                        <button class="share-btn" onclick="shareMeme(this, '建筑大师の诅咒')">
+                            <i class="mdi mdi-share-variant"></i> 分享
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 梗卡片 6 - 红石佬の神秘失踪 -->
+            <div class="meme-card" data-category="事件" data-title="红石佬の神秘失踪" data-author="Redstone_God">
+                <div class="meme-image" style="background-image: linear-gradient(135deg, #a1c4fd, #c2e9fb); background-color: #a1c4fd;">
+                    <span class="meme-category">📅 事件梗</span>
+                    <span class="meme-year">2023</span>
+                </div>
+                <div class="meme-content">
+                    <div class="meme-header">
+                        <span class="meme-title">红石佬の神秘失踪</span>
+                        <span class="meme-origin"><i class="mdi mdi-account"></i> Redstone_God</span>
+                    </div>
+                    <div class="meme-description">
+                        <p>红石大佬Redstone_God曾消失整整两周，回来后说自己"只是在地下室搭了个全自动农场，忘了吃饭睡觉"。从此"红石佬失踪"成为玩家调侃红石玩家的专用梗，指沉迷红石无法自拔的状态。</p>
+                    </div>
+                    <div class="meme-usage">
+                        <div class="usage-label">
+                            <i class="mdi mdi-format-quote-open"></i> 经典例句
+                        </div>
+                        <div class="usage-text">"Redstone_God三天没上线了，又失踪了？"<br>"我怀疑他在底下搭机器，已经进入红石佬状态了"</div>
+                    </div>
+                    <div class="meme-tags">
+                        <span class="tag">#红石</span>
+                        <span class="tag">#失踪</span>
+                        <span class="tag">#沉迷</span>
+                    </div>
+                    <div class="meme-footer">
+                        <div class="interaction-group">
+                            <span class="interaction-item"><i class="mdi mdi-eye-outline"></i> 612</span>
+                            <span class="interaction-item"><i class="mdi mdi-comment-outline"></i> 23</span>
+                        </div>
+                        <button class="share-btn" onclick="shareMeme(this, '红石佬の神秘失踪')">
+                            <i class="mdi mdi-share-variant"></i> 分享
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 梗卡片 7 - 交流群的日常99+ -->
+            <div class="meme-card" data-category="经典" data-title="交流群的日常99+" data-author="全体群友">
+                <div class="meme-image" style="background-image: linear-gradient(135deg, #fccb90, #d57eeb); background-color: #fccb90;">
+                    <span class="meme-category">🏆 经典梗</span>
+                    <span class="meme-year">常驻</span>
+                </div>
+                <div class="meme-content">
+                    <div class="meme-header">
+                        <span class="meme-title">交流群的日常99+</span>
+                        <span class="meme-origin"><i class="mdi mdi-qqchat"></i> QQ群</span>
+                    </div>
+                    <div class="meme-description">
+                        <p>服务器QQ群每天消息量稳定99+，新玩家进群第一句话通常是"这群怎么99+"，老玩家会回"习惯了"。据说有群友曾试图爬楼补消息，结果从早上爬到晚上还没看完。</p>
+                    </div>
+                    <div class="meme-usage">
+                        <div class="usage-label">
+                            <i class="mdi mdi-format-quote-open"></i> 经典例句
+                        </div>
+                        <div class="usage-text">"我就去上了个厕所，回来就99+了"<br>"别爬楼了，直接问，反正也爬不完"</div>
+                    </div>
+                    <div class="meme-tags">
+                        <span class="tag">#QQ群</span>
+                        <span class="tag">#99+</span>
+                        <span class="tag">#日常</span>
+                    </div>
+                    <div class="meme-footer">
+                        <div class="interaction-group">
+                            <span class="interaction-item"><i class="mdi mdi-eye-outline"></i> 2.1k</span>
+                            <span class="interaction-item"><i class="mdi mdi-comment-outline"></i> 89</span>
+                        </div>
+                        <button class="share-btn" onclick="shareMeme(this, '交流群的日常99+')">
+                            <i class="mdi mdi-share-variant"></i> 分享
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 梗卡片 8 - 每周更新の谎言 -->
+            <div class="meme-card" data-category="事件" data-title="每周更新の谎言" data-author="腐竹">
+                <div class="meme-image" style="background-image: linear-gradient(135deg, #ffecd2, #fcb69f); background-color: #ffecd2;">
+                    <span class="meme-category">📅 事件梗</span>
+                    <span class="meme-year">2023-2025</span>
+                </div>
+                <div class="meme-content">
+                    <div class="meme-header">
+                        <span class="meme-title">每周更新の谎言</span>
+                        <span class="meme-origin"><i class="mdi mdi-update"></i> 更新公告</span>
+                    </div>
+                    <div class="meme-description">
+                        <p>腐竹曾承诺"每周更新一次"，结果坚持了两周就鸽了。从此"下周一定更新"成为服务器的经典谎言，每次有人问什么时候更新，都会收到"下周一定"的回复。</p>
+                    </div>
+                    <div class="meme-usage">
+                        <div class="usage-label">
+                            <i class="mdi mdi-format-quote-open"></i> 经典例句
+                        </div>
+                        <div class="usage-text">"什么时候更新啊？"<br>"下周一定！（鸽子.jpg）"</div>
+                    </div>
+                    <div class="meme-tags">
+                        <span class="tag">#更新</span>
+                        <span class="tag">#鸽子</span>
+                        <span class="tag">#下周一定</span>
+                    </div>
+                    <div class="meme-footer">
+                        <div class="interaction-group">
+                            <span class="interaction-item"><i class="mdi mdi-eye-outline"></i> 1.8k</span>
+                            <span class="interaction-item"><i class="mdi mdi-comment-outline"></i> 67</span>
+                        </div>
+                        <button class="share-btn" onclick="shareMeme(this, '每周更新の谎言')">
+                            <i class="mdi mdi-share-variant"></i> 分享
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 提交新梗卡片 - 类似主页combined-card风格 -->
+        <div class="submit-meme-card">
+            <div class="submit-left">
+                <i class="mdi mdi-emoticon-plus"></i>
+                <div class="submit-text">
+                    <h3>知道更多梗？</h3>
+                    <p>在群内分享你的发现，或者联系管理员添加新的梗指南</p>
+                </div>
+            </div>
+            <button class="submit-btn" onclick="alert('请在QQ群内分享你的梗，或者联系管理员提交')">
+                <i class="mdi mdi-send"></i> 提交新梗
+            </button>
+        </div>
+    </div>
+
+    <!-- 页脚 - 按照主页样式 -->
+    <footer>
+        <p>© 2025 Cozily.top | mc.cozily.top | 交流群 919191 / 787878</p>
+    </footer>
+
+    <script>
+        // ===== 日夜模式切换 - 完全按照主页 =====
+        const themeToggle = document.querySelector('.theme-toggle');
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+        themeToggle.innerHTML = savedTheme === 'dark' ? '<i class="mdi mdi-white-balance-sunny"></i>' : '<i class="mdi mdi-weather-night"></i>';
+
+        themeToggle.addEventListener('click', () => {
+            let theme = document.documentElement.getAttribute('data-theme');
+            theme = theme === 'dark' ? 'light' : 'dark';
+            document.documentElement.setAttribute('data-theme', theme);
+            localStorage.setItem('theme', theme);
+            themeToggle.innerHTML = theme === 'dark' ? '<i class="mdi mdi-white-balance-sunny"></i>' : '<i class="mdi mdi-weather-night"></i>';
+        });
+
+        // ===== 分享功能 =====
+        window.shareMeme = function(btn, memeName) {
+            const originalText = btn.innerHTML;
+            btn.innerHTML = '<i class="mdi mdi-check"></i> 已复制链接';
+            setTimeout(() => {
+                btn.innerHTML = originalText;
+            }, 1500);
+            
+            // 模拟分享，实际可以改成复制梗信息
+            navigator.clipboard.writeText(`【鼠鼠安乐窝梗指南】${memeName} - 了解更多请访问服务器官网`).catch(() => {});
+        };
+
+        // ===== 分类筛选功能 =====
+        const categoryTabs = document.querySelectorAll('.category-tab');
+        const memeCards = document.querySelectorAll('.meme-card');
+        
+        function filterMemes() {
+            const activeCategory = document.querySelector('.category-tab.active')?.dataset.category || 'all';
+            
+            memeCards.forEach(card => {
+                const category = card.dataset.category;
+                
+                if (activeCategory === 'all' || category === activeCategory) {
+                    card.classList.remove('hidden');
+                } else {
+                    card.classList.add('hidden');
+                }
+            });
+            
+            // 检查是否没有结果
+            const visibleCount = Array.from(memeCards).filter(card => !card.classList.contains('hidden')).length;
+            const emptyState = document.querySelector('.no-results');
+            
+            if (visibleCount === 0) {
+                if (!emptyState) {
+                    const grid = document.getElementById('memesGrid');
+                    const emptyDiv = document.createElement('div');
+                    emptyDiv.className = 'no-results';
+                    emptyDiv.innerHTML = '<i class="mdi mdi-emoticon-sad"></i>没有找到符合条件的梗';
+                    grid.appendChild(emptyDiv);
+                }
+            } else {
+                if (emptyState) {
+                    emptyState.remove();
+                }
+            }
+        }
+
+        categoryTabs.forEach(tab => {
+            tab.addEventListener('click', function() {
+                categoryTabs.forEach(t => t.classList.remove('active'));
+                this.classList.add('active');
+                filterMemes();
+            });
+        });
+
+        // 初始化显示
+        filterMemes();
+    </script>
+</body>
+</html>

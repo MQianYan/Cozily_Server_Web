@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5, user-scalable=yes">
+    <title>管理团队 - 鼠鼠安乐窝 | Minecraft服务器</title>
+    <meta name="description" content="鼠鼠安乐窝 - 高质量Minecraft生电服务器，mc.cozily.top">
+    <meta name="keywords" content="鼠鼠安乐窝,Minecraft,服务器,我的世界,生电,mc.cozily.top">
+    <meta name="author" content="鼠鼠安乐窝">
+
+    <!-- 字体 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;700&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+
+    <!-- 图标库：Material Design Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@mdi/font@7.4.47/css/materialdesignicons.min.css">
+
+    <style>
+        :root {
+            --primary:    #D7BDE2;      /* 淡紫主色 */
+            --primary-d:  #A084DC;      /* 深紫 */
+            --primary-l:  #E6D0F2;      /* 浅紫 */
+            --bg:         #F8F5FC;      /* 背景 */
+            --card-bg:    rgba(255,255,255,0.78);
+            --text:       #2D1B47;
+            --text-light: #5A4A6E;
+            --border:     rgba(161,132,220,0.28);
+            --shadow:     0 8px 32px rgba(161,132,220,0.18);
+        }
+
+        [data-theme="dark"] {
+            --primary:    #A084DC;
+            --primary-d:  #7B5EB8;
+            --primary-l:  #D7BDE2;
+            --bg:         #1A1425;
+            --card-bg:    rgba(42,33,64,0.82);
+            --text:       #E3D8F2;
+            --text-light: #C4B3E0;
+            --border:     rgba(177,156,217,0.20);
+            --shadow:     0 8px 32px rgba(0,0,0,0.50);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans SC', 'Quicksand', system-ui, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            transition: background 0.4s, color 0.4s;
+        }
+
+        /* 顶部磨砂栏 - 紧凑间距 */
+        .top-bar {
+            background: var(--card-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            box-shadow: var(--shadow);
+            border-bottom: 1px solid var(--border);
+            padding: 0.5rem 1.5rem;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary), var(--primary-d));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .logo i {
+            font-size: 2rem;
+            color: var(--primary);
+        }
+
+        .nav {
+            display: flex;
+            list-style: none;
+            gap: 0.3rem;
+        }
+
+        .nav a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1rem;
+            transition: all 0.3s cubic-bezier(0.2, 0, 0, 1);
+            position: relative;
+            padding: 0.4rem 0.8rem;
+            border-radius: 999px;
+            background: transparent;
+            border: 1px solid transparent;
+            white-space: nowrap;
+        }
+
+        .nav a:hover {
+            background: rgba(215, 189, 226, 0.15);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1px solid rgba(215, 189, 226, 0.3);
+            color: var(--primary-d);
+            transform: translateY(-1px);
+            box-shadow: 0 2px 8px rgba(161, 132, 220, 0.15);
+        }
+
+        .nav a.active {
+            color: var(--primary-d);
+            background: rgba(215, 189, 226, 0.1);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            border: 1px solid rgba(215, 189, 226, 0.2);
+        }
+
+        .nav a.active::after {
+            content: "";
+            position: absolute;
+            bottom: 0px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 16px;
+            height: 2px;
+            background: var(--primary);
+            border-radius: 2px;
+        }
+
+        .right-tools {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .theme-toggle, .join-btn {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-light);
+            transition: all 0.3s;
+        }
+
+        .theme-toggle:hover {
+            color: var(--primary-d);
+            transform: scale(1.1);
+        }
+
+        .join-btn {
+            background: var(--primary);
+            color: var(--text);
+            padding: 0.5rem 1.2rem;
+            border-radius: 999px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            text-decoration: none;
+        }
+
+        .join-btn:hover {
+            background: var(--primary-d);
+            transform: translateY(-1px);
+            box-shadow: var(--shadow);
+        }
+
+        /* ===== 主要内容区 ===== */
+        .main-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 4rem 2.5rem 5rem;
+        }
+
+        /* 头部简洁介绍 */
+        .page-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .page-header h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary), var(--primary-d));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.8rem;
+        }
+
+        .page-header .subhead {
+            font-size: 1.2rem;
+            color: var(--text-light);
+            max-width: 600px;
+            margin: 0 auto;
+            font-weight: 400;
+            opacity: 0.9;
+        }
+
+        /* 团队成员网格 */
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 2rem;
+        }
+
+        /* 团队卡片 */
+        .team-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--border);
+            border-radius: 28px;
+            padding: 2rem 1.5rem 1.8rem;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .team-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 20px 40px rgba(161, 132, 220, 0.25);
+            border-color: var(--primary-l);
+        }
+
+        /* ===== 头像 - 强制圆角 ===== */
+        .member-avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50% !important;        /* 强制圆形 */
+            background: rgba(215, 189, 226, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.2rem;
+            border: 3px solid var(--primary-l);
+            transition: border-color 0.2s;
+            font-size: 2.4rem;
+            font-weight: 600;
+            color: var(--primary-d);
+            overflow: hidden !important;            /* 强制隐藏溢出 */
+        }
+
+        .member-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;                       /* 图片缩放裁剪 */
+            border-radius: 50% !important;           /* 确保图片也是圆形 */
+            display: block;
+        }
+
+        .team-card:hover .member-avatar {
+            border-color: var(--primary);
+        }
+
+        /* 姓名 */
+        .member-name {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 0.3rem;
+            line-height: 1.2;
+        }
+
+        /* 角色标签 */
+        .member-role {
+            display: inline-block;
+            background: rgba(215, 189, 226, 0.15);
+            padding: 0.3rem 1.2rem;
+            border-radius: 999px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--primary-d);
+            margin-bottom: 1rem;
+            border: 1px solid rgba(215, 189, 226, 0.2);
+            backdrop-filter: blur(4px);
+            letter-spacing: 0.3px;
+        }
+
+        /* 个人简介 */
+        .member-bio {
+            color: var(--text-light);
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin: 0.5rem 0 1.2rem;
+            flex: 1;
+        }
+
+        /* 社交链接 */
+        .member-social {
+            display: flex;
+            gap: 0.8rem;
+            margin-top: 0.5rem;
+            border-top: 1px solid var(--border);
+            padding-top: 1.2rem;
+            width: 100%;
+            justify-content: center;
+        }
+
+        .member-social a {
+            color: var(--text-light);
+            font-size: 1.2rem;
+            transition: all 0.2s;
+            background: rgba(215, 189, 226, 0.08);
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            border: 1px solid transparent;
+        }
+
+        .member-social a:hover {
+            color: var(--primary-d);
+            background: rgba(215, 189, 226, 0.2);
+            border-color: rgba(215, 189, 226, 0.3);
+            transform: translateY(-2px);
+        }
+
+        /* 页脚 */
+        footer {
+            text-align: center;
+            padding: 3rem 2rem 2.5rem;
+            color: var(--text-light);
+            border-top: 1px solid var(--border);
+            font-size: 0.9rem;
+            background: var(--bg);
+        }
+
+        /* 响应式 */
+        @media (max-width: 768px) {
+            .top-bar {
+                padding: 0.4rem 1rem;
+            }
+            .nav {
+                gap: 0.2rem;
+            }
+            .nav a {
+                padding: 0.3rem 0.6rem;
+                font-size: 0.9rem;
+            }
+            .main-content {
+                padding: 3rem 1.5rem;
+            }
+            .page-header h1 {
+                font-size: 2.6rem;
+            }
+            .page-header .subhead {
+                font-size: 1rem;
+            }
+            .team-grid {
+                gap: 1.5rem;
+            }
+            .member-avatar {
+                width: 85px;
+                height: 85px;
+                font-size: 2rem;
+            }
+            .member-name {
+                font-size: 1.5rem;
+            }
+            .member-social a {
+                width: 28px;
+                height: 28px;
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 顶部栏 -->
+    <div class="top-bar">
+        <div class="logo"><i class="1"></i> Cozily</div>
+
+        <div class="nav">
+            <a href="index.html">首页</a>
+            <a href="dibiao.html">玩家地标</a>
+            <a href="paihangbang.html">排行榜</a>
+            <a href="licheng.html">服务器历程</a>
+            <a href="zonghe.html">综合导航</a>
+            <a href="gengzhinan.html">梗指南</a>
+            <a href="tuandui.html" class="active">团队介绍</a>
+            <a href="faq.html">常见问题</a>
+            <a href="t.html">测试界面</a>
+        </div>
+
+        <div class="right-tools">
+            <button class="theme-toggle" title="切换日夜模式"><i class="mdi mdi-weather-night"></i></button>
+            <a href="https://qm.qq.com/q/VTUeknT88Q" target="_blank" class="join-btn">加入交流群</a>
+        </div>
+    </div>
+
+    <!-- 主要内容区 -->
+    <div class="main-content">
+        <!-- 头部简洁介绍 -->
+        <div class="page-header">
+            <h1>管理团队</h1>
+        </div>
+
+        <!-- 团队成员网格 - 完全保留您的卡片内容 -->
+        <div class="team-grid">
+            <!-- sun_555 卡片 -->
+            <div class="team-card">
+                <div class="member-avatar">
+                    <img src="material/sun_555_logo.jpg" alt="sun_555">
+                </div>
+                <h2 class="member-name">sun_555</h2>
+                <div class="member-role">建筑 日常管理 社区维护</div>
+                <p class="member-bio">
+                    维护核心生电机制，确保服务器 24/7 稳定运行。红石与生电忠实爱好者。
+                </p>
+                <div class="member-social">
+                    <a href="#" target="_blank" title="QQ"><i class="mdi mdi-qqchat"></i></a>
+                    <a href="#" target="_blank" title="bilibili"><i class="mdi mdi-bilibili"></i></a>
+                    <a href="#" target="_blank" title="GitHub"><i class="mdi mdi-github"></i></a>
+                </div>
+            </div>
+
+            <!-- suzuka 卡片 -->
+            <div class="team-card">
+                <div class="member-avatar">
+                    <img src="material/suzuka_logo.jpg" alt="suzuka">
+                </div>
+                <h2 class="member-name">suzuka</h2>
+                <div class="member-role">建筑 日常管理</div>
+                <p class="member-bio">
+                    车万头子，没有任何才能，永夜抄L无b无接关通关。
+                </p>
+                <div class="member-social">
+                    <a href="#" target="_blank"><i class="mdi mdi-qqchat"></i></a>
+                    <a href="#" target="_blank"><i class="mdi mdi-bilibili"></i></a>
+                    <a href="#" target="_blank"><i class="mdi mdi-github"></i></a>
+                </div>
+            </div>
+
+            <!-- _Qian_an 卡片 -->
+            <div class="team-card">
+                <div class="member-avatar">
+                    <img src="material/_Qian_an_logo.jpg" alt="_Qian_an">
+                </div>
+                <h2 class="member-name">_Qian_an</h2>
+                <div class="member-role">开服的冤种</div>
+                <p class="member-bio">
+                    脑子一热想出来这个玩意，个人简介:我是人
+                </p>
+                <div class="member-social">
+                    <a href="#" target="_blank"><i class="mdi mdi-qqchat"></i></a>
+                    <a href="#" target="_blank"><i class="mdi mdi-bilibili"></i></a>
+                    <a href="#" target="_blank"><i class="mdi mdi-github"></i></a>
+                </div>
+            </div>
+
+            <!-- 卡片 -->
+            <div class="team-card">
+                <div class="member-avatar">
+                    <span>✨</span>
+                </div>
+                <h2 class="member-name">？？？</h2>
+                <div class="member-role">？？？？</div>
+                <p class="member-bio">
+                    虚位以待
+                </p>
+                <div class="member-social">
+                    <a href="#" target="_blank"><i class="mdi mdi-qqchat"></i></a>
+                    <a href="#" target="_blank"><i class="mdi mdi-github"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>© 2025 Cozily.top  |  mc.cozily.top  |  交流群 919191  /  787878</p>
+    </footer>
+
+    <script>
+        // 日夜模式切换
+        const themeToggle = document.querySelector('.theme-toggle');
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+        themeToggle.innerHTML = savedTheme === 'dark' ? '<i class="mdi mdi-white-balance-sunny"></i>' : '<i class="mdi mdi-weather-night"></i>';
+
+        themeToggle.addEventListener('click', () => {
+            let theme = document.documentElement.getAttribute('data-theme');
+            theme = theme === 'dark' ? 'light' : 'dark';
+            document.documentElement.setAttribute('data-theme', theme);
+            localStorage.setItem('theme', theme);
+            themeToggle.innerHTML = theme === 'dark' ? '<i class="mdi mdi-white-balance-sunny"></i>' : '<i class="mdi mdi-weather-night"></i>';
+        });
+    </script>
+</body>
+</html>

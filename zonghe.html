@@ -1,0 +1,1144 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5, user-scalable=yes">
+    <title>综合导航 - 鼠鼠安乐窝 | Minecraft服务器</title>
+    <meta name="description" content="鼠鼠安乐窝 - 高质量Minecraft生电服务器，mc.cozily.top">
+    <meta name="keywords" content="鼠鼠安乐窝,Minecraft,服务器,我的世界,生电,mc.cozily.top">
+    <meta name="author" content="鼠鼠安乐窝">
+
+    <!-- 字体 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;700&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+
+    <!-- 图标库 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@mdi/font@7.4.47/css/materialdesignicons.min.css">
+
+    <style>
+        :root {
+            --primary:    #D7BDE2;      /* 淡紫主色 */
+            --primary-d:  #A084DC;      /* 深紫 */
+            --primary-l:  #E6D0F2;      /* 浅紫 */
+            --bg:         #F8F5FC;      /* 背景 */
+            --card-bg:    rgba(255,255,255,0.78);
+            --text:       #2D1B47;
+            --text-light: #5A4A6E;
+            --border:     rgba(161,132,220,0.28);
+            --shadow:     0 8px 32px rgba(161,132,220,0.18);
+            --success:    #4caf50;
+            --error:      #f44336;
+        }
+
+        [data-theme="dark"] {
+            --primary:    #A084DC;
+            --primary-d:  #7B5EB8;
+            --primary-l:  #D7BDE2;
+            --bg:         #1A1425;
+            --card-bg:    rgba(42,33,64,0.82);
+            --text:       #E3D8F2;
+            --text-light: #C4B3E0;
+            --border:     rgba(177,156,217,0.20);
+            --shadow:     0 8px 32px rgba(0,0,0,0.50);
+            --success:    #66bb6a;
+            --error:      #ef5350;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans SC', 'Quicksand', system-ui, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            transition: background 0.4s, color 0.4s;
+        }
+
+        /* 顶部栏 - 毛玻璃按钮效果 */
+        .top-bar {
+            background: var(--card-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            box-shadow: var(--shadow);
+            border-bottom: 1px solid var(--border);
+            padding: 0.5rem 1.5rem;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary), var(--primary-d));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .logo i {
+            font-size: 2rem;
+            color: var(--primary);
+        }
+
+        .nav {
+            display: flex;
+            list-style: none;
+            gap: 0.3rem;
+            flex-wrap: wrap;
+        }
+
+        .nav a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1rem;
+            transition: all 0.3s cubic-bezier(0.2, 0, 0, 1);
+            position: relative;
+            padding: 0.4rem 0.8rem;
+            border-radius: 999px;
+            background: transparent;
+            border: 1px solid transparent;
+            white-space: nowrap;
+        }
+
+        .nav a:hover {
+            background: rgba(215, 189, 226, 0.15);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1px solid rgba(215, 189, 226, 0.3);
+            color: var(--primary-d);
+            transform: translateY(-1px);
+            box-shadow: 0 2px 8px rgba(161, 132, 220, 0.15);
+        }
+
+        .nav a.active {
+            color: var(--primary-d);
+            background: rgba(215, 189, 226, 0.1);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            border: 1px solid rgba(215, 189, 226, 0.2);
+        }
+
+        .nav a.active::after {
+            content: "";
+            position: absolute;
+            bottom: 0px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 16px;
+            height: 2px;
+            background: var(--primary);
+            border-radius: 2px;
+        }
+
+        .right-tools {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .theme-toggle, .join-btn {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-light);
+            transition: all 0.3s;
+        }
+
+        .theme-toggle:hover {
+            color: var(--primary-d);
+            transform: scale(1.1);
+        }
+
+        .join-btn {
+            background: var(--primary);
+            color: var(--text);
+            padding: 0.5rem 1.2rem;
+            border-radius: 999px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            text-decoration: none;
+        }
+
+        .join-btn:hover {
+            background: var(--primary-d);
+            transform: translateY(-1px);
+            box-shadow: var(--shadow);
+        }
+
+        /* ===== 综合导航页面样式 ===== */
+        .main-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 3rem 2rem 4rem;
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .page-header h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary), var(--primary-d));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem;
+        }
+
+        .page-header .subhead {
+            font-size: 1.1rem;
+            color: var(--text-light);
+        }
+
+        /* 服务器快速状态卡片 */
+        .server-status-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--border);
+            border-radius: 32px;
+            padding: 1.2rem 2rem;
+            box-shadow: var(--shadow);
+            margin-bottom: 3rem;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1.5rem;
+        }
+
+        .status-left {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .server-icon-small {
+            width: 48px;
+            height: 48px;
+            background: rgba(160, 132, 220, 0.2);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: var(--primary-d);
+        }
+
+        .server-meta {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .server-name {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--primary-d);
+        }
+
+        .server-ip {
+            font-size: 0.9rem;
+            color: var(--text-light);
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        .status-badge {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(160, 132, 220, 0.1);
+            padding: 0.5rem 1.2rem;
+            border-radius: 999px;
+            border: 1px solid var(--border);
+        }
+
+        .online-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+        .online-dot.online {
+            background: var(--success);
+            box-shadow: 0 0 8px var(--success);
+        }
+
+        .online-dot.offline {
+            background: var(--error);
+        }
+
+        .status-right {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .quick-copy {
+            background: var(--primary);
+            border: none;
+            border-radius: 999px;
+            padding: 0.5rem 1.5rem;
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: var(--text);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.2s;
+        }
+
+        .quick-copy:hover {
+            background: var(--primary-d);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+        }
+
+        .quick-copy.copied {
+            background: var(--success);
+            color: white;
+        }
+
+        .refresh-status {
+            background: none;
+            border: 1px solid var(--border);
+            border-radius: 999px;
+            padding: 0.5rem 1rem;
+            font-size: 0.9rem;
+            color: var(--text-light);
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            transition: all 0.2s;
+        }
+
+        .refresh-status:hover {
+            background: var(--primary-l);
+            color: var(--primary-d);
+            border-color: var(--primary-d);
+        }
+
+        /* 加载动画 */
+        .loading {
+            animation: pulse 1.5s infinite;
+            opacity: 0.6;
+        }
+        
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+
+        /* 分类导航 */
+        .category-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .category-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--border);
+            border-radius: 28px;
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            transition: all 0.3s;
+        }
+
+        .category-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--primary);
+            box-shadow: 0 12px 40px rgba(161, 132, 220, 0.25);
+        }
+
+        .category-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .category-icon {
+            width: 48px;
+            height: 48px;
+            background: rgba(160, 132, 220, 0.15);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: var(--primary-d);
+        }
+
+        .category-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--primary-d);
+        }
+
+        .category-desc {
+            font-size: 0.85rem;
+            color: var(--text-light);
+            margin-top: 0.2rem;
+        }
+
+        /* 链接列表 */
+        .link-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+        }
+
+        .link-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.8rem 1rem;
+            background: rgba(160, 132, 220, 0.04);
+            border-radius: 16px;
+            border: 1px solid transparent;
+            transition: all 0.2s;
+            text-decoration: none;
+            color: var(--text);
+        }
+
+        .link-item:hover {
+            background: rgba(160, 132, 220, 0.1);
+            border-color: var(--border);
+            transform: translateX(4px);
+        }
+
+        .link-info {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .link-icon {
+            width: 32px;
+            height: 32px;
+            background: rgba(160, 132, 220, 0.1);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            color: var(--primary-d);
+        }
+
+        .link-text {
+            font-weight: 500;
+        }
+
+        .link-meta {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .link-badge {
+            font-size: 0.7rem;
+            padding: 0.2rem 0.6rem;
+            background: rgba(160, 132, 220, 0.15);
+            border-radius: 999px;
+            color: var(--primary-d);
+        }
+
+        .link-arrow {
+            color: var(--text-light);
+            font-size: 1.2rem;
+            transition: transform 0.2s;
+        }
+
+        .link-item:hover .link-arrow {
+            transform: translateX(4px);
+            color: var(--primary-d);
+        }
+
+        /* 服务器资源包展示 */
+        .resource-showcase {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--border);
+            border-radius: 32px;
+            padding: 2rem;
+            margin: 3rem 0;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        .resource-info h3 {
+            font-size: 1.5rem;
+            color: var(--primary-d);
+            margin-bottom: 0.5rem;
+        }
+
+        .resource-info p {
+            color: var(--text-light);
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .resource-features {
+            list-style: none;
+            margin-bottom: 1.5rem;
+        }
+
+        .resource-features li {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--text);
+        }
+
+        .resource-features i {
+            color: var(--primary);
+            font-size: 1.1rem;
+        }
+
+        .resource-actions {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .resource-btn {
+            background: var(--primary);
+            border: none;
+            border-radius: 999px;
+            padding: 0.8rem 1.8rem;
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text);
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.2s;
+            text-decoration: none;
+        }
+
+        .resource-btn:hover {
+            background: var(--primary-d);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+        }
+
+        .resource-btn.secondary {
+            background: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary-d);
+        }
+
+        .resource-btn.secondary:hover {
+            background: var(--primary);
+            color: var(--text);
+        }
+
+        .resource-preview {
+            background: rgba(160, 132, 220, 0.1);
+            border-radius: 24px;
+            padding: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .preview-image {
+            width: 100%;
+            max-width: 300px;
+            height: auto;
+            border-radius: 16px;
+            background: var(--card-bg);
+            padding: 1rem;
+            text-align: center;
+        }
+
+        .preview-image i {
+            font-size: 8rem;
+            color: var(--primary);
+        }
+
+        /* 快速工具 */
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .tool-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: all 0.3s;
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+
+        .tool-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--primary);
+        }
+
+        .tool-icon {
+            width: 56px;
+            height: 56px;
+            background: rgba(160, 132, 220, 0.15);
+            border-radius: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: var(--primary-d);
+            margin: 0 auto 1rem;
+        }
+
+        .tool-name {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--primary-d);
+            margin-bottom: 0.3rem;
+        }
+
+        .tool-desc {
+            font-size: 0.85rem;
+            color: var(--text-light);
+        }
+
+        footer {
+            text-align: center;
+            padding: 3rem 2rem 2rem;
+            color: var(--text-light);
+            border-top: 1px solid var(--border);
+        }
+    </style>
+</head>
+<body>
+    <!-- 顶部栏 - 毛玻璃按钮效果 -->
+    <div class="top-bar">
+        <div class="logo"><i class="1"></i> Cozily</div>
+
+        <div class="nav">
+            <a href="index.html">首页</a>
+            <a href="dibiao.html">玩家地标</a>
+            <a href="paihangbang.html">排行榜</a>
+            <a href="licheng.html">服务器历程</a>
+            <a href="zonghe.html" class="active">综合导航</a>
+            <a href="gengzhinan.html">梗指南</a>
+            <a href="tuandui.html">团队介绍</a>
+            <a href="faq.html">常见问题</a>
+            <a href="t.html">测试界面</a>
+        </div>
+
+        <div class="right-tools">
+            <button class="theme-toggle" id="themeToggle" title="切换日夜模式"><i class="mdi mdi-weather-night"></i></button>
+            <a href="https://qm.qq.com/q/VTUeknT88Q" target="_blank" class="join-btn">加入交流群</a>
+        </div>
+    </div>
+
+    <!-- 主内容 - 综合导航 -->
+    <div class="main-content">
+        <div class="page-header">
+            <h1>综合导航</h1>
+            <div class="subhead">一站式访问所有服务器资源 · 工具 · 社区</div>
+        </div>
+
+        <!-- 服务器状态卡片 - 带真实API -->
+        <div class="server-status-card" id="serverStatusCard">
+            <div class="status-left">
+                <div class="server-icon-small" id="statusIcon">
+                    <i class="mdi mdi-server"></i>
+                </div>
+                <div class="server-meta">
+                    <span class="server-name">CozilyMC 主服务器</span>
+                    <span class="server-ip">
+                        <i class="mdi mdi-ip"></i> mc.cozily.top
+                    </span>
+                </div>
+                <div class="status-badge" id="statusBadge">
+                    <span class="online-dot" id="onlineDot"></span>
+                    <span id="statusText">获取中...</span>
+                </div>
+            </div>
+            <div class="status-right">
+                <button class="quick-copy" id="copyIpBtn">
+                    <i class="mdi mdi-content-copy"></i> 复制IP
+                </button>
+                <button class="refresh-status" id="refreshStatus">
+                    <i class="mdi mdi-refresh"></i> 刷新
+                </button>
+                <span class="status-badge" id="playerCount">
+                    <i class="mdi mdi-account-group"></i> <span id="onlineCount">?</span>/<span id="maxPlayers">?</span>
+                </span>
+            </div>
+        </div>
+
+        <div class="server-status-card" id="serverStatusCard">
+            <div class="status-left">
+                <div class="server-icon-small" id="statusIcon">
+                    <i class="mdi mdi-server"></i>
+                </div>
+                <div class="server-meta">
+                    <span class="server-name">友情推荐 SnowCherry&New World Online</span>
+                    <span class="server-ip">
+                        <i class="mdi mdi-ip"></i> v5.snowymc.top:15151
+                    </span>
+                </div>
+                <div class="status-badge" id="statusBadge">
+                    <span class="online-dot" id="onlineDot"></span>
+                    <span id="statusText">获取中...</span>
+                </div>
+            </div>
+            <div class="status-right">
+                <button class="quick-copy" id="copyIpBtn">
+                    <i class="mdi mdi-content-copy"></i> 复制IP
+                </button>
+                <button class="refresh-status" id="refreshStatus">
+                    <i class="mdi mdi-refresh"></i> 刷新
+                </button>
+                <span class="status-badge" id="playerCount">
+                    <i class="mdi mdi-account-group"></i> <span id="onlineCount">?</span>/<span id="maxPlayers">?</span>
+                </span>
+            </div>
+        </div>
+
+        <!-- 分类导航网格 -->
+        <div class="category-grid">
+            <!-- 社区交流 -->
+            <div class="category-card">
+                <div class="category-header">
+                    <div class="category-icon">
+                        <i class="mdi mdi-chat"></i>
+                    </div>
+                    <div>
+                        <div class="category-title">社区交流</div>
+                        <div class="category-desc">玩家聚集地 · 实时讨论</div>
+                    </div>
+                </div>
+                <div class="link-list">
+                    <a href="https://qm.qq.com/q/VTUeknT88Q" target="_blank" class="link-item">
+                        <div class="link-info">
+                            <div class="link-icon"><i class="mdi mdi-qqchat"></i></div>
+                            <span class="link-text">QQ 交流群</span>
+                        </div>
+                        <div class="link-meta">
+                            <span class="link-badge">0+ 人</span>
+                            <i class="mdi mdi-arrow-right link-arrow"></i>
+                        </div>
+                    </a>
+                    <a href="#" target="_blank" class="link-item">
+                        <div class="link-info">
+                            <div class="link-icon"><i class="mdi mdi-discord"></i></div>
+                            <span class="link-text">Discord 社区</span>
+                        </div>
+                        <div class="link-meta">
+                            <span class="link-badge">建设中</span>
+                            <i class="mdi mdi-arrow-right link-arrow"></i>
+                        </div>
+                    </a>
+                    <a href="https://qm.qq.com/q/EQgmviosGA" target="_blank" class="link-item">
+                        <div class="link-info">
+                            <div class="link-icon"><i class="mdi mdi-forum"></i></div>
+                            <span class="link-text">管理/权限申请</span>
+                        </div>
+                        <div class="link-meta">
+                            <span class="link-badge">申请加群审核</span>
+                            <i class="mdi mdi-arrow-right link-arrow"></i>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+            <!-- 开发相关 -->
+            <div class="category-card">
+                <div class="category-header">
+                    <div class="category-icon">
+                        <i class="mdi mdi-github"></i>
+                    </div>
+                    <div>
+                        <div class="category-title">开发相关</div>
+                        <div class="category-desc">开源 · 插件 · 技术文档</div>
+                    </div>
+                </div>
+                <div class="link-list">
+                    <a href="https://github.com/MQianYan?tab=repositories" target="_blank" class="link-item">
+                        <div class="link-info">
+                            <div class="link-icon"><i class="mdi mdi-github"></i></div>
+                            <span class="link-text">GitHub组织</span>
+                        </div>
+                        <div class="link-meta">
+                            <span class="link-badge">开源项目</span>
+                            <i class="mdi mdi-arrow-right link-arrow"></i>
+                        </div>
+                    </a>
+                    <a href="https://github.com/MQianYan?tab=repositories" target="_blank" class="link-item">
+                        <div class="link-info">
+                            <div class="link-icon"><i class="mdi mdi-code-tags"></i></div>
+                            <span class="link-text">腐竹的插件文档</span>
+                        </div>
+                        <div class="link-meta">
+                            <span class="link-badge">开发中</span>
+                            <i class="mdi mdi-arrow-right link-arrow"></i>
+                        </div>
+                    </a>
+                    <a href="https://qm.qq.com/q/EQgmviosGA" target="_blank" class="link-item">
+                        <div class="link-info">
+                            <div class="link-icon"><i class="mdi mdi-api"></i></div>
+                            <span class="link-text">创意提交</span>
+                        </div>
+                        <div class="link-meta">
+                            <span class="link-badge">QQ群提交审核</span>
+                            <i class="mdi mdi-arrow-right link-arrow"></i>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+            <!-- 第三方平台 -->
+            <div class="category-card">
+                <div class="category-header">
+                    <div class="category-icon">
+                        <i class="mdi mdi-earth"></i>
+                    </div>
+                    <div>
+                        <div class="category-title">第三方平台</div>
+                        <div class="category-desc">MineBBS · 视频 · 百科</div>
+                    </div>
+                </div>
+                <div class="link-list">
+                    <a href="https://www.minebbs.com/" target="_blank" class="link-item">
+                        <div class="link-info">
+                            <div class="link-icon"><i class="mdi mdi-forum"></i></div>
+                            <span class="link-text">MineBBS 宣传贴</span>
+                        </div>
+                        <div class="link-meta">
+                            <span class="link-badge">哥哥帮忙顶一下~</span>
+                            <i class="mdi mdi-arrow-right link-arrow"></i>
+                        </div>
+                    </a>
+                    <a href="https://www.bilibili.com/video/BV1Hp6CBZEDj/?spm_id_from=333.1387.homepage.video_card.click" target="_blank" class="link-item">
+                        <div class="link-info">
+                            <div class="link-icon"><i class="mdi mdi-video"></i></div>
+                            <span class="link-text">B站介绍视频</span>
+                        </div>
+                        <div class="link-meta">
+                            <span class="link-badge">给个三连吧）</span>
+                            <i class="mdi mdi-arrow-right link-arrow"></i>
+                        </div>
+                    </a>
+                    <a href="https://www.mcmod.cn/" target="_blank" class="link-item">
+                        <div class="link-info">
+                            <div class="link-icon"><i class="mdi mdi-book-open-variant"></i></div>
+                            <span class="link-text">MC百科</span>
+                        </div>
+                        <div class="link-meta">
+                            <span class="link-badge">2333</span>
+                            <i class="mdi mdi-arrow-right link-arrow"></i>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- 服务器资源包展示 -->
+        <div class="resource-showcase">
+            <div class="resource-info">
+                <h3>🎨 服务器专用资源包</h3>
+                <p>服务器材质包</p>
+                <ul class="resource-features">
+                    <li><i class="mdi mdi-check-circle"></i> 未加载材质可以下载此包以手动安装</li>
+                    <li><i class="mdi mdi-check-circle"></i></li>
+                    <li><i class="mdi mdi-check-circle"></i></li>
+                    <li><i class="mdi mdi-check-circle"></i></li>
+                </ul>
+                <div class="resource-actions">
+                    <a href="http://serve.cozily.top:7787/generated.zip" class="resource-btn">
+                        <i class="mdi mdi-download"></i> 立即下载
+                    </a>
+                    </a>
+                </div>
+            </div>
+            <div class="resource-preview">
+                <img src="material/pack_serverlogo.png" alt="pack_serverlogo">
+                <!-- <i class="mdi mdi-cube-outline"></i>-->
+            </div>
+        </div>
+
+        <!-- 快速工具 (带链接) -->
+        <h2 style="margin: 3rem 0 1rem; color: var(--primary-d);">🛠️ 常用工具</h2>
+        <div class="tools-grid">
+            <a href="https://mcid.lingningyu.cn/" class="tool-card">
+                <div class="tool-icon">
+                    <i class="mdi mdi-chart-line"></i>
+                </div>
+                <div class="tool-name">方块ID查询</div>
+                <div class="tool-desc">By lingningyu.cn Web</div>
+            </a>
+            <a href="https://www.chunkbase.com/apps/seed-map#seed=0&platform=java_1_21_2&dimension=overworld&x=0&z=0&zoom=0.5" class="tool-card">
+                <div class="tool-icon">
+                    <i class="mdi mdi-map-search"></i>
+                </div>
+                <div class="tool-name">种子查询</div>
+                <div class="tool-desc">By chunkbase.com All Rights Reserved.</div>
+            </a>
+            <a href="https://afdian.com/a/LTCat" class="tool-card">
+                <div class="tool-icon">
+                    <i class="mdi mdi-clock-outline"></i>
+                </div>
+                <div class="tool-name">PCL 2 下载</div>
+                <div class="tool-desc">PS. 转调至龙腾猫跃个人爱发电</div>
+            </a>
+            <a href="ziyuan.html" class="tool-card">
+                <div class="tool-icon">
+                    <i class="mdi mdi-calculator"></i>
+                </div>
+                <div class="tool-name">资源下载</div>
+                <div class="tool-desc">服务器各类贴图 玩家提供/作者授权的投影等</div>
+            </a>
+        </div>
+
+        <!-- 快捷链接 -->
+        <div style="display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center; margin: 3rem 0;">
+            <span style="background: var(--card-bg); backdrop-filter: blur(8px); padding: 0.5rem 1.2rem; border-radius: 999px; border: 1px solid var(--border);">
+                <i class="mdi mdi-star" style="color: var(--primary);"></i> 官网: cozily.top
+            </span>
+            <span style="background: var(--card-bg); backdrop-filter: blur(8px); padding: 0.5rem 1.2rem; border-radius: 999px; border: 1px solid var(--border);">
+                <i class="mdi mdi-email" style="color: var(--primary);"></i> 邮箱: admin@cozily.top
+            </span>
+            <span style="background: var(--card-bg); backdrop-filter: blur(8px); padding: 0.5rem 1.2rem; border-radius: 999px; border: 1px solid var(--border);" id="updateTime">
+                <i class="mdi mdi-update" style="color: var(--primary);"></i> 最后更新: 2025-03-08
+            </span>
+        </div>
+    </div>
+
+    <!-- 页脚 -->
+    <footer>
+        <p>© 2025 Cozily.top | mc.cozily.top | 交流群 919191 / 787878</p>
+    </footer>
+
+    <script>
+        // ===== 主题切换 =====
+        const themeToggle = document.getElementById('themeToggle');
+        const root = document.documentElement;
+        const themeIcon = themeToggle.querySelector('i');
+
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        if (savedTheme === 'dark') {
+            root.setAttribute('data-theme', 'dark');
+            themeIcon.classList.remove('mdi-weather-night');
+            themeIcon.classList.add('mdi-white-balance-sunny');
+        } else {
+            root.setAttribute('data-theme', 'light');
+            themeIcon.classList.add('mdi-weather-night');
+            themeIcon.classList.remove('mdi-white-balance-sunny');
+        }
+
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = root.getAttribute('data-theme') || 'light';
+            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+            root.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+
+            if (newTheme === 'dark') {
+                themeIcon.classList.remove('mdi-weather-night');
+                themeIcon.classList.add('mdi-white-balance-sunny');
+            } else {
+                themeIcon.classList.remove('mdi-white-balance-sunny');
+                themeIcon.classList.add('mdi-weather-night');
+            }
+        });
+
+        // ===== 复制IP功能 =====
+        const copyBtn = document.getElementById('copyIpBtn');
+        const originalContent = copyBtn.innerHTML;
+
+        copyBtn.addEventListener('click', async () => {
+            const ipText = 'mc.cozily.top';
+
+            try {
+                await navigator.clipboard.writeText(ipText);
+
+                copyBtn.classList.add('copied');
+                copyBtn.innerHTML = `<i class="mdi mdi-check"></i> 已复制`;
+
+                setTimeout(() => {
+                    copyBtn.classList.remove('copied');
+                    copyBtn.innerHTML = originalContent;
+                }, 1500);
+
+            } catch (err) {
+                try {
+                    const textarea = document.createElement('textarea');
+                    textarea.value = ipText;
+                    document.body.appendChild(textarea);
+                    textarea.select();
+                    document.execCommand('copy');
+                    document.body.removeChild(textarea);
+
+                    copyBtn.classList.add('copied');
+                    copyBtn.innerHTML = `<i class="mdi mdi-check"></i> 已复制`;
+                    setTimeout(() => {
+                        copyBtn.classList.remove('copied');
+                        copyBtn.innerHTML = originalContent;
+                    }, 1500);
+                } catch (e) {
+                    alert('复制失败，请手动复制 IP: ' + ipText);
+                }
+            }
+        });
+
+        // ===== 服务器状态API =====
+        const serverHost = 'mc.cozily.top';
+        const statusText = document.getElementById('statusText');
+        const onlineDot = document.getElementById('onlineDot');
+        const onlineCount = document.getElementById('onlineCount');
+        const maxPlayers = document.getElementById('maxPlayers');
+        const statusIcon = document.getElementById('statusIcon');
+        const refreshBtn = document.getElementById('refreshStatus');
+
+        // 加载状态
+        function setLoading(isLoading) {
+            const elements = [statusText, onlineCount, maxPlayers];
+            if (isLoading) {
+                elements.forEach(el => {
+                    if (el) el.classList.add('loading');
+                });
+                statusText.textContent = '获取中...';
+                onlineDot.className = 'online-dot';
+            } else {
+                elements.forEach(el => {
+                    if (el) el.classList.remove('loading');
+                });
+            }
+        }
+
+        // 获取服务器状态
+        async function fetchServerStatus() {
+            setLoading(true);
+            
+            const apis = [
+                `https://api.mcsrvstat.us/2/${serverHost}`,
+                `https://mcapi.us/server/status?ip=${serverHost}&port=25565`
+            ];
+            
+            let success = false;
+            
+            for (const apiUrl of apis) {
+                try {
+                    const response = await fetch(apiUrl, { 
+                        timeout: 5000,
+                        mode: 'cors',
+                        headers: {
+                            'Accept': 'application/json'
+                        }
+                    });
+                    
+                    if (!response.ok) continue;
+                    
+                    const data = await response.json();
+                    
+                    // 解析不同API的返回格式
+                    let online = false;
+                    let playersOnline = 0, playersMax = 0;
+                    let motd = '';
+                    
+                    if (apiUrl.includes('mcsrvstat.us')) {
+                        online = data.online || false;
+                        if (online) {
+                            playersOnline = data.players?.online || 0;
+                            playersMax = data.players?.max || 0;
+                            motd = data.motd?.clean?.join(' ') || data.motd?.raw?.[0] || '';
+                        }
+                    } else if (apiUrl.includes('mcapi.us')) {
+                        online = data.status === 'success' && (data.online || false);
+                        if (online) {
+                            playersOnline = data.players?.now || 0;
+                            playersMax = data.players?.max || 0;
+                        }
+                    }
+                    
+                    if (online) {
+                        onlineDot.className = 'online-dot online';
+                        statusText.textContent = '在线';
+                        onlineCount.textContent = playersOnline;
+                        maxPlayers.textContent = playersMax;
+                        statusIcon.innerHTML = '<i class="mdi mdi-server"></i>';
+                        success = true;
+                        break;
+                    } else {
+                        onlineDot.className = 'online-dot offline';
+                        statusText.textContent = '离线';
+                        onlineCount.textContent = '0';
+                        maxPlayers.textContent = '0';
+                        statusIcon.innerHTML = '<i class="mdi mdi-server-off"></i>';
+                    }
+                } catch (error) {
+                    console.log(`API ${apiUrl} 失败:`, error);
+                    continue;
+                }
+            }
+            
+            if (!success) {
+                onlineDot.className = 'online-dot offline';
+                statusText.textContent = '离线';
+                onlineCount.textContent = '0';
+                maxPlayers.textContent = '0';
+                statusIcon.innerHTML = '<i class="mdi mdi-server-off"></i>';
+            }
+            
+            setLoading(false);
+        }
+
+        // 初始获取
+        fetchServerStatus();
+
+        // 刷新按钮点击事件
+        if (refreshBtn) {
+            refreshBtn.addEventListener('click', () => {
+                fetchServerStatus();
+            });
+        }
+
+        // 每60秒自动刷新一次
+        setInterval(fetchServerStatus, 60000);
+    </script>
+</body>
+</html>

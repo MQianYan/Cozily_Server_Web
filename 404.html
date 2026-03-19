@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5, user-scalable=yes">
+    <title>404 - 鼠鼠安乐窝 | Minecraft服务器</title>
+    <meta name="description" content="页面未找到 - 鼠鼠安乐窝 Minecraft服务器">
+
+    <!-- 字体 & 图标 (与主页完全一致) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;700&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@mdi/font@7.4.47/css/materialdesignicons.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <style>
+        /* ===== 完全保留顶部栏的样式 ===== */
+        :root {
+            --primary:    #D7BDE2;      /* 淡紫主色 */
+            --primary-d:  #A084DC;      /* 深紫 */
+            --primary-l:  #E6D0F2;      /* 浅紫 */
+            --bg:         #F8F5FC;      /* 背景 */
+            --card-bg:    rgba(255,255,255,0.78);
+            --text:       #2D1B47;
+            --text-light: #5A4A6E;
+            --border:     rgba(161,132,220,0.28);
+            --shadow:     0 8px 32px rgba(161,132,220,0.18);
+        }
+
+        [data-theme="dark"] {
+            --primary:    #A084DC;
+            --primary-d:  #7B5EB8;
+            --primary-l:  #D7BDE2;
+            --bg:         #1A1425;
+            --card-bg:    rgba(42,33,64,0.82);
+            --text:       #E3D8F2;
+            --text-light: #C4B3E0;
+            --border:     rgba(177,156,217,0.20);
+            --shadow:     0 8px 32px rgba(0,0,0,0.50);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans SC', 'Quicksand', system-ui, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            transition: background 0.4s, color 0.4s;
+        }
+
+        /* ===== 完全复用顶部栏 ===== */
+        .top-bar {
+            background: var(--card-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            box-shadow: var(--shadow);
+            border-bottom: 1px solid var(--border);
+            padding: 0.5rem 1.5rem;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary), var(--primary-d));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .logo i {
+            font-size: 2rem;
+            color: var(--primary);
+        }
+
+        .nav {
+            display: flex;
+            list-style: none;
+            gap: 0.3rem;
+            flex-wrap: wrap;
+        }
+
+        .nav a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1rem;
+            transition: all 0.3s cubic-bezier(0.2, 0, 0, 1);
+            position: relative;
+            padding: 0.4rem 0.8rem;
+            border-radius: 999px;
+            background: transparent;
+            border: 1px solid transparent;
+            white-space: nowrap;
+        }
+
+        .nav a:hover {
+            background: rgba(215, 189, 226, 0.15);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1px solid rgba(215, 189, 226, 0.3);
+            color: var(--primary-d);
+            transform: translateY(-1px);
+            box-shadow: 0 2px 8px rgba(161, 132, 220, 0.15);
+        }
+
+        .right-tools {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .theme-toggle, .join-btn {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-light);
+            transition: all 0.3s;
+        }
+
+        .theme-toggle:hover {
+            color: var(--primary-d);
+            transform: scale(1.1);
+        }
+
+        .join-btn {
+            background: var(--primary);
+            color: var(--text);
+            padding: 0.5rem 1.2rem;
+            border-radius: 999px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            text-decoration: none;
+        }
+
+        .join-btn:hover {
+            background: var(--primary-d);
+            transform: translateY(-1px);
+            box-shadow: var(--shadow);
+        }
+
+        /* ===== 404 内容区 - 极简风格，无圆角卡片，只有文字 ===== */
+        .error-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 5rem 2rem;
+            min-height: calc(100vh - 160px); /* 保证 footer 在底部 */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .error-content {
+            max-width: 600px;
+        }
+
+        .error-code {
+            font-size: 6rem;
+            font-weight: 700;
+            line-height: 1;
+            color: var(--text);
+            margin-bottom: 0.5rem;
+            letter-spacing: -2px;
+        }
+
+        .error-message {
+            font-size: 2rem;
+            font-weight: 500;
+            color: var(--text-light);
+            margin-bottom: 1.5rem;
+            border-left: 4px solid var(--primary);
+            padding-left: 1.2rem;
+        }
+
+        .error-desc {
+            font-size: 1rem;
+            color: var(--text-light);
+            margin-bottom: 2.5rem;
+            line-height: 1.8;
+        }
+
+        .error-desc strong {
+            color: var(--primary-d);
+            font-weight: 600;
+        }
+
+        .error-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .error-links a {
+            color: var(--primary-d);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            border-bottom: 2px solid transparent;
+            transition: border-color 0.2s;
+            padding-bottom: 2px;
+        }
+
+        .error-links a:hover {
+            border-bottom-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .error-links .home-link {
+            color: var(--text);
+            background: var(--primary);
+            padding: 0.6rem 1.5rem;
+            border-radius: 999px;  /* 保留按钮圆角，但它是独立元素，不影响整体简约感 */
+            border-bottom: none;
+        }
+
+        .error-links .home-link:hover {
+            background: var(--primary-d);
+            color: white;
+            border-bottom: none;
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem;
+            color: var(--text-light);
+            border-top: 1px solid var(--border);
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .top-bar {
+                padding: 0.4rem 1rem;
+            }
+            .error-code {
+                font-size: 4.5rem;
+            }
+            .error-message {
+                font-size: 1.6rem;
+            }
+            .error-container {
+                padding: 3rem 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- ===== 完全保留的顶部栏（包含日夜切换功能） ===== -->
+    <div class="top-bar">
+        <div class="logo"><i class="1"></i> Cozily</div>
+
+        <div class="nav">
+            <a href="index.html">首页</a>
+            <a href="dibiao.html">玩家地标</a>
+            <a href="paihangbang.html">排行榜</a>
+            <a href="licheng.html">服务器历程</a>
+            <a href="zonghe.html">综合导航</a>
+            <a href="gengzhinan.html">梗指南</a>
+            <a href="tuandui.html">团队介绍</a>
+            <a href="faq.html">常见问题</a>
+            <a href="t.html">测试界面</a>
+        </div>
+
+        <div class="right-tools">
+            <button class="theme-toggle" id="themeToggle" title="切换日夜模式">
+                <i class="mdi mdi-weather-night"></i>
+            </button>
+            <a href="https://qm.qq.com/q/VTUeknT88Q" target="_blank" class="join-btn">加入交流群</a>
+        </div>
+    </div>
+
+    <!-- ===== 极简404内容区：没有圆角卡片，只有纯文字和链接 ===== -->
+    <div class="error-container">
+        <div class="error-content">
+            <div class="error-code">404</div>
+            <div class="error-message">页面找不到了</div>
+            <div class="error-desc">
+                您访问的地址可能已被移动或删除。<br>
+                但服务器的地址一直没变：<strong>mc.cozily.top</strong><br>
+                随时欢迎您回来。
+            </div>
+            <div class="error-links">
+                <a href="index.html" class="home-link">返回首页</a>
+                <a href="https://qm.qq.com/q/VTUeknT88Q" target="_blank">反馈问题</a>
+                <a href="javascript:history.back()">后退</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- 页脚 (简约) -->
+    <footer>
+        <p>© 2025 Cozily.top · 404 Not Found</p>
+    </footer>
+
+    <script>
+        // ===== 日夜模式切换（完全保留） =====
+        const themeToggle = document.getElementById('themeToggle');
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+        themeToggle.innerHTML = savedTheme === 'dark' 
+            ? '<i class="mdi mdi-white-balance-sunny"></i>' 
+            : '<i class="mdi mdi-weather-night"></i>';
+
+        themeToggle.addEventListener('click', () => {
+            let theme = document.documentElement.getAttribute('data-theme');
+            theme = theme === 'dark' ? 'light' : 'dark';
+            document.documentElement.setAttribute('data-theme', theme);
+            localStorage.setItem('theme', theme);
+            themeToggle.innerHTML = theme === 'dark' 
+                ? '<i class="mdi mdi-white-balance-sunny"></i>' 
+                : '<i class="mdi mdi-weather-night"></i>';
+        });
+    </script>
+</body>
+</html>
