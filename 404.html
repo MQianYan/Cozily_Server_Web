@@ -50,7 +50,7 @@
             background: var(--bg);
             color: var(--text);
             min-height: 100vh;
-            transition: background 0.4s, color 0.4s;
+            transition: background 0.4, color 0.4;
         }
 
         /* ===== 完全复用顶部栏 ===== */
@@ -99,7 +99,7 @@
             text-decoration: none;
             font-weight: 500;
             font-size: 1rem;
-            transition: all 0.3s cubic-bezier(0.2, 0, 0, 1);
+            transition: all 0.3 cubic-bezier(0.2, 0, 0, 1);
             position: relative;
             padding: 0.4rem 0.8rem;
             border-radius: 999px;
@@ -130,7 +130,7 @@
             font-size: 1.5rem;
             cursor: pointer;
             color: var(--text-light);
-            transition: all 0.3s;
+            transition: all 0.3;
         }
 
         .theme-toggle:hover {
@@ -212,7 +212,7 @@
             font-weight: 600;
             font-size: 1rem;
             border-bottom: 2px solid transparent;
-            transition: border-color 0.2s;
+            transition: border-color 0.2;
             padding-bottom: 2px;
         }
 
@@ -290,8 +290,8 @@
             <div class="error-message">页面找不到了</div>
             <div class="error-desc">
                 您访问的地址可能已被移动或删除。<br>
-                但服务器的地址一直没变：<strong>mc.cozily.top</strong><br>
-                随时欢迎您回来。
+                或许该页面正在更新呢...
+
             </div>
             <div class="error-links">
                 <a href="index.html" class="home-link">返回首页</a>
