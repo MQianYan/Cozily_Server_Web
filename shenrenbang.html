@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5, user-scalable=yes">
+    <title>服务器神人榜 - 鼠鼠安乐窝 | Minecraft服务器</title>
+    <meta name="description" content="鼠鼠安乐窝服务器神人榜 - 记录那些闪耀的玩家">
+    <meta name="keywords" content="鼠鼠安乐窝,Minecraft,服务器,神人榜,玩家">
+    <meta name="author" content="鼠鼠安乐窝">
+
+    <!-- 字体 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;700&family=Noto+Sans+SC:wght@400;500;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- 图标库：Material Design Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@mdi/font@7.4.47/css/materialdesignicons.min.css">
+
+    <style>
+        :root {
+            --primary:    #D7BDE2;
+            --primary-d:  #A084DC;
+            --primary-l:  #E6D0F2;
+            --bg:         #F8F5FC;
+            --card-bg:    rgba(255,255,255,0.78);
+            --text:       #2D1B47;
+            --text-light: #5A4A6E;
+            --border:     rgba(161,132,220,0.28);
+            --shadow:     0 8px 32px rgba(161,132,220,0.18);
+            --success:    #4caf50;
+            --error:      #f44336;
+            --warning:    #ff9800;
+            --gold:       #FFD700;
+            --silver:     #C0C0C0;
+            --bronze:     #CD7F32;
+        }
+
+        [data-theme="dark"] {
+            --primary:    #A084DC;
+            --primary-d:  #7B5EB8;
+            --primary-l:  #D7BDE2;
+            --bg:         #1A1425;
+            --card-bg:    rgba(42,33,64,0.82);
+            --text:       #E3D8F2;
+            --text-light: #C4B3E0;
+            --border:     rgba(177,156,217,0.20);
+            --shadow:     0 8px 32px rgba(0,0,0,0.50);
+            --success:    #66bb6a;
+            --error:      #ef5350;
+            --warning:    #ffa726;
+            --gold:       #FFD700;
+            --silver:     #C0C0C0;
+            --bronze:     #CD7F32;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', 'Noto Sans SC', 'Quicksand', system-ui, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            transition: background 0.4s, color 0.4s;
+            line-height: 1.5;
+        }
+
+        /* 顶部导航栏 */
+        .top-bar {
+            background: var(--card-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            box-shadow: var(--shadow);
+            border-bottom: 1px solid var(--border);
+            padding: 0.5rem 1.5rem;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary), var(--primary-d));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .logo i {
+            font-size: 2rem;
+            color: var(--primary);
+        }
+
+        /* 导航容器 - 紧凑间距 */
+        .nav {
+            display: flex;
+            list-style: none;
+            gap: 0.3rem;
+            flex-wrap: wrap;
+        }
+
+        /* 毛玻璃按钮效果 - 每个导航链接 */
+        .nav a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1rem;
+            transition: all 0.3s cubic-bezier(0.2, 0, 0, 1);
+            position: relative;
+            padding: 0.4rem 0.8rem;
+            border-radius: 999px;
+            background: transparent;
+            border: 1px solid transparent;
+            white-space: nowrap;
+        }
+
+        .nav a:hover {
+            background: rgba(215, 189, 226, 0.15);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1px solid rgba(215, 189, 226, 0.3);
+            color: var(--primary-d);
+            transform: translateY(-1px);
+            box-shadow: 0 2px 8px rgba(161, 132, 220, 0.15);
+        }
+
+        .nav a.active {
+            color: var(--primary-d);
+            background: rgba(215, 189, 226, 0.1);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            border: 1px solid rgba(215, 189, 226, 0.2);
+        }
+
+        .nav a.active::after {
+            content: "";
+            position: absolute;
+            bottom: 0px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 16px;
+            height: 2px;
+            background: var(--primary);
+            border-radius: 2px;
+        }
+
+        .right-tools {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .theme-toggle, .join-btn {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-light);
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .theme-toggle i, .join-btn i {
+            font-size: 1.5rem;
+            line-height: 1;
+        }
+
+        .theme-toggle:hover {
+            color: var(--primary-d);
+            transform: scale(1.1);
+        }
+
+        .join-btn {
+            background: var(--primary);
+            color: var(--text);
+            padding: 0.5rem 1.2rem;
+            border-radius: 999px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            text-decoration: none;
+            gap: 0.3rem;
+        }
+
+        .join-btn i {
+            font-size: 1.1rem;
+        }
+
+        .join-btn:hover {
+            background: var(--primary-d);
+            transform: translateY(-1px);
+            box-shadow: var(--shadow);
+        }
+
+        /* 主内容区域 */
+        .main-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 3rem 2.5rem 4rem;
+        }
+
+        /* 页面头部 */
+        .page-header {
+            text-align: center;
+            padding: 2rem 0 3rem;
+        }
+
+        .page-header h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary), var(--primary-d));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1rem;
+            letter-spacing: -0.02em;
+        }
+
+        .page-header .subtitle {
+            font-size: 1.2rem;
+            color: var(--text-light);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* 神人榜统计栏 */
+        .stats-bar {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .stat-item {
+            background: var(--card-bg);
+            backdrop-filter: blur(8px);
+            border: 1px solid var(--border);
+            border-radius: 999px;
+            padding: 0.5rem 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 500;
+        }
+
+        .stat-item i {
+            color: var(--primary-d);
+            font-size: 1.2rem;
+            line-height: 1;
+        }
+
+        /* 神人条目列表 - 每个条目左右均分 */
+        .god-list {
+            display: flex;
+            flex-direction: column;
+            gap: 2.5rem;
+        }
+
+        /* 单个神人卡片 - 左右均分布局 */
+        .god-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--border);
+            border-radius: 2rem;
+            overflow: hidden;
+            transition: all 0.3s;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0;
+            box-shadow: var(--shadow);
+        }
+
+        .god-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--primary);
+            box-shadow: 0 20px 40px rgba(160, 132, 220, 0.25);
+        }
+
+        /* 左侧图片区域 */
+        .god-image {
+            position: relative;
+            min-height: 320px;
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: flex-end;
+            justify-content: flex-start;
+            padding: 1.5rem;
+        }
+
+        .rank-badge {
+            position: absolute;
+            top: 1.5rem;
+            left: 1.5rem;
+            background: var(--primary-d);
+            color: white;
+            padding: 0.4rem 1.2rem;
+            border-radius: 999px;
+            font-weight: 700;
+            font-size: 1rem;
+            backdrop-filter: blur(4px);
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .rank-badge i {
+            font-size: 1.2rem;
+            line-height: 1;
+        }
+
+        .rank-badge.gold {
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            color: #2D1B47;
+        }
+
+        .rank-badge.silver {
+            background: linear-gradient(135deg, #C0C0C0, #A0A0A0);
+        }
+
+        .rank-badge.bronze {
+            background: linear-gradient(135deg, #CD7F32, #B87333);
+        }
+
+        .image-caption {
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(8px);
+            padding: 0.3rem 1rem;
+            border-radius: 999px;
+            color: white;
+            font-size: 0.8rem;
+            z-index: 2;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        .image-caption i {
+            font-size: 0.9rem;
+            line-height: 1;
+        }
+
+        /* 右侧内容区域 */
+        .god-content {
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .god-header {
+            margin-bottom: 1rem;
+        }
+
+        .god-name {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary-d);
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            flex-wrap: wrap;
+        }
+
+        .god-name i {
+            font-size: 1.8rem;
+            line-height: 1;
+            color: var(--gold);
+        }
+
+        .god-title {
+            display: inline-block;
+            background: rgba(160, 132, 220, 0.15);
+            padding: 0.2rem 1rem;
+            border-radius: 999px;
+            font-size: 0.8rem;
+            color: var(--primary-d);
+            font-weight: 500;
+        }
+
+        .god-desc {
+            color: var(--text-light);
+            line-height: 1.7;
+            margin: 1rem 0;
+            font-size: 0.95rem;
+        }
+
+        .god-achievements {
+            background: rgba(160, 132, 220, 0.05);
+            border-radius: 1rem;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-left: 3px solid var(--primary);
+        }
+
+        .achievement-item {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            margin: 0.5rem 0;
+            font-size: 0.85rem;
+            color: var(--text-light);
+        }
+
+        .achievement-item i {
+            color: var(--gold);
+            font-size: 1rem;
+            line-height: 1;
+            flex-shrink: 0;
+        }
+
+        /* 三个按钮区域 */
+        .god-actions {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-top: 1.5rem;
+        }
+
+        .action-btn {
+            padding: 0.6rem 1.3rem;
+            border-radius: 999px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            border: none;
+            background: var(--primary);
+            color: var(--text);
+            text-decoration: none;
+        }
+
+        .action-btn i {
+            font-size: 1rem;
+            line-height: 1;
+        }
+
+        .action-btn:hover {
+            transform: translateY(-2px);
+            filter: brightness(0.95);
+            box-shadow: var(--shadow);
+        }
+
+        .action-btn.primary {
+            background: var(--primary-d);
+            color: white;
+        }
+
+        .action-btn.secondary {
+            background: rgba(160, 132, 220, 0.2);
+            border: 1px solid var(--border);
+            color: var(--text-light);
+        }
+
+        .action-btn.secondary:hover {
+            background: var(--primary);
+            color: var(--text);
+        }
+
+        .action-btn.outline {
+            background: transparent;
+            border: 1px solid var(--primary);
+            color: var(--primary-d);
+        }
+
+        .action-btn.outline:hover {
+            background: var(--primary);
+            color: var(--text);
+        }
+
+        /* 页脚 */
+        footer {
+            text-align: center;
+            padding: 4rem 0 2.5rem;
+            color: var(--text-light);
+            border-top: 1px solid var(--border);
+        }
+
+        /* 响应式 - 移动端变为上下布局 */
+        @media (max-width: 768px) {
+            .top-bar {
+                padding: 0.4rem 1rem;
+            }
+            .nav {
+                gap: 0.2rem;
+                justify-content: center;
+            }
+            .nav a {
+                padding: 0.3rem 0.6rem;
+                font-size: 0.85rem;
+            }
+            .main-content {
+                padding: 1.5rem;
+            }
+            .page-header h1 {
+                font-size: 2.2rem;
+            }
+            .god-card {
+                grid-template-columns: 1fr;
+            }
+            .god-image {
+                min-height: 240px;
+            }
+            .god-name {
+                font-size: 1.5rem;
+            }
+            .god-name i {
+                font-size: 1.4rem;
+            }
+            .stats-bar {
+                gap: 1rem;
+            }
+            .stat-item {
+                padding: 0.3rem 1rem;
+                font-size: 0.8rem;
+            }
+            .stat-item i {
+                font-size: 1rem;
+            }
+            .god-actions {
+                justify-content: center;
+            }
+            .action-btn {
+                padding: 0.5rem 1rem;
+                font-size: 0.8rem;
+            }
+            .action-btn i {
+                font-size: 0.9rem;
+            }
+        }
+
+        @media (min-width: 769px) and (max-width: 1024px) {
+            .god-card {
+                grid-template-columns: 1fr;
+            }
+            .god-image {
+                min-height: 280px;
+            }
+        }
+
+        /* 修复所有图标全局尺寸 - 防止图标异常放大 */
+        i, .mdi, .mdi-set, .mdi:before {
+            font-size: inherit;
+            line-height: 1;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 顶部导航栏 - 与主页一致 -->
+    <div class="top-bar">
+        <div class="logo"><i class="mdi mdi-paw"></i> Cozily</div>
+        <div class="nav">
+            <a href="index.html">首页</a>
+            <a href="dibiao.html">玩家地标</a>
+            <a href="licheng.html">服务器历程</a>
+            <a href="zonghe.html">综合导航</a>
+            <a href="shenrenbang.html" class="active">神人榜</a>
+            <a href="tuandui.html">团队介绍</a>
+            <a href="faq.html">常见问题</a>
+            <a href="t.html">测试界面</a>
+        </div>
+        <div class="right-tools">
+            <button class="theme-toggle" title="切换日夜模式"><i class="mdi mdi-weather-night"></i></button>
+            <a href="https://qm.qq.com/q/VTUeknT88Q" target="_blank" class="join-btn">加入交流群</a>
+        </div>
+    </div>
+
+    <!-- 主内容 - 神人榜页面 -->
+    <div class="main-content">
+        <div class="page-header">
+            <h1>🏆 服务器神人榜</h1>
+            <div class="subtitle">记录那些闪耀在方块世界的传奇玩家</div>
+        </div>
+
+        <!-- 统计栏 -->
+        <div class="stats-bar">
+            <div class="stat-item"><i class="mdi mdi-crown"></i> 上榜神人 · 1位</div>
+            <div class="stat-item"><i class="mdi mdi-star"></i> 传奇事迹 · 2件</div>
+        </div>
+
+        <!-- 神人条目列表 -->
+        <div class="god-list" id="godList">
+            <!-- 条目1：建筑之神 -->
+            <div class="god-card">
+                <div class="god-image" style="background-image: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                    <div class="rank-badge gold"><i class="mdi mdi-crown"></i> 1</div>
+                    <div class="image-caption"><i class="mdi mdi-image-filter"></i> 7</div>
+                </div>
+                <div class="god-content">
+                    <div class="god-header">
+                        <div class="god-name">
+                            6
+                            <i class="mdi mdi-crown" style="color: var(--gold);"></i>
+                        </div>
+                        <span class="god-title"><i class="mdi mdi-palette"></i> 5</span>
+                    </div>
+                    <p class="god-desc">
+                        4
+                    </p>
+                    <div class="god-achievements">
+                        <div class="achievement-item"><i class="mdi mdi-trophy"></i> 3</div>
+                        <div class="achievement-item"><i class="mdi mdi-map-marker"></i> 2</div>
+                        <div class="achievement-item"><i class="mdi mdi-clock"></i> 1</div>
+                    </div>
+                    <div class="god-actions">
+                        <button class="action-btn primary" data-god="幻光筑梦师" data-action="detail"><i class="mdi mdi-information-outline"></i> 详细事迹</button>
+                        <button class="action-btn outline" data-god="幻光筑梦师" data-action="comment"><i class="mdi mdi-message-text"></i> 留言应援</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 条目2：红石狂人 -->
+            <div class="god-card">
+                <div class="god-image" style="background-image: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                    <div class="rank-badge silver"><i class="mdi mdi-flash"></i> 2</div>
+                    <div class="image-caption"><i class="mdi mdi-cog"></i> 8</div>
+                </div>
+                <div class="god-content">
+                    <div class="god-header">
+                        <div class="god-name">
+                            7
+                            <i class="mdi mdi-flask"></i>
+                        </div>
+                        <span class="god-title"><i class="mdi mdi-chip"></i> 6</span>
+                    </div>
+                    <p class="god-desc">
+                        5
+                    </p>
+                    <div class="god-achievements">
+                        <div class="achievement-item"><i class="mdi mdi-trophy"></i> 4</div>
+                        <div class="achievement-item"><i class="mdi mdi-calculator"></i> 3</div>
+                        <div class="achievement-item"><i class="mdi mdi-clock"></i> 2</div>
+                    </div>
+                    <div class="god-actions">
+                       <a href="detail.html" class="action-btn primary">详细事迹</a>
+                        <button class="action-btn outline" data-god="逻辑主宰" data-action="comment"><i class="mdi mdi-message-text"></i> 1</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 空位预留说明（提示可添加更多神人） -->
+        <div style="text-align: center; margin-top: 3rem; padding: 2rem; background: var(--card-bg); backdrop-filter: blur(8px); border-radius: 2rem; border: 1px dashed var(--border);">
+            <i class="mdi mdi-plus-circle-outline" style="font-size: 2rem; color: var(--primary-d); line-height: 1;"></i>
+            <p style="margin-top: 0.5rem; color: var(--text-light);">更多神人即将登场 · 身边的传奇等你提名</p>
+        </div>
+    </div>
+
+    <footer>
+        <p>© 2025 www.cozily.top | Page for GitHub.io | QQ交流群:749543572</p>
+        <p>‎</p>
+        <p>CozilyMC 是一个独立的团队。Minecraft™ 是 Mojang Studios 和 Microsoft Corporation 的商标及其游戏标识。</p>
+        <p>CozilyMC 未获Mojang Studios或Microsoft公司批准，也未与其有任何关联。</p>
+        <p>我们的团队致力于为玩家提供良好的游戏环境，并愿意维护，保证正确的价值观</p>
+    </footer>
+
+    <script>
+        // 日夜模式切换
+        const themeToggle = document.querySelector('.theme-toggle');
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+        themeToggle.innerHTML = savedTheme === 'dark' ? '<i class="mdi mdi-white-balance-sunny"></i>' : '<i class="mdi mdi-weather-night"></i>';
+
+        themeToggle.addEventListener('click', () => {
+            let theme = document.documentElement.getAttribute('data-theme');
+            theme = theme === 'dark' ? 'light' : 'dark';
+            document.documentElement.setAttribute('data-theme', theme);
+            localStorage.setItem('theme', theme);
+            themeToggle.innerHTML = theme === 'dark' ? '<i class="mdi mdi-white-balance-sunny"></i>' : '<i class="mdi mdi-weather-night"></i>';
+        });
+
+        // 三个按钮的交互处理（保持原有功能不变）
+        const allActionBtns = document.querySelectorAll('.action-btn');
+
+        allActionBtns.forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                const godName = this.dataset.god;
+                const action = this.dataset.action;
+                
+                if (action === 'detail') {
+                    alert(`📖 【${godName}】\n\n详情页面开发中，后续将展示完整事迹、作品集和荣誉墙。\n您可在此自定义详细内容。`);
+                } 
+                else if (action === 'like') {
+                    if (likeCounts[godName]) {
+                        likeCounts[godName]++;
+                        this.innerHTML = `<i class="mdi mdi-thumb-up"></i> 点赞 · ${likeCounts[godName]}`;
+                        this.style.transform = 'scale(1.05)';
+                        setTimeout(() => { this.style.transform = ''; }, 200);
+                        console.log(`点赞成功：${godName} 当前点赞 ${likeCounts[godName]}`);
+                    }
+                } 
+                else if (action === 'comment') {
+                    const userMessage = prompt(`💬 留言给 ${godName}：\n（可在此自定义留言内容）`, "太强了！支持！");
+                    if (userMessage && userMessage.trim()) {
+                        alert(`✅ 留言已发送！\n\n你的留言：「${userMessage}」\n管理员审核后将会展示。`);
+                    } else if (userMessage !== null) {
+                        alert('留言内容不能为空~');
+                    }
+                }
+            });
+        });
+
+
+        console.log('神人榜已加载，三个按钮均已绑定');
+    </script>
+</body>
+</html>

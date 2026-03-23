@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5, user-scalable=yes">
+    <title>自述文件 - Cozily官方 | 鼠鼠安乐窝</title>
+    <meta name="description" content="Cozily官方网站自述页面 - 知识产权声明与开源信息">
+    <meta name="keywords" content="Cozily,鼠鼠安乐窝,Minecraft,服务器,开源,知识产权,自述">
+    <meta name="author" content="CozilyMC">
+
+    <!-- 字体 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;700&family=Noto+Sans+SC:wght@400;500;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- 图标库：Material Design Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@mdi/font@7.4.47/css/materialdesignicons.min.css">
+
+    <style>
+        :root {
+            --primary:    #D7BDE2;
+            --primary-d:  #A084DC;
+            --primary-l:  #E6D0F2;
+            --bg:         #F8F5FC;
+            --card-bg:    rgba(255,255,255,0.78);
+            --text:       #2D1B47;
+            --text-light: #5A4A6E;
+            --border:     rgba(161,132,220,0.28);
+            --shadow:     0 8px 32px rgba(161,132,220,0.18);
+            --success:    #4caf50;
+            --error:      #f44336;
+            --warning:    #ff9800;
+            --gold:       #FFD700;
+            --silver:     #C0C0C0;
+            --bronze:     #CD7F32;
+        }
+
+        [data-theme="dark"] {
+            --primary:    #A084DC;
+            --primary-d:  #7B5EB8;
+            --primary-l:  #D7BDE2;
+            --bg:         #1A1425;
+            --card-bg:    rgba(42,33,64,0.82);
+            --text:       #E3D8F2;
+            --text-light: #C4B3E0;
+            --border:     rgba(177,156,217,0.20);
+            --shadow:     0 8px 32px rgba(0,0,0,0.50);
+            --success:    #66bb6a;
+            --error:      #ef5350;
+            --warning:    #ffa726;
+            --gold:       #FFD700;
+            --silver:     #C0C0C0;
+            --bronze:     #CD7F32;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', 'Noto Sans SC', 'Quicksand', system-ui, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            transition: background 0.4s, color 0.4s;
+            line-height: 1.5;
+        }
+
+        /* 顶部导航栏 */
+        .top-bar {
+            background: var(--card-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            box-shadow: var(--shadow);
+            border-bottom: 1px solid var(--border);
+            padding: 0.5rem 1.5rem;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary), var(--primary-d));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .logo i {
+            font-size: 2rem;
+            color: var(--primary);
+        }
+
+        .nav {
+            display: flex;
+            list-style: none;
+            gap: 0.3rem;
+            flex-wrap: wrap;
+        }
+
+        .nav a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1rem;
+            transition: all 0.3s cubic-bezier(0.2, 0, 0, 1);
+            position: relative;
+            padding: 0.4rem 0.8rem;
+            border-radius: 999px;
+            background: transparent;
+            border: 1px solid transparent;
+            white-space: nowrap;
+        }
+
+        .nav a:hover {
+            background: rgba(215, 189, 226, 0.15);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(215, 189, 226, 0.3);
+            color: var(--primary-d);
+            transform: translateY(-1px);
+            box-shadow: 0 2px 8px rgba(161, 132, 220, 0.15);
+        }
+
+        .nav a.active {
+            color: var(--primary-d);
+            background: rgba(215, 189, 226, 0.1);
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(215, 189, 226, 0.2);
+        }
+
+        .nav a.active::after {
+            content: "";
+            position: absolute;
+            bottom: 0px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 16px;
+            height: 2px;
+            background: var(--primary);
+            border-radius: 2px;
+        }
+
+        .right-tools {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .theme-toggle, .join-btn {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-light);
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .theme-toggle i, .join-btn i {
+            font-size: 1.5rem;
+            line-height: 1;
+        }
+
+        .theme-toggle:hover {
+            color: var(--primary-d);
+            transform: scale(1.1);
+        }
+
+        .join-btn {
+            background: var(--primary);
+            color: var(--text);
+            padding: 0.5rem 1.2rem;
+            border-radius: 999px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            text-decoration: none;
+            gap: 0.3rem;
+        }
+
+        .join-btn i {
+            font-size: 1.1rem;
+        }
+
+        .join-btn:hover {
+            background: var(--primary-d);
+            transform: translateY(-1px);
+            box-shadow: var(--shadow);
+        }
+
+        /* 主内容区域 - 自述页面 */
+        .main-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 3rem 2rem 4rem;
+        }
+
+        /* 页面头部 */
+        .page-header {
+            text-align: center;
+            padding: 1.5rem 0 2rem;
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 2.5rem;
+        }
+
+        .page-header h1 {
+            font-size: 2.8rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary), var(--primary-d));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.02em;
+        }
+
+        .page-header .badge {
+            display: inline-block;
+            background: rgba(160, 132, 220, 0.15);
+            padding: 0.3rem 1.2rem;
+            border-radius: 999px;
+            font-size: 0.85rem;
+            color: var(--primary-d);
+            margin-top: 0.5rem;
+        }
+
+        /* 自述卡片容器 */
+        .readme-container {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--border);
+            border-radius: 2rem;
+            padding: 2.5rem;
+            box-shadow: var(--shadow);
+            transition: all 0.3s;
+        }
+
+        .readme-section {
+            margin-bottom: 2.5rem;
+        }
+
+        .section-title {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--primary-d);
+            margin-bottom: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            border-left: 4px solid var(--primary);
+            padding-left: 1rem;
+        }
+
+        .section-title i {
+            font-size: 1.5rem;
+            color: var(--primary);
+        }
+
+        .content-block {
+            padding-left: 1.5rem;
+            color: var(--text-light);
+            line-height: 1.8;
+        }
+
+        .content-block p {
+            margin: 0.8rem 0;
+        }
+
+        .repo-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            background: rgba(160, 132, 220, 0.1);
+            padding: 0.6rem 1.2rem;
+            border-radius: 999px;
+            text-decoration: none;
+            color: var(--primary-d);
+            font-weight: 500;
+            transition: all 0.2s;
+            border: 1px solid var(--border);
+            margin: 0.5rem 0;
+        }
+
+        .repo-link:hover {
+            background: var(--primary);
+            color: var(--text);
+            transform: translateY(-2px);
+        }
+
+        .repo-link i {
+            font-size: 1.2rem;
+        }
+
+        .legal-note {
+            background: rgba(215, 189, 226, 0.1);
+            border-radius: 1.2rem;
+            padding: 1.2rem 1.5rem;
+            margin: 1.5rem 0;
+            border-left: 3px solid var(--warning);
+            font-size: 0.9rem;
+        }
+
+        .lang-switch {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 0.8rem;
+        }
+
+        .lang-btn {
+            background: none;
+            border: none;
+            font-size: 0.9rem;
+            font-weight: 600;
+            padding: 0.3rem 1rem;
+            border-radius: 999px;
+            cursor: pointer;
+            color: var(--text-light);
+            transition: all 0.2s;
+        }
+
+        .lang-btn.active {
+            background: var(--primary-d);
+            color: white;
+        }
+
+        .lang-btn:hover:not(.active) {
+            background: rgba(160, 132, 220, 0.2);
+            color: var(--primary-d);
+        }
+
+        .lang-content {
+            display: none;
+        }
+
+        .lang-content.active-lang {
+            display: block;
+        }
+
+        hr {
+            margin: 1.5rem 0;
+            border: none;
+            height: 1px;
+            background: var(--border);
+        }
+
+        /* 页脚 */
+        footer {
+            text-align: center;
+            padding: 3rem 0 2rem;
+            color: var(--text-light);
+            border-top: 1px solid var(--border);
+            margin-top: 2rem;
+            font-size: 0.85rem;
+        }
+
+        footer p {
+            margin: 0.4rem 0;
+        }
+
+        /* 响应式 */
+        @media (max-width: 768px) {
+            .top-bar {
+                padding: 0.4rem 1rem;
+            }
+            .nav {
+                gap: 0.2rem;
+                justify-content: center;
+            }
+            .nav a {
+                padding: 0.3rem 0.6rem;
+                font-size: 0.85rem;
+            }
+            .main-content {
+                padding: 1.5rem;
+            }
+            .page-header h1 {
+                font-size: 2rem;
+            }
+            .readme-container {
+                padding: 1.5rem;
+            }
+            .section-title {
+                font-size: 1.3rem;
+            }
+            .content-block {
+                padding-left: 0.8rem;
+            }
+        }
+
+        /* 图标修复 */
+        i, .mdi, .mdi-set, .mdi:before {
+            font-size: inherit;
+            line-height: 1;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 顶部导航栏 - 与其他页面一致 -->
+    <div class="top-bar">
+        <div class="logo"></i> Cozily</div>
+        <div class="nav">
+            <a href="index.html" >首页</a>
+            <a href="readme.html" class="active">自述(点此进入NO UI)</a>
+
+        </div>
+        <div class="right-tools">
+            <button class="theme-toggle" title="切换日夜模式"><i class="mdi mdi-weather-night"></i></button>
+            
+        </div>
+    </div>
+
+    <!-- 主内容 - 自述页面 -->
+    <div class="main-content">
+        <div class="page-header">
+            <h1><i class="mdi mdi-file-document-outline"></i> README.md</h1>
+            <div class="badge"><i class="mdi mdi-information-outline"></i> 网站自述 · 开源声明</div>
+            <div class="badge"><i class="mdi mdi-information-outline"></i> Readme最后更新:2026-03-23 · Readme_UI最后更新:2026-03-23 · 网站最后更新:2026-03-23</div>
+            <div class="badge"><i class="mdi mdi-information-outline"></i> 他处若有偏差，则以Readme.html所述为主</div>
+        </div>
+
+        <div class="readme-container">
+            <!-- 语言切换按钮（保留风格但无额外复杂功能，简洁展示中英文） -->
+            <div class="lang-switch">
+                <button class="lang-btn active" data-lang="zh">简体中文</button>
+                <button class="lang-btn" data-lang="en">English (机翻)</button>
+            </div>
+
+            <!-- 中文内容 -->
+            <div id="lang-zh" class="lang-content active-lang">
+                <div class="readme-section">
+                    <div class="section-title">
+                        <i class="mdi mdi-book-open-variant"></i> 
+                        本网站知识产权声明
+                    </div>
+                    <div class="content-block">
+                        <p>📄 本网站（包括当前网址所指向的全部页面）均为 <strong>CozilyMC</strong> 的知识产权。</p>
+                        <p>🌐 所有的组合元素均来自互联网公开内容，设计风格与原创代码由 CozilyMC 团队整理维护。</p>
+                        <p>📂 若您需要取得源代码（.html文件），请访问我们的开源仓库：</p>
+                        <a href="https://github.com/MQianYan/Cozily_Server_Web" target="_blank" class="repo-link">
+                            <i class="mdi mdi-github"></i> github.com/MQianYan/Cozily_Server_Web
+                        </a>
+                        <p>⚙️ 页面为<strong>静态页面</strong>，网站的运营提供商为 <strong>GitHub Pages</strong>。</p>
+                        <p>✏️ CozilyMC 保留对该页面及本网站所有内容的修改权力，最终解释权归鼠鼠安乐窝服务器管理组所有。</p>
+                        <p>🕒 <strong>最后更新：</strong> 2026年3月23日 GMT+8:00</p>
+                    </div>
+                </div>
+
+                <div class="legal-note">
+                    <i class="mdi mdi-scale-balance"></i> 
+                    <strong>版权与使用须知：</strong> 本网站所有原创代码基于 MIT 协议开源，但网站内展示的服务器专属内容（玩家ID、地标名称、服务器设定等）归 CozilyMC 所有。欢迎学习与二次开发，但请保留出处说明，请勿直接商用或盗用服务器品牌形象。
+                </div>
+            </div>
+
+            <!-- 英文内容（机翻） -->
+            <div id="lang-en" class="lang-content">
+                <div class="readme-section">
+                    <div class="section-title">
+                        <i class="mdi mdi-book-open-variant"></i> 
+                        Intellectual Property Statement
+                    </div>
+                    <div class="content-block">
+                        <p>📄 This website (including all pages linked from this URL) is the intellectual property of <strong>CozilyMC</strong>.</p>
+                        <p>🌐 All elements are derived from publicly available content on the internet. The design language and original code are maintained by the CozilyMC team.</p>
+                        <p>📂 If you require the source code (.html files), please visit our open-source repository:</p>
+                        <a href="https://github.com/MQianYan/Cozily_Server_Web" target="_blank" class="repo-link">
+                            <i class="mdi mdi-github"></i> github.com/MQianYan/Cozily_Server_Web
+                        </a>
+                        <p>⚙️ This page is <strong>static</strong>. The website is operated by <strong>GitHub Pages</strong>.</p>
+                        <p>✏️ CozilyMC reserves the right to modify this page and all content on this website. The final interpretation right belongs to the Cozily Server administration team.</p>
+                        <p>🕒 <strong>Last Updated:</strong> March 23, 2026, GMT+8:00</p>
+                    </div>
+                </div>
+
+                <div class="legal-note">
+                    <i class="mdi mdi-scale-balance"></i> 
+                    <strong>Copyright & Usage Notice:</strong> All original code in this website is open-sourced under the MIT License. However, server-specific content (player IDs, landmark names, server settings, etc.) displayed on the website belongs to CozilyMC. Learning and secondary development are welcome, but please retain the attribution and do not directly use the server brand for commercial purposes.
+                </div>
+            </div>
+
+            <hr>
+
+            <!-- 独立的说明区块（团队声明部分） -->
+            <div class="readme-section">
+                <div class="section-title">
+                    <i class="mdi mdi-account-group"></i> 
+                    关于 CozilyMC 名称声明
+                </div>
+                <div class="content-block">
+                    <p> <strong>CozilyMC</strong> 是一个独立的 Minecraft 服务器团队，由玩家自发组建。</p>
+                    <p> Minecraft™ 是 Mojang Studios 和 Microsoft Corporation 的商标及其游戏标识。</p>
+                    <p> CozilyMC 未获 Mojang Studios 或 Microsoft 公司批准，也未与其有任何关联。</p>
+                    <p> 我们的团队致力于为玩家提供良好的游戏环境，并愿意维护、保证正确的价值观，营造友善、创造、互助的社区氛围。</p>
+                    <p> 官方网站基于 GitHub Pages 托管，所有页面均为静态公益展示，不涉及商业盈利行为。</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 附加简单社交或二次确认 -->
+        <div style="text-align: center; margin-top: 2.5rem;">
+            <a href="javascript:history.back()"  class="repo-link" style="background: var(--card-bg);">
+                <i class="mdi mdi-github-face"></i> 返回之前的页面 
+            </a>
+        </div>
+    </div>
+
+    <!-- 页脚区域（保留原样式及版权信息） -->
+    <footer>
+        <p>© 2025 www.cozily.top | Page for GitHub.io | QQ交流群:749543572</p>
+        <p>CozilyMC 是一个独立的团队。Minecraft™ 是 Mojang Studios 和 Microsoft Corporation 的商标及其游戏标识。</p>
+        <p>CozilyMC 未获Mojang Studios或Microsoft公司批准，也未与其有任何关联。</p>
+        <p>我们的团队致力于为玩家提供良好的游戏环境，并愿意维护，保证正确的价值观</p>
+        <p style="margin-top: 0.6rem; font-size: 0.75rem;">本页面内容基于自述文件生成，最终解释归 CozilyMC 所有。</p>
+    </footer>
+
+    <script>
+        // 日夜模式切换 (与之前样式完全一致)
+        const themeToggle = document.querySelector('.theme-toggle');
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+        if (themeToggle) {
+            themeToggle.innerHTML = savedTheme === 'dark' ? '<i class="mdi mdi-white-balance-sunny"></i>' : '<i class="mdi mdi-weather-night"></i>';
+            themeToggle.addEventListener('click', () => {
+                let theme = document.documentElement.getAttribute('data-theme');
+                theme = theme === 'dark' ? 'light' : 'dark';
+                document.documentElement.setAttribute('data-theme', theme);
+                localStorage.setItem('theme', theme);
+                themeToggle.innerHTML = theme === 'dark' ? '<i class="mdi mdi-white-balance-sunny"></i>' : '<i class="mdi mdi-weather-night"></i>';
+            });
+        }
+
+        // 语言切换（中文/英文）
+        const zhContent = document.getElementById('lang-zh');
+        const enContent = document.getElementById('lang-en');
+        const langBtns = document.querySelectorAll('.lang-btn');
+
+        function switchLanguage(lang) {
+            if (lang === 'zh') {
+                zhContent.classList.add('active-lang');
+                enContent.classList.remove('active-lang');
+            } else {
+                zhContent.classList.remove('active-lang');
+                enContent.classList.add('active-lang');
+            }
+            // 更新按钮样式
+            langBtns.forEach(btn => {
+                if (btn.getAttribute('data-lang') === lang) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+            });
+        }
+
+        langBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const lang = btn.getAttribute('data-lang');
+                switchLanguage(lang);
+            });
+        });
+
+        // 确保没有图标意外放大（继承样式已修复）
+        console.log('自述页面已加载 — CozilyMC 开源声明');
+    </script>
+</body>
+</html>

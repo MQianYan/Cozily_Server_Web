@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5, user-scalable=yes">
+    <title>神人详情 - 筑梦师·星辰 | 鼠鼠安乐窝</title>
+    <meta name="description" content="筑梦师·星辰 - 服务器建筑之神，史诗级作品集">
+    <meta name="keywords" content="鼠鼠安乐窝,Minecraft,建筑,神人榜,筑梦师">
+
+    <!-- 字体 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;700&family=Noto+Sans+SC:wght@400;500;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- 图标库 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@mdi/font@7.4.47/css/materialdesignicons.min.css">
+
+    <style>
+        :root {
+            --primary:    #D7BDE2;
+            --primary-d:  #A084DC;
+            --primary-l:  #E6D0F2;
+            --bg:         #F8F5FC;
+            --card-bg:    rgba(255,255,255,0.78);
+            --text:       #2D1B47;
+            --text-light: #5A4A6E;
+            --border:     rgba(161,132,220,0.28);
+            --shadow:     0 8px 32px rgba(161,132,220,0.18);
+            --gold:       #FFD700;
+        }
+
+        [data-theme="dark"] {
+            --primary:    #A084DC;
+            --primary-d:  #7B5EB8;
+            --primary-l:  #D7BDE2;
+            --bg:         #1A1425;
+            --card-bg:    rgba(42,33,64,0.82);
+            --text:       #E3D8F2;
+            --text-light: #C4B3E0;
+            --border:     rgba(177,156,217,0.20);
+            --shadow:     0 8px 32px rgba(0,0,0,0.50);
+            --gold:       #FFD700;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', 'Noto Sans SC', 'Quicksand', system-ui, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            transition: background 0.4s, color 0.4s;
+            line-height: 1.5;
+        }
+
+        /* 顶部导航栏 */
+        .top-bar {
+            background: var(--card-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            box-shadow: var(--shadow);
+            border-bottom: 1px solid var(--border);
+            padding: 0.5rem 1.5rem;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary), var(--primary-d));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .logo i {
+            font-size: 2rem;
+            color: var(--primary);
+        }
+
+        /* 导航容器 - 紧凑间距 */
+        .nav {
+            display: flex;
+            list-style: none;
+            gap: 0.3rem;
+            flex-wrap: wrap;
+        }
+
+        /* 毛玻璃按钮效果 - 每个导航链接 */
+        .nav a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1rem;
+            transition: all 0.3s cubic-bezier(0.2, 0, 0, 1);
+            position: relative;
+            padding: 0.4rem 0.8rem;
+            border-radius: 999px;
+            background: transparent;
+            border: 1px solid transparent;
+            white-space: nowrap;
+        }
+
+        .nav a:hover {
+            background: rgba(215, 189, 226, 0.15);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1px solid rgba(215, 189, 226, 0.3);
+            color: var(--primary-d);
+            transform: translateY(-1px);
+            box-shadow: 0 2px 8px rgba(161, 132, 220, 0.15);
+        }
+
+        .nav a.active {
+            color: var(--primary-d);
+            background: rgba(215, 189, 226, 0.1);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            border: 1px solid rgba(215, 189, 226, 0.2);
+        }
+
+        .nav a.active::after {
+            content: "";
+            position: absolute;
+            bottom: 0px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 16px;
+            height: 2px;
+            background: var(--primary);
+            border-radius: 2px;
+        }
+
+        .right-tools {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .theme-toggle, .join-btn {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-light);
+            transition: all 0.3s;
+        }
+
+        .theme-toggle:hover {
+            color: var(--primary-d);
+            transform: scale(1.1);
+        }
+
+        .join-btn {
+            background: var(--primary);
+            color: var(--text);
+            padding: 0.5rem 1.2rem;
+            border-radius: 999px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            text-decoration: none;
+        }
+
+        .join-btn:hover {
+            background: var(--primary-d);
+            transform: translateY(-1px);
+            box-shadow: var(--shadow);
+        }
+
+        /* 主内容 */
+        .main-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 2rem 4rem;
+        }
+
+        /* 返回按钮 */
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-light);
+            text-decoration: none;
+            margin-bottom: 2rem;
+            transition: color 0.2s;
+        }
+
+        .back-link:hover {
+            color: var(--primary-d);
+        }
+
+        /* 神人头部卡片 */
+        .hero-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--border);
+            border-radius: 2rem;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .hero-avatar {
+            width: 120px;
+            height: 120px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-d));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3.5rem;
+            color: white;
+            flex-shrink: 0;
+        }
+
+        .hero-info {
+            flex: 1;
+        }
+
+        .hero-name {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary-d);
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            flex-wrap: wrap;
+            margin-bottom: 0.5rem;
+        }
+
+        .hero-badge {
+            background: var(--gold);
+            color: #2D1B47;
+            padding: 0.2rem 1rem;
+            border-radius: 999px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .hero-title {
+            color: var(--text-light);
+            margin-bottom: 1rem;
+        }
+
+        .hero-stats {
+            display: flex;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .stat {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+            font-size: 0.9rem;
+        }
+
+        /* 内容区块通用样式 */
+        .section {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--border);
+            border-radius: 1.5rem;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-d);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            border-left: 4px solid var(--primary);
+            padding-left: 1rem;
+        }
+
+        /* 事迹时间线 */
+        .timeline {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .timeline-item {
+            display: flex;
+            gap: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .timeline-date {
+            min-width: 100px;
+            font-weight: 600;
+            color: var(--primary-d);
+        }
+
+        .timeline-content h4 {
+            margin-bottom: 0.3rem;
+        }
+
+        .timeline-content p {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        /* 作品网格 - 修复图表大小问题 */
+        .works-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+        }
+
+        .work-card {
+            background: rgba(160, 132, 220, 0.05);
+            border-radius: 1rem;
+            overflow: hidden;
+            transition: transform 0.2s;
+        }
+
+        .work-card:hover {
+            transform: translateY(-4px);
+        }
+
+        .work-image {
+            height: 160px;
+            width: 100%;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        .work-info {
+            padding: 1rem;
+        }
+
+        .work-title {
+            font-weight: 700;
+            margin-bottom: 0.3rem;
+        }
+
+        .work-desc {
+            font-size: 0.8rem;
+            color: var(--text-light);
+        }
+
+        /* 荣誉徽章 */
+        .honor-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .honor-item {
+            background: linear-gradient(135deg, var(--primary-l), var(--primary));
+            padding: 0.8rem 1.2rem;
+            border-radius: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 500;
+        }
+
+        /* 留言区 */
+        .comment-list {
+            margin-bottom: 2rem;
+        }
+
+        .comment-item {
+            display: flex;
+            gap: 1rem;
+            padding: 1rem 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .comment-avatar {
+            width: 40px;
+            height: 40px;
+            background: var(--primary-d);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            flex-shrink: 0;
+        }
+
+        .comment-content {
+            flex: 1;
+        }
+
+        .comment-name {
+            font-weight: 600;
+            margin-bottom: 0.3rem;
+        }
+
+        .comment-text {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        .comment-time {
+            font-size: 0.7rem;
+            color: var(--text-light);
+            margin-top: 0.3rem;
+        }
+
+        .comment-input {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .comment-input input {
+            flex: 1;
+            padding: 0.8rem;
+            border-radius: 999px;
+            border: 1px solid var(--border);
+            background: var(--bg);
+            color: var(--text);
+            font-family: inherit;
+        }
+
+        .comment-input button {
+            background: var(--primary);
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 999px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        /* 按钮组 */
+        .action-buttons {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-top: 1rem;
+        }
+
+        .btn {
+            padding: 0.6rem 1.5rem;
+            border-radius: 999px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            border: none;
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background: var(--primary-d);
+            color: white;
+        }
+
+        .btn-secondary {
+            background: rgba(160, 132, 220, 0.2);
+            color: var(--text);
+        }
+
+        .btn-primary:hover, .btn-secondary:hover {
+            transform: translateY(-2px);
+        }
+
+        footer {
+            text-align: center;
+            padding: 3rem 0 2rem;
+            color: var(--text-light);
+            border-top: 1px solid var(--border);
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                padding: 1rem;
+            }
+            .hero-name {
+                font-size: 1.8rem;
+            }
+            .timeline-item {
+                flex-direction: column;
+                gap: 0.3rem;
+            }
+            .timeline-date {
+                min-width: auto;
+            }
+            .section {
+                padding: 1.2rem;
+            }
+            .works-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="top-bar">
+        <div class="logo"><i class="1"></i> Cozily</div>
+        <div class="nav">
+            <a href="index.html">首页</a>
+            <a href="dibiao.html">玩家地标</a>
+            <a href="licheng.html">服务器历程</a>
+            <a href="zonghe.html">综合导航</a>
+            <a href="shenrenbang.html" class="active">神人榜</a>
+            <a href="tuandui.html">团队介绍</a>
+            <a href="faq.html">常见问题</a>
+            <a href="t.html">测试界面</a>
+        </div>
+        <div class="right-tools">
+            <button class="theme-toggle" title="切换日夜模式"><i class="mdi mdi-weather-night"></i></button>
+            <a href="https://qm.qq.com/q/VTUeknT88Q" target="_blank" class="join-btn">加入交流群</a>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <a href="shenrenbang.html" class="back-link">
+            <i class="javascript:history.back()"></i> 返回神人榜
+        </a>
+
+        <!-- 神人头部信息 -->
+        <div class="hero-card">
+            <div class="hero-avatar">
+                <i class="mdi mdi-account-circle"></i>
+            </div>
+            <div class="hero-info">
+                <div class="hero-name">
+                    name
+                    <span class="hero-badge"><i class="mdi mdi-crown"></i> Level</span>
+                </div>
+                <div class="hero-title">name_lore</div>
+            </div>
+        </div>
+
+        <!-- 个人简介 -->
+        <div class="section">
+            <div class="section-title">
+                <i class="mdi mdi-account-details"></i> 简述
+            </div>
+            <p style="line-height: 1.8; margin-bottom: 1rem;">
+                213546
+            </p>
+            <p style="line-height: 1.8;">
+                1234
+            </p>
+        </div>
+
+        <!-- 传奇事迹时间线 -->
+        <div class="section">
+            <div class="section-title">
+                <i class="mdi mdi-timeline"></i> 具体事迹
+            </div>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-date">time</div>
+                    <div class="timeline-content">
+                        <h4>12</h4>
+                        <p>34</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 代表作品集 -->
+        <div class="section">
+            <div class="section-title">
+                <i class="mdi mdi-palette"></i> 图集
+            </div>
+            <div class="works-grid">
+                <div class="work-card">
+                    <div class="work-image" style="background: linear-gradient(135deg, #667eea, #764ba2);"></div>
+                    <div class="work-info">
+                        <div class="work-title">12</div>
+                        <div class="work-desc">12</div>
+                    </div>
+                </div>
+                <div class="work-card">
+                    <div class="work-image" style="background: linear-gradient(135deg, #f093fb, #f5576c);"></div>
+                    <div class="work-info">
+                        <div class="work-title">12</div>
+                        <div class="work-desc">悬12</div>
+                    </div>
+                </div>
+                <div class="work-card">
+                    <div class="work-image" style="background: linear-gradient(135deg, #43e97b, #38f9d7);"></div>
+                    <div class="work-info">
+                        <div class="work-title">12</div>
+                        <div class="work-desc">12</div>
+                    </div>
+                </div>
+                <div class="work-card">
+                    <div class="work-image" style="background: linear-gradient(135deg, #fa709a, #fee140);"></div>
+                    <div class="work-info">
+                        <div class="work-title">12</div>
+                        <div class="work-desc">12</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 玩家留言区 -->
+        <div class="section">
+            <div class="section-title">
+                <i class="mdi mdi-message-text"></i> 本期素材来源
+            </div>
+            <div class="comment-list" id="commentList">
+                <div class="comment-item">
+                    <div class="comment-avatar"><i class="mdi mdi-account"></i></div>
+                    <div class="comment-content">
+                        <div class="comment-name">1234</div>
+                        <div class="comment-text">5678</div>
+                        <div class="comment-time">9876.01.01</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 底部操作按钮 -->
+        <div class="action-buttons">
+            <button class="btn btn-secondary" id="shareBtn"><i class="mdi mdi-share-variant"></i> 分享神人页</button>
+            <a href="```````back" class="btn btn-secondary"><i class="mdi mdi-format-list-bulleted"></i> 查看完整神人榜</a>
+        </div>
+    </div>
+
+    <footer>
+        <p>© 2025 www.cozily.top | Page for GitHub.io | QQ交流群:749543572</p>
+        <p>‎</p>
+        <p>CozilyMC 是一个独立的团队。Minecraft™ 是 Mojang Studios 和 Microsoft Corporation 的商标及其游戏标识。</p>
+        <p>CozilyMC 未获Mojang Studios或Microsoft公司批准，也未与其有任何关联。</p>
+        <p>我们的团队致力于为玩家提供良好的游戏环境，并愿意维护，保证正确的价值观</p>
+    </footer>
+
+    <script>
+        // 日夜模式切换
+        const themeToggle = document.querySelector('.theme-toggle');
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+        themeToggle.innerHTML = savedTheme === 'dark' ? '<i class="mdi mdi-white-balance-sunny"></i>' : '<i class="mdi mdi-weather-night"></i>';
+
+        themeToggle.addEventListener('click', () => {
+            let theme = document.documentElement.getAttribute('data-theme');
+            theme = theme === 'dark' ? 'light' : 'dark';
+            document.documentElement.setAttribute('data-theme', theme);
+            localStorage.setItem('theme', theme);
+            themeToggle.innerHTML = theme === 'dark' ? '<i class="mdi mdi-white-balance-sunny"></i>' : '<i class="mdi mdi-weather-night"></i>';
+        });
+
+        // 分享功能
+        const shareBtn = document.getElementById('shareBtn');
+        shareBtn.addEventListener('click', () => {
+            navigator.clipboard.writeText(window.location.href);
+            alert('✅ 页面链接已复制，可以分享给朋友啦！');
+        });
+
+        // 简单的防XSS
+        function escapeHtml(str) {
+            return str.replace(/[&<>]/g, function(m) {
+                if (m === '&') return '&amp;';
+                if (m === '<') return '&lt;';
+                if (m === '>') return '&gt;';
+                return m;
+            });
+        }
+
+    </script>
+</body>
+</html>
