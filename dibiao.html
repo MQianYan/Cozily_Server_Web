@@ -753,57 +753,9 @@
                 justify-content: center;
             }
         }
-        .top-bar .logo {
-            display: flex !important;
-            justify-content: center !important;
-            padding: 0 20px !important;
-            margin-bottom: 20px !important;
-        }
-        .nav {
-            flex-direction: column !important;
-            padding: 0 10px !important;
-        }
-        .nav a {
-            text-align: center !important;
-        }
-        .nav a:hover {
-            transform: translateX(5px) !important;
-        }
-        .nav a.active::after {
-            left: 0 !important;
-            top: 50% !important;
-            transform: translateY(-50%) !important;
-            width: 4px !important;
-            height: 60% !important;
-        }
-        .right-tools {
-            padding: 20px 10px 0 !important;
-            border-top: 1px solid var(--border) !important;
-            margin-top: auto !important;
-            flex-direction: column !important;
-        }
-        .main-content {
-            margin-left: 180px !important;
-        }
-        @media (max-width: 768px) {
-            .top-bar {
-                transform: translateX(-100%) !important;
-            }
-            .top-bar.open {
-                transform: translateX(0) !important;
-            }
-            .main-content {
-                margin-left: 0 !important;
-                padding: 20px !important;
-            }
-        }
     </style>
 </head>
 <body>
-    <button class="mobile-toggle" onclick="toggleSidebar()">
-        <i class="mdi mdi-menu"></i>
-    </button>
-    <div class="sidebar-overlay" onclick="toggleSidebar()"></div>
 
     <!-- 顶部栏 - 按照主页样式 -->
     <div class="top-bar">
@@ -899,6 +851,8 @@
     <footer>
         <p>© 2025 www.cozily.top | Page for GitHub.io | QQ交流群:749543572</p>
         <p>‎</p>
+        <p>CozilyMC 是一个独立的团队。Minecraft™ 是 Mojang Studios 和 Microsoft Corporation 的商标及其游戏标识。</p>
+        <p>CozilyMC 未获Mojang Studios或Microsoft公司批准，也未与其有任何关联。</p>
         <p>我们的团队致力于为玩家提供良好的游戏环境，并愿意维护，保证正确的价值观</p>
     </footer>
 
@@ -1042,45 +996,6 @@
 
         // 初始化显示
         filterLandmarks();
-    </script>
-    <script>
-        function toggleSidebar() {
-            const sidebar = document.querySelector(".top-bar");
-            const overlay = document.querySelector(".sidebar-overlay");
-            sidebar.classList.toggle("open");
-            overlay.classList.toggle("show");
-        }
-        
-        // 主题切换功能保持不变
-        document.addEventListener("DOMContentLoaded", function() {
-            const themeToggle = document.querySelector(".theme-toggle");
-            const html = document.documentElement;
-            
-            const savedTheme = localStorage.getItem("theme");
-            const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-            
-            if (savedTheme) {
-                html.setAttribute("data-theme", savedTheme);
-            } else if (prefersDark) {
-                html.setAttribute("data-theme", "dark");
-            }
-            
-            if (themeToggle) {
-                themeToggle.addEventListener("click", function() {
-                    const currentTheme = html.getAttribute("data-theme");
-                    const newTheme = currentTheme === "dark" ? "light" : "dark";
-                    html.setAttribute("data-theme", newTheme);
-                    localStorage.setItem("theme", newTheme);
-                    
-                    const icon = this.querySelector("i");
-                    if (newTheme === "dark") {
-                        icon.className = "mdi mdi-weather-sunny";
-                    } else {
-                        icon.className = "mdi mdi-weather-night";
-                    }
-                });
-            }
-        });
     </script>
 </body>
 </html>
