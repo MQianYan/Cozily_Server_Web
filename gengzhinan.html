@@ -610,7 +610,7 @@
 
     <!-- 顶部栏 - 按照主页样式 -->
     <div class="top-bar">
-        <div class="logo">Cozily</div>
+        <div class="logo"><i class="1."></i> Cozily</div>
 
         <div class="nav">
             <a href="index.html">首页</a>
@@ -963,10 +963,87 @@
     </div>
 
     <!-- 页脚 - 按照主页样式 -->
+    <footer>
+        <p>© 2025 www.cozily.top | Page for GitHub.io | QQ交流群:749543572</p>
+        <p>‎</p>
+        <p>CozilyMC 是一个独立的团队。Minecraft™ 是 Mojang Studios 和 Microsoft Corporation 的商标及其游戏标识。</p>
+        <p>CozilyMC 未获Mojang Studios或Microsoft公司批准，也未与其有任何关联。</p>
+        <p>我们的团队致力于为玩家提供良好的游戏环境，并愿意维护，保证正确的价值观</p>
+    </footer>
 
-        <footer>
-            <p>© 2026 CozilyMC. All rights reserved.</p>
-            <p>Minecraft™ 是 Mojang Studios 及 Microsoft 的商标。</p>
-        </footer>
-    </body>
+    <script>
+        // ===== 日夜模式切换 - 完全按照主页 =====
+        const themeToggle = document.querySelector('.theme-toggle');
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+        themeToggle.innerHTML = savedTheme === 'dark' ? '<i class="mdi mdi-white-balance-sunny"></i>' : '<i class="mdi mdi-weather-night"></i>';
+
+        themeToggle.addEventListener('click', () => {
+            let theme = document.documentElement.getAttribute('data-theme');
+            theme = theme === 'dark' ? 'light' : 'dark';
+            document.documentElement.setAttribute('data-theme', theme);
+            localStorage.setItem('theme', theme);
+            themeToggle.innerHTML = theme === 'dark' ? '<i class="mdi mdi-white-balance-sunny"></i>' : '<i class="mdi mdi-weather-night"></i>';
+        });
+
+        // ===== 分享功能 =====
+        window.shareMeme = function(btn, memeName) {
+            const originalText = btn.innerHTML;
+            btn.innerHTML = '<i class="mdi mdi-check"></i> 已复制链接';
+            setTimeout(() => {
+                btn.innerHTML = originalText;
+            }, 1500);
+            
+            // 模拟分享，实际可以改成复制梗信息
+            navigator.clipboard.writeText(`【鼠鼠安乐窝梗指南】${memeName} - 了解更多请访问服务器官网`).catch(() => {});
+        };
+
+        // ===== 分类筛选功能 =====
+        const categoryTabs = document.querySelectorAll('.category-tab');
+        const memeCards = document.querySelectorAll('.meme-card');
+        
+        function filterMemes() {
+            const activeCategory = document.querySelector('.category-tab.active')?.dataset.category || 'all';
+            
+            memeCards.forEach(card => {
+                const category = card.dataset.category;
+                
+                if (activeCategory === 'all' || category === activeCategory) {
+                    card.classList.remove('hidden');
+                } else {
+                    card.classList.add('hidden');
+                }
+            });
+            
+            // 检查是否没有结果
+            const visibleCount = Array.from(memeCards).filter(card => !card.classList.contains('hidden')).length;
+            const emptyState = document.querySelector('.no-results');
+            
+            if (visibleCount === 0) {
+                if (!emptyState) {
+                    const grid = document.getElementById('memesGrid');
+                    const emptyDiv = document.createElement('div');
+                    emptyDiv.className = 'no-results';
+                    emptyDiv.innerHTML = '<i class="mdi mdi-emoticon-sad"></i>没有找到符合条件的梗';
+                    grid.appendChild(emptyDiv);
+                }
+            } else {
+                if (emptyState) {
+                    emptyState.remove();
+                }
+            }
+        }
+
+        categoryTabs.forEach(tab => {
+            tab.addEventListener('click', function() {
+                categoryTabs.forEach(t => t.classList.remove('active'));
+                this.classList.add('active');
+                filterMemes();
+            });
+        });
+
+        // 初始化显示
+        filterMemes();
+    </script>
+</body>
 </html>

@@ -612,7 +612,7 @@
 
     <!-- 顶部栏 - 按照主页样式 -->
     <div class="top-bar">
-        <div class="logo">Cozily</div>
+        <div class="logo"><i class="1"></i> Cozily</div>
 
         <div class="nav">
             <a href="index.html">首页</a>
@@ -747,10 +747,80 @@
     </div>
 
     <!-- 页脚 - 按照主页样式 -->
+    <footer>
+        <p>© 2025 www.cozily.top | Page for GitHub.io | QQ交流群:749543572</p>
+        <p>‎</p>
+        <p>CozilyMC 是一个独立的团队。Minecraft™ 是 Mojang Studios 和 Microsoft Corporation 的商标及其游戏标识。</p>
+        <p>CozilyMC 未获Mojang Studios或Microsoft公司批准，也未与其有任何关联。</p>
+        <p>我们的团队致力于为玩家提供良好的游戏环境，并愿意维护，保证正确的价值观</p>
+    </footer>
 
-        <footer>
-            <p>© 2026 CozilyMC. All rights reserved.</p>
-            <p>Minecraft™ 是 Mojang Studios 及 Microsoft 的商标。</p>
-        </footer>
-    </body>
+    <script>
+        // ===== 日夜模式切换 - 完全按照主页 =====
+        const themeToggle = document.querySelector('.theme-toggle');
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+        themeToggle.innerHTML = savedTheme === 'dark' ? '<i class="mdi mdi-white-balance-sunny"></i>' : '<i class="mdi mdi-weather-night"></i>';
+
+        themeToggle.addEventListener('click', () => {
+            let theme = document.documentElement.getAttribute('data-theme');
+            theme = theme === 'dark' ? 'light' : 'dark';
+            document.documentElement.setAttribute('data-theme', theme);
+            localStorage.setItem('theme', theme);
+            themeToggle.innerHTML = theme === 'dark' ? '<i class="mdi mdi-white-balance-sunny"></i>' : '<i class="mdi mdi-weather-night"></i>';
+        });
+
+        // ===== 下载功能 =====
+        window.handleDownload = function(btn, fileName) {
+            const originalText = btn.innerHTML;
+            btn.classList.add('downloaded');
+            btn.innerHTML = '<i class="mdi mdi-check"></i> 已下载';
+            
+            setTimeout(() => {
+                btn.classList.remove('downloaded');
+                btn.innerHTML = originalText;
+            }, 2000);
+            
+            console.log(`下载素材: ${fileName}`);
+        };
+
+        // ===== 分类筛选功能 =====
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const materialCards = document.querySelectorAll('.horizontal-card');
+
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                filterBtns.forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                
+                const category = this.dataset.category;
+                
+                materialCards.forEach(card => {
+                    if (category === 'all' || card.dataset.category === category) {
+                        card.style.display = 'flex';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+                
+                const visibleCards = Array.from(materialCards).filter(card => card.style.display !== 'none');
+                const noResults = document.querySelector('.no-results');
+                
+                if (visibleCards.length === 0) {
+                    if (!noResults) {
+                        const grid = document.getElementById('showcaseGrid');
+                        const emptyDiv = document.createElement('div');
+                        emptyDiv.className = 'no-results';
+                        emptyDiv.innerHTML = '<i class="mdi mdi-folder-off"></i>暂无此类素材';
+                        grid.appendChild(emptyDiv);
+                    }
+                } else {
+                    if (noResults) {
+                        noResults.remove();
+                    }
+                }
+            });
+        });
+    </script>
+</body>
 </html>

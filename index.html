@@ -621,7 +621,7 @@
 
     <!-- 顶部栏 - 添加毛玻璃按钮效果 -->
     <div class="top-bar">
-        <div class="logo">Cozily</div>
+        <div class="logo"><i class="1"></i> Cozily</div>
 
         <div class="nav">
             <a href="index.html" class="active">首页</a>
@@ -635,7 +635,7 @@
         </div>
 
         <div class="right-tools">
-            <button class="theme-toggle" id="themeToggle" title="切换日夜模式"><i class="mdi mdi-weather-night"></i></button>
+            <button class="theme-toggle" title="切换日夜模式"><i class="mdi mdi-weather-night"></i></button>
             <a href="https://qm.qq.com/q/VTUeknT88Q" target="_blank" class="join-btn">加入交流群</a>
         </div>
     </div>
@@ -748,10 +748,200 @@
         </div>
     </div>
 
+    <footer>
+        <p>© 2025 www.cozily.top | Page for GitHub.io | QQ交流群:749543572</p>
+        <p>‎</p>
+        <p>CozilyMC 是一个独立的团队。Minecraft™ 是 Mojang Studios 和 Microsoft Corporation 的商标及其游戏标识。</p>
+        <p>CozilyMC 未获Mojang Studios或Microsoft公司批准，也未与其有任何关联。</p>
+        <p>我们的团队致力于为玩家提供良好的游戏环境，并愿意维护，保证正确的价值观</p>
+        <a href= "Readme_UI.html" repo-link style="background: var(--card-bg);"></i> Readme(UI)</a> <p>or</p>
+        <a href= "Readme.html" repo-link style="background: var(--card-bg);"></i> Readme</a>
+    </footer>
 
-        <footer>
-            <p>© 2026 CozilyMC. All rights reserved.</p>
-            <p>Minecraft™ 是 Mojang Studios 及 Microsoft 的商标。</p>
-        </footer>
-    </body>
+    <script>
+        // 日夜模式切换
+        const themeToggle = document.querySelector('.theme-toggle');
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+        themeToggle.innerHTML = savedTheme === 'dark' ? '<i class="mdi mdi-white-balance-sunny"></i>' : '<i class="mdi mdi-weather-night"></i>';
+
+        themeToggle.addEventListener('click', () => {
+            let theme = document.documentElement.getAttribute('data-theme');
+            theme = theme === 'dark' ? 'light' : 'dark';
+            document.documentElement.setAttribute('data-theme', theme);
+            localStorage.setItem('theme', theme);
+            themeToggle.innerHTML = theme === 'dark' ? '<i class="mdi mdi-white-balance-sunny"></i>' : '<i class="mdi mdi-weather-night"></i>';
+        });
+
+        // 复制IP功能
+        const copyButtons = document.querySelectorAll('.copy-button');
+        copyButtons.forEach(btn => {
+            const card = btn.closest('.card-bottom');
+            const ipElement = card.querySelector('.ip-address');
+            const originalContent = btn.innerHTML;
+
+            btn.addEventListener('click', async () => {
+                const ipText = ipElement.innerText;
+                if (ipText.includes('你猜猜呢')) {
+                    alert('测试服地址暂未开放，请期待后续更新~');
+                    return;
+                }
+                try {
+                    await navigator.clipboard.writeText(ipText);
+                    btn.classList.add('copied');
+                    btn.innerHTML = `<i class="mdi mdi-check"></i> 已复制`;
+                    setTimeout(() => {
+                        btn.classList.remove('copied');
+                        btn.innerHTML = originalContent;
+                    }, 1500);
+                } catch (err) {
+                    try {
+                        const textarea = document.createElement('textarea');
+                        textarea.value = ipText;
+                        document.body.appendChild(textarea);
+                        textarea.select();
+                        document.execCommand('copy');
+                        document.body.removeChild(textarea);
+                        btn.classList.add('copied');
+                        btn.innerHTML = `<i class="mdi mdi-check"></i> 已复制`;
+                        setTimeout(() => {
+                            btn.classList.remove('copied');
+                            btn.innerHTML = originalContent;
+                        }, 1500);
+                    } catch (e) {
+                        alert('复制失败，请手动复制 IP: ' + ipText);
+                    }
+                }
+            });
+        });
+
+        // ===== 服务器状态获取 =====
+        const serverHost = 'mc.cozily.top';
+        const serverPort = 25565;
+        
+        const motdLine1 = document.getElementById('motdLine1');
+        const motdLine2 = document.getElementById('motdLine2');
+        const onlineDot = document.getElementById('onlineDot');
+        const onlineCount = document.getElementById('onlineCount');
+        const pingValue = document.getElementById('pingValue');
+        const versionInfo = document.getElementById('versionInfo');
+        const serverIcon = document.getElementById('serverIcon');
+        const refreshBtn = document.getElementById('refreshServerInfo');
+
+        // 加载状态
+        function setLoading(isLoading) {
+            const elements = [motdLine1, motdLine2, onlineCount, pingValue, versionInfo];
+            if (isLoading) {
+                elements.forEach(el => el.classList.add('loading'));
+                onlineDot.className = 'online-dot';
+                motdLine1.textContent = '正在获取服务器信息...';
+                motdLine2.innerHTML = '<small>请稍候</small>';
+                onlineCount.textContent = '??';
+                pingValue.textContent = '--';
+                versionInfo.textContent = '??';
+            } else {
+                elements.forEach(el => el.classList.remove('loading'));
+            }
+        }
+
+        // 获取服务器状态
+        async function fetchServerStatus() {
+            setLoading(true);
+            
+            const apis = [
+                `https://api.mcsrvstat.us/2/${serverHost}`,
+                `https://mcapi.us/server/status?ip=${serverHost}&port=${serverPort}`,
+                `https://ping.lvjia.cc/mcapi?host=${serverHost}&port=${serverPort}`
+            ];
+            
+            let success = false;
+            
+            for (const apiUrl of apis) {
+                try {
+                    const response = await fetch(apiUrl, { timeout: 5000 });
+                    const data = await response.json();
+                    
+                    let online = false;
+                    let playersOnline = 0, playersMax = 0;
+                    let ping = null;
+                    let version = '';
+                    let motd = '';
+                    let favicon = null;
+                    
+                    if (apiUrl.includes('mcsrvstat.us')) {
+                        online = data.online;
+                        if (online) {
+                            playersOnline = data.players?.online || 0;
+                            playersMax = data.players?.max || 0;
+                            ping = data.debug?.ping || null;
+                            version = data.version || '未知';
+                            motd = data.motd?.clean?.join('\n') || data.motd?.raw?.[0] || 'Minecraft 服务器';
+                            favicon = data.icon;
+                        }
+                    } else if (apiUrl.includes('mcapi.us')) {
+                        online = data.status === 'success' && data.online;
+                        if (online) {
+                            playersOnline = data.players?.now || 0;
+                            playersMax = data.players?.max || 0;
+                            ping = data.server?.ping || null;
+                            version = data.server?.name || '未知';
+                            motd = data.motd || 'Minecraft 服务器';
+                        }
+                    } else {
+                        online = data.status === 'online' || data.online === true;
+                        if (online) {
+                            playersOnline = data.players?.online || data.online_players || 0;
+                            playersMax = data.players?.max || data.max_players || 0;
+                            ping = data.ping || data.latency || null;
+                            version = data.version?.name || data.version || '未知';
+                            motd = data.motd?.clean || data.description?.text || data.motd || 'Minecraft 服务器';
+                            favicon = data.favicon;
+                        }
+                    }
+                    
+                    if (online) {
+                        motd = motd.replace(/§[0-9a-fklmnor]/g, '');
+                        
+                        onlineDot.className = 'online-dot online';
+                        onlineCount.textContent = `${playersOnline}/${playersMax}`;
+                        pingValue.textContent = ping ? ping : '--';
+                        versionInfo.textContent = version;
+                        
+                        const motdLines = motd.split('\n');
+                        motdLine1.textContent = motdLines[0] || '鼠鼠安乐窝';
+                        motdLine2.innerHTML = motdLines.length > 1 ? `<small>${motdLines[1]}</small>` : '<small>生电 · 纯净 · 和谐</small>';
+                        
+                        if (favicon) {
+                            serverIcon.innerHTML = `<img src="${favicon}" alt="server icon">`;
+                        } else {
+                            serverIcon.innerHTML = '<i class="mdi mdi-server"></i>';
+                        }
+                        
+                        success = true;
+                        break;
+                    }
+                } catch (error) {
+                    console.log(`API ${apiUrl} 失败，尝试下一个`);
+                    continue;
+                }
+            }
+            
+            if (!success) {
+                onlineDot.className = 'online-dot offline';
+                onlineCount.textContent = '0/0';
+                pingValue.textContent = '--';
+                versionInfo.textContent = '离线';
+                motdLine1.textContent = '服务器离线';
+                motdLine2.innerHTML = '<small>请稍后再试</small>';
+                serverIcon.innerHTML = '<i class="mdi mdi-server-off"></i>';
+            }
+            
+            setLoading(false);
+        }
+
+        fetchServerStatus();
+        refreshBtn.addEventListener('click', fetchServerStatus);
+        setInterval(fetchServerStatus, 60000);
+    </script>
+</body>
 </html>
