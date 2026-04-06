@@ -3,312 +3,321 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🎨 CozilyMC 网站设计</title>
+    <title>CozilyMC - 鼠鼠安乐窝</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@mdi/font@7.4.47/css/materialdesign-icons.min.css">
     <style>
         :root {
-            --cyan: #22d3ee;
-            --violet: #8b5cf6;
-            --pink: #ec4899;
-            --bg-dark: #0f172a;
-            --bg-card: rgba(15, 23, 42, 0.8);
-            --text: #e2e8f0;
-            --text-light: #94a3b8;
+            --purple: #A084DC;
+            --purple-dark: #7B5EB8;
+            --purple-light: #D7BDE2;
+            --bg: #ffffff;
+            --text: #1a1a1a;
+            --text-light: #666666;
+            --card-bg: rgba(255,255,255,0.85);
+            --border: rgba(0,0,0,0.08);
+            --shadow: 0 4px 24px rgba(0,0,0,0.06);
         }
 
-        [data-theme="light"] {
-            --bg-dark: #f8f5fc;
-            --bg-card: rgba(255, 255, 255, 0.85);
-            --text: #1e1b4b;
-            --text-light: #64748b;
+        [data-theme="dark"] {
+            --bg: #0a0a0f;
+            --text: #f0f0f0;
+            --text-light: #888;
+            --card-bg: rgba(30,30,45,0.9);
+            --border: rgba(255,255,255,0.08);
+            --shadow: 0 4px 24px rgba(0,0,0,0.4);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
             font-family: 'Noto Sans SC', sans-serif;
-            background: linear-gradient(135deg, var(--bg-dark) 0%, #1e1b4b 50%, var(--bg-dark) 100%);
+            background: var(--bg);
             color: var(--text);
-            min-height: 100vh;
+            line-height: 1.6;
             transition: all 0.3s;
         }
 
-        [data-theme="light"] body {
-            background: linear-gradient(135deg, #f8f5fc 0%, #e8e0f0 50%, #f8f5fc 100%);
-        }
-
         /* 顶部导航 */
-        .top-bar {
+        .nav {
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
-            z-index: 1000;
-            padding: 0.75rem 2rem;
+            z-index: 100;
+            padding: 0 2rem;
         }
 
-        .top-bar-inner {
-            max-width: 1200px;
+        .nav-inner {
+            max-width: 1100px;
             margin: 0 auto;
-            background: var(--bg-card);
-            backdrop-filter: blur(20px);
-            border-radius: 20px;
-            border: 1px solid rgba(255,255,255,0.1);
-            padding: 0.6rem 1.5rem;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+            height: 64px;
         }
 
-        .logo {
+        .nav-logo {
             font-size: 1.2rem;
             font-weight: 700;
             color: var(--text);
             text-decoration: none;
         }
 
-        .nav {
+        .nav-links {
             display: flex;
-            gap: 0.5rem;
+            gap: 0.25rem;
         }
 
-        .nav-item {
-            padding: 0.4rem 1rem;
-            border-radius: 15px;
+        .nav-link {
+            padding: 0.5rem 1rem;
+            font-size: 0.9rem;
             color: var(--text-light);
             text-decoration: none;
-            font-size: 0.9rem;
+            border-radius: 20px;
             transition: all 0.2s;
         }
 
-        .nav-item:hover, .nav-item.active {
-            background: rgba(139, 92, 246, 0.2);
+        .nav-link:hover {
+            background: rgba(160,132,220,0.1);
             color: var(--text);
         }
 
-        .nav-item.active {
-            background: linear-gradient(135deg, var(--cyan), var(--violet));
+        .nav-link.active {
+            background: var(--purple);
             color: white;
         }
 
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
         .theme-btn {
-            background: rgba(139, 92, 246, 0.1);
-            border: 1px solid rgba(255,255,255,0.1);
-            border-radius: 15px;
-            padding: 0.4rem 0.8rem;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            border: 1px solid var(--border);
+            background: transparent;
             color: var(--text);
             cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             transition: all 0.2s;
         }
 
         .theme-btn:hover {
-            background: rgba(139, 92, 246, 0.2);
+            background: var(--purple);
+            color: white;
+            border-color: var(--purple);
         }
 
         /* 主内容 */
         .main {
-            max-width: 1000px;
+            max-width: 900px;
             margin: 0 auto;
-            padding: 100px 2rem 2rem;
+            padding: 100px 2rem 4rem;
         }
 
         /* Hero */
         .hero {
             text-align: center;
-            padding: 3rem 1rem;
+            padding: 3rem 0 4rem;
+            position: relative;
+        }
+
+        .hero-bg {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: clamp(4rem, 15vw, 12rem);
+            font-weight: 800;
+            color: var(--purple);
+            opacity: 0.06;
+            white-space: nowrap;
+            letter-spacing: 0.1em;
+            user-select: none;
+            pointer-events: none;
         }
 
         .hero h1 {
-            font-size: 4rem;
+            font-size: 2.5rem;
             font-weight: 800;
-            background: linear-gradient(135deg, var(--cyan) 0%, var(--violet) 50%, var(--pink) 100%);
-            background-size: 200% 200%;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            animation: gradient-shift 4s ease infinite;
+            color: var(--purple);
+            margin-bottom: 0.5rem;
             position: relative;
         }
 
-        .hero h1::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(135deg, var(--cyan), var(--violet), var(--pink));
-            opacity: 0.5;
-            filter: blur(30px);
-            z-index: -1;
+        .hero p {
+            font-size: 1.1rem;
+            color: var(--text-light);
+            margin-bottom: 2rem;
+            position: relative;
         }
 
-        @keyframes gradient-shift {
-            0%, 100% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-        }
-
-        /* 终端风格卡片 */
-        .terminal-card {
-            max-width: 600px;
-            margin: 2rem auto;
-            background: rgba(0, 0, 0, 0.8);
+        /* 服务器状态卡片 */
+        .server-card {
+            background: var(--card-bg);
             backdrop-filter: blur(20px);
-            border-radius: 16px;
-            border: 1px solid rgba(255,255,255,0.1);
-            padding: 1rem 1.5rem;
-            box-shadow: 0 0 50px rgba(0,0,0,0.5);
-            text-align: left;
-        }
-
-        .terminal-header {
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 1.25rem 1.5rem;
+            margin: 0 auto 3rem;
+            max-width: 500px;
+            box-shadow: var(--shadow);
             display: flex;
             align-items: center;
-            gap: 0.4rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .terminal-dot {
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-        }
-
-        .dot-red { background: #ef4444; }
-        .dot-yellow { background: #eab308; }
-        .dot-green { background: #22c55e; }
-
-        .terminal-title {
-            font-size: 0.75rem;
-            color: #6b7280;
-            margin-left: 0.5rem;
-        }
-
-        .terminal-body {
-            font-family: 'Consolas', monospace;
-            color: #22c55e;
-            font-size: 0.9rem;
-        }
-
-        .cursor {
-            display: inline-block;
-            width: 8px;
-            height: 16px;
-            background: #22c55e;
-            animation: blink 1s infinite;
-        }
-
-        @keyframes blink {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0; }
-        }
-
-        /* 介绍卡片 */
-        .intro-card {
-            max-width: 700px;
-            margin: 2rem auto;
-            background: rgba(255,255,255,0.1);
-            backdrop-filter: blur(20px);
-            border-radius: 20px;
-            border: 1px solid rgba(255,255,255,0.1);
-            padding: 1.5rem 2rem;
-            position: relative;
-        }
-
-        .intro-badge {
-            position: absolute;
-            top: -12px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: linear-gradient(135deg, var(--cyan), var(--violet));
-            padding: 0.3rem 1rem;
-            border-radius: 20px;
-            font-size: 0.75rem;
-            color: white;
-            font-weight: 600;
-        }
-
-        .intro-card p {
-            text-align: center;
-            color: var(--text);
-            line-height: 1.7;
-            font-size: 1rem;
-        }
-
-        /* 功能卡片网格 */
-        .section-title {
-            text-align: center;
-            font-size: 2rem;
-            font-weight: 800;
-            margin: 3rem 0 1.5rem;
-            background: linear-gradient(135deg, var(--cyan), var(--violet));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .card-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
             gap: 1rem;
         }
 
-        .card {
-            background: rgba(255,255,255,0.05);
-            backdrop-filter: blur(10px);
-            border-radius: 16px;
-            border: 1px solid rgba(255,255,255,0.08);
-            padding: 1.2rem;
-            transition: all 0.3s;
-            cursor: pointer;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 3px;
-            background: linear-gradient(90deg, var(--cyan), var(--violet), var(--pink));
-            opacity: 0;
-            transition: opacity 0.3s;
-        }
-
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
-        }
-
-        .card:hover::before {
-            opacity: 1;
-        }
-
-        .card-icon {
+        .server-icon {
             width: 48px;
             height: 48px;
-            background: linear-gradient(135deg, var(--cyan), var(--violet));
+            background: linear-gradient(135deg, var(--purple), var(--purple-dark));
             border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-bottom: 0.8rem;
-            transition: transform 0.3s;
+            font-size: 1.4rem;
+            flex-shrink: 0;
         }
 
-        .card:hover .card-icon {
-            transform: scale(1.1) rotate(5deg);
+        .server-info {
+            flex: 1;
+        }
+
+        .server-name {
+            font-weight: 700;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .online-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #4caf50;
+            box-shadow: 0 0 6px #4caf50;
+        }
+
+        .online-dot.offline {
+            background: #f44336;
+            box-shadow: none;
+        }
+
+        .server-tags {
+            display: flex;
+            gap: 0.4rem;
+            margin-top: 0.35rem;
+            flex-wrap: wrap;
+        }
+
+        .tag {
+            font-size: 0.7rem;
+            padding: 0.15rem 0.5rem;
+            background: rgba(160,132,220,0.1);
+            border-radius: 6px;
+            color: var(--text);
+        }
+
+        .copy-btn {
+            background: var(--purple);
+            border: none;
+            border-radius: 12px;
+            padding: 0.5rem 1rem;
+            color: white;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+            transition: all 0.2s;
+            flex-shrink: 0;
+        }
+
+        .copy-btn:hover {
+            background: var(--purple-dark);
+            transform: translateY(-1px);
+        }
+
+        /* 快速入口 */
+        .section {
+            margin-bottom: 3.5rem;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1.25rem;
+        }
+
+        .section-num {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--purple);
+            background: rgba(160,132,220,0.1);
+            padding: 0.2rem 0.5rem;
+            border-radius: 6px;
+        }
+
+        .section-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+        }
+
+        /* 卡片网格 */
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1rem;
+        }
+
+        .card {
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 1.25rem;
+            transition: all 0.25s;
+            cursor: pointer;
+            text-decoration: none;
+            color: var(--text);
+        }
+
+        .card:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow);
+            border-color: var(--purple);
+        }
+
+        .card-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--purple), var(--purple-dark));
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 0.85rem;
         }
 
         .card-icon i {
-            font-size: 1.3rem;
+            font-size: 1.1rem;
             color: white;
         }
 
         .card h3 {
-            font-size: 1rem;
-            color: var(--text);
-            margin-bottom: 0.3rem;
+            font-size: 0.95rem;
+            font-weight: 700;
+            margin-bottom: 0.25rem;
         }
 
         .card p {
@@ -317,194 +326,211 @@
             line-height: 1.5;
         }
 
-        .card .badge {
-            display: inline-block;
-            padding: 0.15rem 0.5rem;
-            background: rgba(139, 92, 246, 0.2);
-            border-radius: 8px;
-            font-size: 0.65rem;
-            margin-top: 0.5rem;
-            color: var(--cyan);
+        /* 列表 */
+        .list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
         }
 
-        /* IP卡片 */
-        .ip-card {
-            max-width: 600px;
-            margin: 2rem auto;
-            background: var(--bg-card);
-            backdrop-filter: blur(20px);
-            border-radius: 20px;
-            border: 1px solid rgba(255,255,255,0.1);
-            padding: 1rem 1.5rem;
+        .list-item {
             display: flex;
             align-items: center;
-            justify-content: space-between;
             gap: 1rem;
-            flex-wrap: wrap;
-        }
-
-        .ip-info {
-            text-align: left;
-        }
-
-        .ip-info .label {
-            font-size: 0.7rem;
-            color: var(--text-light);
-        }
-
-        .ip-info .value {
-            font-size: 1.2rem;
-            font-weight: 700;
+            padding: 1rem 1.25rem;
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            text-decoration: none;
             color: var(--text);
-        }
-
-        .copy-btn {
-            background: linear-gradient(135deg, var(--cyan), var(--violet));
-            border: none;
-            border-radius: 15px;
-            padding: 0.5rem 1.2rem;
-            color: white;
-            font-weight: 600;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 0.4rem;
             transition: all 0.2s;
         }
 
-        .copy-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(34, 211, 238, 0.3);
+        .list-item:hover {
+            border-color: var(--purple);
+            transform: translateX(4px);
+        }
+
+        .list-num {
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: var(--purple);
+            min-width: 28px;
+        }
+
+        .list-content {
+            flex: 1;
+        }
+
+        .list-content h4 {
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .list-content p {
+            font-size: 0.75rem;
+            color: var(--text-light);
+        }
+
+        .list-arrow {
+            color: var(--purple);
+            font-size: 1.2rem;
         }
 
         /* 页脚 */
         .footer {
             text-align: center;
-            padding: 2rem;
+            padding: 2.5rem;
             color: var(--text-light);
             font-size: 0.8rem;
-            border-top: 1px solid rgba(255,255,255,0.1);
-            margin-top: 3rem;
+            border-top: 1px solid var(--border);
+            margin-top: 2rem;
         }
 
         .footer a {
-            color: var(--cyan);
+            color: var(--purple);
             text-decoration: none;
         }
 
         /* 移动端 */
         @media (max-width: 768px) {
-            .top-bar { padding: 0.5rem 1rem; }
-            .nav { display: none; }
-            .hero h1 { font-size: 2.5rem; }
-            .main { padding: 80px 1rem 1rem; }
-            .ip-card { flex-direction: column; text-align: center; }
-            .ip-info { text-align: center; }
+            .nav-links { display: none; }
+            .main { padding: 80px 1rem 2rem; }
+            .hero h1 { font-size: 1.8rem; }
+            .hero-bg { font-size: 3rem; }
+            .server-card { flex-direction: column; text-align: center; }
+            .server-tags { justify-content: center; }
         }
     </style>
 </head>
 <body>
     <!-- 顶部导航 -->
-    <header class="top-bar">
-        <div class="top-bar-inner">
-            <a href="#" class="logo">Cozily</a>
+    <nav class="nav">
+        <div class="nav-inner">
+            <a href="#" class="nav-logo">Cozily</a>
 
-            <nav class="nav">
-                <a href="#" class="nav-item active">首页</a>
-                <a href="#" class="nav-item">综合导航</a>
-                <a href="#" class="nav-item">神人榜</a>
-                <a href="#" class="nav-item">攻略指南</a>
-            </nav>
+            <div class="nav-links">
+                <a href="#" class="nav-link active">首页</a>
+                <a href="#" class="nav-link">综合导航</a>
+                <a href="#" class="nav-link">神人榜</a>
+                <a href="#" class="nav-link">攻略指南</a>
+            </div>
 
-            <button class="theme-btn" onclick="toggleTheme()">
-                <i class="mdi mdi-weather-sunny" id="themeIcon"></i>
-            </button>
+            <div class="nav-right">
+                <button class="theme-btn" onclick="toggleTheme()">
+                    <i class="mdi mdi-weather-sunny" id="themeIcon"></i>
+                </button>
+            </div>
         </div>
-    </header>
+    </nav>
 
     <!-- 主内容 -->
     <main class="main">
         <!-- Hero -->
         <section class="hero">
-            <h1>CozilyMC</h1>
+            <div class="hero-bg">COZILYCOZILYCOZILYCOZILY</div>
+            <h1>鼠鼠安乐窝</h1>
+            <p>Minecraft 高质量生存建筑服务器</p>
 
-            <!-- 终端风格卡片 -->
-            <div class="terminal-card">
-                <div class="terminal-header">
-                    <div class="terminal-dot dot-red"></div>
-                    <div class="terminal-dot dot-yellow"></div>
-                    <div class="terminal-dot dot-green"></div>
-                    <span class="terminal-title">terminal</span>
+            <!-- 服务器状态 -->
+            <div class="server-card">
+                <div class="server-icon">🎮</div>
+                <div class="server-info">
+                    <div class="server-name">
+                        <span class="online-dot"></span>
+                        鼠鼠安乐窝
+                    </div>
+                    <div class="server-tags">
+                        <span class="tag">24/100</span>
+                        <span class="tag">12ms</span>
+                        <span class="tag">1.21.4 Purpur</span>
+                    </div>
                 </div>
-                <div class="terminal-body">
-                    > 正在连接服务器 mc.cozily.top...<br>
-                    > 连接成功！当前在线：24/100<span class="cursor"></span>
-                </div>
-            </div>
-
-            <!-- 介绍卡片 -->
-            <div class="intro-card">
-                <span class="intro-badge">专注</span>
-                <p>高质量Minecraft生存建筑服务器，让你的创意在像素世界中自由飞翔。生电生存、纯净原版、创意无限。</p>
+                <button class="copy-btn" onclick="copyIP('mc.cozily.top')">
+                    <i class="mdi mdi-content-copy"></i> 复制
+                </button>
             </div>
         </section>
 
-        <!-- IP卡片 -->
-        <div class="ip-card">
-            <div class="ip-info">
-                <div class="label">服务器地址</div>
-                <div class="value">mc.cozily.top</div>
-            </div>
-            <button class="copy-btn" onclick="copyIP('mc.cozily.top')">
-                <i class="mdi mdi-content-copy"></i> 复制IP
-            </button>
-        </div>
-
         <!-- 快速入口 -->
-        <h2 class="section-title">快速入口</h2>
-        <div class="card-grid">
-            <div class="card">
-                <div class="card-icon"><i class="mdi mdi-map"></i></div>
-                <h3>🏰 服务器地标</h3>
-                <p>探索玩家建筑的精彩世界</p>
-                <span class="badge">128 个地标</span>
+        <section class="section">
+            <div class="section-header">
+                <span class="section-num">01</span>
+                <h2 class="section-title">快速入口</h2>
             </div>
 
-            <div class="card">
-                <div class="card-icon"><i class="mdi mdi-trophy"></i></div>
-                <h3>⭐ 神人榜</h3>
-                <p>建筑大师排行榜</p>
-                <span class="badge">Top 50</span>
+            <div class="card-grid">
+                <a href="#" class="card">
+                    <div class="card-icon"><i class="mdi mdi-map"></i></div>
+                    <h3>🏰 服务器地标</h3>
+                    <p>探索玩家建筑的精彩世界</p>
+                </a>
+
+                <a href="#" class="card">
+                    <div class="card-icon"><i class="mdi mdi-trophy"></i></div>
+                    <h3>⭐ 神人榜</h3>
+                    <p>建筑大师排行榜</p>
+                </a>
+
+                <a href="#" class="card">
+                    <div class="card-icon"><i class="mdi mdi-compass"></i></div>
+                    <h3>🧭 综合导航</h3>
+                    <p>一站式资源汇总</p>
+                </a>
+
+                <a href="#" class="card">
+                    <div class="card-icon"><i class="mdi mdi-account-group"></i></div>
+                    <h3>👥 团队介绍</h3>
+                    <p>认识幕后运营团队</p>
+                </a>
+            </div>
+        </section>
+
+        <!-- 服务 -->
+        <section class="section">
+            <div class="section-header">
+                <span class="section-num">02</span>
+                <h2 class="section-title">更多服务</h2>
             </div>
 
-            <div class="card">
-                <div class="card-icon"><i class="mdi mdi-compass"></i></div>
-                <h3>🧭 综合导航</h3>
-                <p>一站式资源汇总</p>
-                <span class="badge">持续更新</span>
-            </div>
+            <div class="list">
+                <a href="#" class="list-item">
+                    <span class="list-num">01</span>
+                    <div class="list-content">
+                        <h4>常见问题 FAQ</h4>
+                        <p>新手入门指南与常见问题解答</p>
+                    </div>
+                    <span class="list-arrow">→</span>
+                </a>
 
-            <div class="card">
-                <div class="card-icon"><i class="mdi mdi-account-group"></i></div>
-                <h3>👥 团队介绍</h3>
-                <p>认识幕后运营团队</p>
-                <span class="badge">管理组</span>
-            </div>
+                <a href="#" class="list-item">
+                    <span class="list-num">02</span>
+                    <div class="list-content">
+                        <h4>攻略指南</h4>
+                        <p>建筑技巧与大师经验分享</p>
+                    </div>
+                    <span class="list-arrow">→</span>
+                </a>
 
-            <div class="card">
-                <div class="card-icon"><i class="mdi mdi-help-circle"></i></div>
-                <h3>❓ 常见问题</h3>
-                <p>新手入门指南</p>
-                <span class="badge">FAQ</span>
-            </div>
+                <a href="#" class="list-item">
+                    <span class="list-num">03</span>
+                    <div class="list-content">
+                        <h4>资源中心</h4>
+                        <p>材质包、模组等资源下载</p>
+                    </div>
+                    <span class="list-arrow">→</span>
+                </a>
 
-            <div class="card">
-                <div class="card-icon"><i class="mdi mdi-book-open"></i></div>
-                <h3>📖 攻略指南</h3>
-                <p>建筑技巧与经验分享</p>
-                <span class="badge">进阶教程</span>
+                <a href="#" class="list-item">
+                    <span class="list-num">04</span>
+                    <div class="list-content">
+                        <h4>发展历程</h4>
+                        <p>服务器发展历史回顾</p>
+                    </div>
+                    <span class="list-arrow">→</span>
+                </a>
             </div>
-        </div>
+        </section>
 
         <!-- 页脚 -->
         <footer class="footer">
@@ -520,11 +546,11 @@
             const body = document.body;
             const icon = document.getElementById('themeIcon');
             
-            if (body.getAttribute('data-theme') === 'light') {
+            if (body.getAttribute('data-theme') === 'dark') {
                 body.removeAttribute('data-theme');
                 icon.className = 'mdi mdi-weather-sunny';
             } else {
-                body.setAttribute('data-theme', 'light');
+                body.setAttribute('data-theme', 'dark');
                 icon.className = 'mdi mdi-weather-night';
             }
         }
