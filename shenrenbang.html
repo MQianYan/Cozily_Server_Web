@@ -565,7 +565,7 @@
 
     <!-- 顶部导航栏 - 与主页一致 -->
     <div class="top-bar">
-        <div class="logo"><i class="mdi mdi-paw"></i> Cozily</div>
+        <div class="logo">Cozily</div>
         <div class="nav">
             <a href="index.html">首页</a>
             <a href="dibiao.html">玩家地标</a>
@@ -664,62 +664,5 @@
     </div>
 
     <footer>
-        <p>© 2025 www.cozily.top | Page for GitHub.io | QQ交流群:749543572</p>
+        <p>© 2026 CozilyMC. All rights reserved.</p>
         <p>‎</p>
-        <p>CozilyMC 是一个独立的团队。Minecraft™ 是 Mojang Studios 和 Microsoft Corporation 的商标及其游戏标识。</p>
-        <p>CozilyMC 未获Mojang Studios或Microsoft公司批准，也未与其有任何关联。</p>
-        <p>我们的团队致力于为玩家提供良好的游戏环境，并愿意维护，保证正确的价值观</p>
-    </footer>
-
-    <script>
-        // 日夜模式切换
-        const themeToggle = document.querySelector('.theme-toggle');
-        const savedTheme = localStorage.getItem('theme') || 'light';
-        document.documentElement.setAttribute('data-theme', savedTheme);
-        themeToggle.innerHTML = savedTheme === 'dark' ? '<i class="mdi mdi-white-balance-sunny"></i>' : '<i class="mdi mdi-weather-night"></i>';
-
-        themeToggle.addEventListener('click', () => {
-            let theme = document.documentElement.getAttribute('data-theme');
-            theme = theme === 'dark' ? 'light' : 'dark';
-            document.documentElement.setAttribute('data-theme', theme);
-            localStorage.setItem('theme', theme);
-            themeToggle.innerHTML = theme === 'dark' ? '<i class="mdi mdi-white-balance-sunny"></i>' : '<i class="mdi mdi-weather-night"></i>';
-        });
-
-        // 三个按钮的交互处理（保持原有功能不变）
-        const allActionBtns = document.querySelectorAll('.action-btn');
-
-        allActionBtns.forEach(btn => {
-            btn.addEventListener('click', function(e) {
-                e.stopPropagation();
-                const godName = this.dataset.god;
-                const action = this.dataset.action;
-                
-                if (action === 'detail') {
-                    alert(`📖 【${godName}】\n\n详情页面开发中，后续将展示完整事迹、作品集和荣誉墙。\n您可在此自定义详细内容。`);
-                } 
-                else if (action === 'like') {
-                    if (likeCounts[godName]) {
-                        likeCounts[godName]++;
-                        this.innerHTML = `<i class="mdi mdi-thumb-up"></i> 点赞 · ${likeCounts[godName]}`;
-                        this.style.transform = 'scale(1.05)';
-                        setTimeout(() => { this.style.transform = ''; }, 200);
-                        console.log(`点赞成功：${godName} 当前点赞 ${likeCounts[godName]}`);
-                    }
-                } 
-                else if (action === 'comment') {
-                    const userMessage = prompt(`💬 留言给 ${godName}：\n（可在此自定义留言内容）`, "太强了！支持！");
-                    if (userMessage && userMessage.trim()) {
-                        alert(`✅ 留言已发送！\n\n你的留言：「${userMessage}」\n管理员审核后将会展示。`);
-                    } else if (userMessage !== null) {
-                        alert('留言内容不能为空~');
-                    }
-                }
-            });
-        });
-
-
-        console.log('神人榜已加载，三个按钮均已绑定');
-    </script>
-</body>
-</html>

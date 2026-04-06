@@ -495,7 +495,7 @@
 <body>
     <!-- 顶部栏 - 毛玻璃按钮效果 -->
     <div class="top-bar">
-        <div class="logo"><i class="1"></i> Cozily</div>
+        <div class="logo">Cozily</div>
 
         <div class="nav">
             <a href="index.html">首页</a>
@@ -761,114 +761,5 @@
 
     <!-- 页脚 -->
     <footer>
-        <p>© 2025 www.cozily.top | Page for GitHub.io | QQ交流群:749543572</p>
+        <p>© 2026 CozilyMC. All rights reserved.</p>
         <p>‎</p>
-        <p>CozilyMC 是一个独立的团队。Minecraft™ 是 Mojang Studios 和 Microsoft Corporation 的商标及其游戏标识。</p>
-        <p>CozilyMC 未获Mojang Studios或Microsoft公司批准，也未与其有任何关联。</p>
-        <p>我们的团队致力于为玩家提供良好的游戏环境，并愿意维护，保证正确的价值观</p>
-    </footer>
-
-    <script>
-        (function() {
-            // ----- 主题切换 -----
-            const themeToggle = document.getElementById('themeToggle');
-            const root = document.documentElement;
-            const themeIcon = themeToggle.querySelector('i');
-
-            const savedTheme = localStorage.getItem('theme') || 'light';
-            if (savedTheme === 'dark') {
-                root.setAttribute('data-theme', 'dark');
-                themeIcon.classList.remove('mdi-weather-night');
-                themeIcon.classList.add('mdi-white-balance-sunny');
-            } else {
-                root.setAttribute('data-theme', 'light');
-                themeIcon.classList.add('mdi-weather-night');
-                themeIcon.classList.remove('mdi-white-balance-sunny');
-            }
-
-            themeToggle.addEventListener('click', () => {
-                const currentTheme = root.getAttribute('data-theme') || 'light';
-                const newTheme = currentTheme === 'light' ? 'dark' : 'light';
-                root.setAttribute('data-theme', newTheme);
-                localStorage.setItem('theme', newTheme);
-
-                if (newTheme === 'dark') {
-                    themeIcon.classList.remove('mdi-weather-night');
-                    themeIcon.classList.add('mdi-white-balance-sunny');
-                } else {
-                    themeIcon.classList.remove('mdi-white-balance-sunny');
-                    themeIcon.classList.add('mdi-weather-night');
-                }
-            });
-
-            // ----- FAQ 交互：展开/折叠 -----
-            const faqItems = document.querySelectorAll('.faq-item');
-            
-            faqItems.forEach(item => {
-                const question = item.querySelector('.faq-question');
-                
-                question.addEventListener('click', () => {
-                    // 先关闭其他（可选，如果想要手风琴效果就取消注释）
-                    // faqItems.forEach(otherItem => {
-                    //     if (otherItem !== item && otherItem.classList.contains('active')) {
-                    //         otherItem.classList.remove('active');
-                    //     }
-                    // });
-                    
-                    item.classList.toggle('active');
-                });
-            });
-
-            // 默认展开第一个
-            if (faqItems.length > 0) {
-                faqItems[0].classList.add('active');
-            }
-
-            // ----- 分类筛选 -----
-            const categoryBtns = document.querySelectorAll('.category-btn');
-            const faqList = document.getElementById('faqList');
-            
-            categoryBtns.forEach(btn => {
-                btn.addEventListener('click', () => {
-                    // 更新按钮状态
-                    categoryBtns.forEach(b => b.classList.remove('active'));
-                    btn.classList.add('active');
-                    
-                    const category = btn.dataset.category;
-                    
-                    // 筛选FAQ项目
-                    faqItems.forEach(item => {
-                        if (category === 'all' || item.dataset.category === category) {
-                            item.style.display = 'block';
-                        } else {
-                            item.style.display = 'none';
-                        }
-                    });
-                });
-            });
-
-            // ----- 搜索功能 -----
-            const searchInput = document.getElementById('faqSearch');
-            
-            searchInput.addEventListener('input', (e) => {
-                const searchTerm = e.target.value.toLowerCase().trim();
-                
-                faqItems.forEach(item => {
-                    const questionText = item.querySelector('.question-text').textContent.toLowerCase();
-                    const answerText = item.querySelector('.answer-text').textContent.toLowerCase();
-                    
-                    if (questionText.includes(searchTerm) || answerText.includes(searchTerm)) {
-                        item.style.display = 'block';
-                    } else {
-                        item.style.display = 'none';
-                    }
-                });
-                
-                // 搜索时重置分类按钮
-                categoryBtns.forEach(btn => btn.classList.remove('active'));
-                document.querySelector('[data-category="all"]').classList.add('active');
-            });
-        })();
-    </script>
-</body>
-</html>
