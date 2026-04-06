@@ -341,19 +341,6 @@
             overlay.classList.toggle("show");
         }
         
-        // 主题切换功能保持不变
-        document.addEventListener("DOMContentLoaded", function() {
-            const themeToggle = document.querySelector(".theme-toggle");
-            const html = document.documentElement;
-            
-            const savedTheme = localStorage.getItem("theme");
-            const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-            
-            if (savedTheme) {
-                html.setAttribute("data-theme", savedTheme);
-            } else if (prefersDark) {
-                html.setAttribute("data-theme", "dark");
-            }
             
             if (themeToggle) {
                 themeToggle.addEventListener("click", function() {
