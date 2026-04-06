@@ -406,6 +406,7 @@
             line-height: 1;
         }
 
+
     </style>
 </head>
 <body>
@@ -577,5 +578,13 @@
         console.log('自述页面已加载 — CozilyMC 开源声明');
     </script>
 
+    <script>
+        function toggleSidebar() {
+            const sidebar = document.querySelector(".top-bar");
+            const overlay = document.querySelector(".sidebar-overlay");
+            sidebar.classList.toggle("open");
+            overlay.classList.toggle("show");
+        }
+    </script>
 </body>
 </html>
