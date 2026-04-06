@@ -9,24 +9,25 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@mdi/font@7.4.47/css/materialdesign-icons.min.css">
     <style>
         :root {
-            --purple: #A084DC;
-            --purple-dark: #7B5EB8;
-            --purple-light: #D7BDE2;
-            --bg: #ffffff;
-            --text: #1a1a1a;
-            --text-light: #666666;
-            --card-bg: rgba(255,255,255,0.9);
-            --border: rgba(0,0,0,0.08);
-            --shadow: 0 4px 24px rgba(0,0,0,0.06);
+            --primary: #A084DC;
+            --primary-d: #7B5EB8;
+            --primary-l: #D7BDE2;
+            --bg: #F8F5FC;
+            --card-bg: rgba(255, 255, 255, 0.85);
+            --text: #2D1B47;
+            --text-light: #5A4A6E;
+            --border: rgba(161, 132, 220, 0.28);
+            --shadow: 0 8px 32px rgba(161, 132, 220, 0.18);
+            --success: #4caf50;
         }
 
         [data-theme="dark"] {
-            --bg: #0a0a0f;
-            --text: #f0f0f0;
-            --text-light: #888;
-            --card-bg: rgba(30,30,45,0.95);
-            --border: rgba(255,255,255,0.08);
-            --shadow: 0 4px 24px rgba(0,0,0,0.4);
+            --bg: #1A1425;
+            --card-bg: rgba(42, 33, 64, 0.88);
+            --text: #E3D8F2;
+            --text-light: #C4B3E0;
+            --border: rgba(177, 156, 217, 0.20);
+            --shadow: 0 8px 32px rgba(0, 0, 0, 0.50);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -62,7 +63,7 @@
         .nav-logo {
             font-size: 1.2rem;
             font-weight: 700;
-            color: var(--text);
+            color: var(--primary-d);
             text-decoration: none;
         }
 
@@ -81,12 +82,12 @@
         }
 
         .nav-link:hover {
-            background: rgba(160,132,220,0.1);
+            background: rgba(161,132,220,0.12);
             color: var(--text);
         }
 
         .nav-link.active {
-            background: var(--purple);
+            background: var(--primary);
             color: white;
         }
 
@@ -111,9 +112,9 @@
         }
 
         .theme-btn:hover {
-            background: var(--purple);
+            background: var(--primary);
             color: white;
-            border-color: var(--purple);
+            border-color: var(--primary);
         }
 
         /* 主内容 */
@@ -123,17 +124,40 @@
             padding: 100px 2rem 4rem;
         }
 
-        /* Hero */
+        /* Hero - MiMo风格 */
         .hero {
             text-align: center;
             padding: 3rem 0 4rem;
+            position: relative;
         }
 
-        .hero h1 {
-            font-size: 2.5rem;
+        .hero-title {
+            font-size: 3rem;
             font-weight: 800;
-            color: var(--purple);
+            color: var(--primary-d);
             margin-bottom: 0.5rem;
+            position: relative;
+            display: inline-block;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .hero-title::before {
+            content: attr(data-text);
+            position: absolute;
+            inset: 0;
+            background: #1a1a1a;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .hero-title:hover::before {
+            opacity: 1;
         }
 
         .hero p {
@@ -142,41 +166,116 @@
             margin-bottom: 2rem;
         }
 
-        /* 服务器状态卡片 */
+        /* 服务器状态卡片 - 原版MC风格 */
         .server-card {
             background: var(--card-bg);
             backdrop-filter: blur(20px);
             border: 1px solid var(--border);
-            border-radius: 20px;
-            padding: 1.25rem 1.5rem;
+            border-radius: 28px;
+            padding: 0.8rem 1.5rem;
             margin: 0 auto 3rem;
-            max-width: 500px;
+            max-width: 600px;
             box-shadow: var(--shadow);
             display: flex;
+            flex-wrap: wrap;
             align-items: center;
-            gap: 1rem;
+            justify-content: space-between;
+            gap: 0.8rem;
             transition: all 0.3s;
         }
 
-        .server-icon {
-            width: 48px;
-            height: 48px;
-            background: linear-gradient(135deg, var(--purple), var(--purple-dark));
-            border-radius: 12px;
+        .card-top {
+            text-align: left;
+        }
+
+        .tagline {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--primary-d);
+        }
+
+        .version-info {
+            font-size: 0.8rem;
+            color: var(--text-light);
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+            margin-top: 0.1rem;
+        }
+
+        .version-info i {
+            font-size: 0.9rem;
+            color: var(--primary);
+        }
+
+        .ip-box {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        .ip-address {
+            font-size: 1.2rem;
+            font-weight: 800;
+            color: var(--primary-d);
+        }
+
+        .copy-btn {
+            background: var(--primary);
+            border: none;
+            border-radius: 20px;
+            padding: 0.4rem 1rem;
+            color: white;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+            transition: all 0.2s;
+        }
+
+        .copy-btn:hover {
+            background: var(--primary-d);
+            transform: translateY(-1px);
+        }
+
+        /* 服务器状态 - 原版MC风格 */
+        .server-status {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 0.8rem 1.2rem;
+            margin-bottom: 3rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+            transition: all 0.3s;
+        }
+
+        .status-icon {
+            width: 44px;
+            height: 44px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-d));
+            border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.4rem;
+            font-size: 1.3rem;
             flex-shrink: 0;
         }
 
-        .server-info {
+        .status-info {
             flex: 1;
         }
 
-        .server-name {
+        .status-name {
             font-weight: 700;
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             display: flex;
             align-items: center;
             gap: 0.4rem;
@@ -186,52 +285,58 @@
             width: 8px;
             height: 8px;
             border-radius: 50%;
-            background: #4caf50;
-            box-shadow: 0 0 6px #4caf50;
+        }
+
+        .online-dot.online {
+            background: var(--success);
+            box-shadow: 0 0 6px var(--success);
         }
 
         .online-dot.offline {
             background: #f44336;
-            box-shadow: none;
         }
 
-        .server-tags {
+        .status-desc {
+            font-size: 0.75rem;
+            color: var(--text-light);
+            margin-top: 0.05rem;
+        }
+
+        .status-tags {
             display: flex;
-            gap: 0.4rem;
-            margin-top: 0.35rem;
+            gap: 0.3rem;
+            margin-top: 0.3rem;
             flex-wrap: wrap;
         }
 
-        .tag {
-            font-size: 0.7rem;
-            padding: 0.15rem 0.5rem;
-            background: rgba(160,132,220,0.1);
-            border-radius: 6px;
+        .status-tag {
+            background: rgba(161,132,220,0.1);
+            padding: 0.1rem 0.45rem;
+            border-radius: 8px;
+            font-size: 0.65rem;
             color: var(--text);
         }
 
-        .copy-btn {
-            background: var(--purple);
-            border: none;
-            border-radius: 12px;
-            padding: 0.5rem 1rem;
-            color: white;
-            font-size: 0.85rem;
-            font-weight: 600;
+        .refresh-btn {
+            background: rgba(161,132,220,0.08);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 0.3rem 0.6rem;
+            font-size: 0.7rem;
+            color: var(--text-light);
             cursor: pointer;
             display: flex;
             align-items: center;
-            gap: 0.3rem;
+            gap: 0.2rem;
             transition: all 0.2s;
-            flex-shrink: 0;
         }
 
-        .copy-btn:hover {
-            background: var(--purple-dark);
-            transform: translateY(-1px);
+        .refresh-btn:hover {
+            background: var(--primary-l);
+            color: var(--primary-d);
         }
 
-        /* 快速入口 */
+        /* 翻转卡片 */
         .section {
             margin-bottom: 3.5rem;
         }
@@ -246,8 +351,8 @@
         .section-num {
             font-size: 0.75rem;
             font-weight: 700;
-            color: var(--purple);
-            background: rgba(160,132,220,0.1);
+            color: var(--primary);
+            background: rgba(161,132,220,0.1);
             padding: 0.2rem 0.5rem;
             border-radius: 6px;
         }
@@ -257,13 +362,19 @@
             font-weight: 700;
         }
 
-        /* 翻转卡片 - MiMo效果 */
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        /* 翻转卡片 */
         .flip-card {
             position: relative;
             border-radius: 16px;
             overflow: hidden;
             cursor: pointer;
-            height: 180px;
+            height: 160px;
         }
 
         .flip-card-inner {
@@ -299,7 +410,7 @@
         }
 
         .flip-back {
-            background: linear-gradient(135deg, var(--purple), var(--purple-dark));
+            background: linear-gradient(135deg, var(--primary), var(--primary-d));
             transform: rotateX(180deg);
             color: white;
             text-align: left;
@@ -308,12 +419,12 @@
         .flip-front .card-icon {
             width: 40px;
             height: 40px;
-            background: linear-gradient(135deg, var(--purple), var(--purple-dark));
+            background: linear-gradient(135deg, var(--primary), var(--primary-d));
             border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-bottom: 0.85rem;
+            margin-bottom: 0.75rem;
         }
 
         .flip-front .card-icon i {
@@ -340,27 +451,8 @@
 
         .flip-back .flip-label {
             font-size: 0.7rem;
-            opacity: 0.8;
-            margin-bottom: 0.5rem;
-        }
-
-        /* 卡片网格 */
-        .card-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-            gap: 1rem;
-        }
-
-        .card-grid-2 {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 1rem;
-        }
-
-        @media (max-width: 600px) {
-            .card-grid-2 {
-                grid-template-columns: 1fr;
-            }
+            opacity: 0.85;
+            margin-bottom: 0.4rem;
         }
 
         /* 列表 */
@@ -384,14 +476,14 @@
         }
 
         .list-item:hover {
-            border-color: var(--purple);
+            border-color: var(--primary);
             transform: translateX(4px);
         }
 
         .list-num {
             font-size: 0.8rem;
             font-weight: 700;
-            color: var(--purple);
+            color: var(--primary);
             min-width: 28px;
         }
 
@@ -410,7 +502,7 @@
         }
 
         .list-arrow {
-            color: var(--purple);
+            color: var(--primary);
             font-size: 1.2rem;
         }
 
@@ -425,7 +517,7 @@
         }
 
         .footer a {
-            color: var(--purple);
+            color: var(--primary);
             text-decoration: none;
         }
 
@@ -433,9 +525,10 @@
         @media (max-width: 768px) {
             .nav-links { display: none; }
             .main { padding: 80px 1rem 2rem; }
-            .hero h1 { font-size: 1.8rem; }
+            .hero-title { font-size: 2rem; }
             .server-card { flex-direction: column; text-align: center; }
-            .server-tags { justify-content: center; }
+            .card-top { text-align: center; }
+            .server-status { flex-direction: column; text-align: center; }
         }
     </style>
 </head>
@@ -464,28 +557,47 @@
     <main class="main">
         <!-- Hero -->
         <section class="hero">
-            <h1>鼠鼠安乐窝</h1>
+            <!-- MiMo风格悬停效果 -->
+            <h1 class="hero-title" data-text="鼠鼠安乐窝">鼠鼠安乐窝</h1>
             <p>Minecraft 高质量生存建筑服务器</p>
 
-            <!-- 服务器状态 -->
+            <!-- 服务器状态卡片 -->
             <div class="server-card">
-                <div class="server-icon">🎮</div>
-                <div class="server-info">
-                    <div class="server-name">
-                        <span class="online-dot"></span>
-                        鼠鼠安乐窝
-                    </div>
-                    <div class="server-tags">
-                        <span class="tag">24/100</span>
-                        <span class="tag">12ms</span>
-                        <span class="tag">1.21.4 Purpur</span>
+                <div class="card-top">
+                    <div class="tagline">欢迎来到CozilyMC！</div>
+                    <div class="version-info">
+                        <i class="mdi mdi-pickaxe"></i> 生电 · 支持全版本 · 离线登录
                     </div>
                 </div>
-                <button class="copy-btn" onclick="copyIP('mc.cozily.top')">
-                    <i class="mdi mdi-content-copy"></i> 复制
-                </button>
+
+                <div class="ip-box">
+                    <span class="ip-address">mc.cozily.top</span>
+                    <button class="copy-btn" onclick="copyIP('mc.cozily.top')">
+                        <i class="mdi mdi-content-copy"></i> 复制
+                    </button>
+                </div>
             </div>
         </section>
+
+        <!-- 服务器状态 - 原版MC风格 -->
+        <div class="server-status">
+            <div class="status-icon">🎮</div>
+            <div class="status-info">
+                <div class="status-name">
+                    <span class="online-dot online"></span>
+                    鼠鼠安乐窝
+                </div>
+                <div class="status-desc">生电生存 · 纯净原版</div>
+                <div class="status-tags">
+                    <span class="status-tag">24/100</span>
+                    <span class="status-tag">12ms</span>
+                    <span class="status-tag">1.21.4 Purpur</span>
+                </div>
+            </div>
+            <button class="refresh-btn">
+                <i class="mdi mdi-refresh"></i> 刷新
+            </button>
+        </div>
 
         <!-- 快速入口 - 翻转卡片 -->
         <section class="section">
@@ -504,7 +616,7 @@
                         </div>
                         <div class="flip-back">
                             <p class="flip-label">探索精彩</p>
-                            <p>发现服务器上令人惊叹的生存建筑作品，与玩家创意零距离接触</p>
+                            <p>发现令人惊叹的生存建筑作品</p>
                         </div>
                     </div>
                 </div>
@@ -518,7 +630,7 @@
                         </div>
                         <div class="flip-back">
                             <p class="flip-label">荣耀时刻</p>
-                            <p>见证建筑大师的杰作，学习技巧，提升自己的建造水平</p>
+                            <p>见证建筑大师的杰作</p>
                         </div>
                     </div>
                 </div>
@@ -532,7 +644,7 @@
                         </div>
                         <div class="flip-back">
                             <p class="flip-label">资源中心</p>
-                            <p>聚合服务器相关链接、资源下载、コミュニティ入口</p>
+                            <p>聚合服务器相关链接</p>
                         </div>
                     </div>
                 </div>
@@ -546,7 +658,7 @@
                         </div>
                         <div class="flip-back">
                             <p class="flip-label">幕后英雄</p>
-                            <p>了解为服务器付出努力的团队成员，一起打造更好的游戏环境</p>
+                            <p>了解为服务器付出努力的团队</p>
                         </div>
                     </div>
                 </div>
