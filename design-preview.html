@@ -6,7 +6,7 @@
     <title>🎨 CozilyMC 网站设计原型</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@mdi/font@7.4.47/css/materialdesignicons.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@mdi/font@7.4.47/css/materialdesign-icons.min.css">
     <style>
         :root {
             --primary: #D7BDE2;
@@ -19,10 +19,8 @@
             --border: rgba(161, 132, 220, 0.28);
             --shadow: 0 8px 32px rgba(161, 132, 220, 0.18);
             --success: #4caf50;
-            --error: #f44336;
         }
 
-        /* 夜间模式 */
         [data-theme="dark"] {
             --primary: #A084DC;
             --primary-d: #7B5EB8;
@@ -45,45 +43,40 @@
             transition: background 0.3s, color 0.3s;
         }
 
-        /* 左侧导航 */
-        .sidebar {
+        /* 顶部导航 */
+        .top-bar {
             position: fixed;
-            left: 0;
             top: 0;
-            width: 200px;
-            height: 100vh;
+            left: 0;
+            right: 0;
+            height: 60px;
             background: var(--card-bg);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
-            border-right: 1px solid var(--border);
-            z-index: 100;
+            border-bottom: 1px solid var(--border);
             display: flex;
-            flex-direction: column;
-            padding: 1.5rem 0.8rem;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 2rem;
+            z-index: 1000;
             transition: background 0.3s;
         }
 
-        .sidebar-logo {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 0.5rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .sidebar-logo span {
-            font-size: 1.4rem;
+        .logo {
+            font-size: 1.3rem;
             font-weight: 700;
             color: var(--primary-d);
+            text-decoration: none;
+        }
+
+        .nav {
+            display: flex;
+            gap: 0.3rem;
         }
 
         .nav-item {
-            display: flex;
-            align-items: center;
-            gap: 0.6rem;
-            padding: 0.7rem 0.8rem;
-            margin: 0.2rem 0;
-            border-radius: 10px;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
             color: var(--text-light);
             text-decoration: none;
             font-size: 0.9rem;
@@ -96,202 +89,157 @@
         }
 
         .nav-item.active {
-            background: linear-gradient(90deg, rgba(161, 132, 220, 0.25), transparent);
-            border-left: 3px solid var(--primary-d);
+            background: var(--primary);
+            color: white;
         }
 
-        .nav-item i { font-size: 1.1rem; width: 22px; }
-
-        /* 主题切换 */
-        .theme-toggle {
-            margin-top: auto;
-            padding: 0.6rem 0.8rem;
-            background: rgba(161, 132, 220, 0.1);
-            border: 1px solid var(--border);
-            border-radius: 10px;
-            color: var(--text);
-            cursor: pointer;
+        .right-tools {
             display: flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: 0.75rem;
+        }
+
+        .theme-btn {
+            background: rgba(161, 132, 220, 0.1);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 0.4rem 0.8rem;
+            color: var(--text);
+            cursor: pointer;
             font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
             transition: all 0.2s;
         }
 
-        .theme-toggle:hover {
+        .theme-btn:hover {
             background: rgba(161, 132, 220, 0.2);
         }
 
         /* 主内容 */
         .main-content {
-            margin-left: 200px;
-            padding: 1.5rem 2rem;
-            position: relative;
-            z-index: 1;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 80px 2rem 2rem;
         }
 
-        /* Hero区域 */
+        /* Hero */
         .hero {
             text-align: center;
-            padding: 1.5rem 1rem;
-            margin-bottom: 2rem;
+            padding: 2rem 1rem;
+            margin-bottom: 1.5rem;
         }
 
         .hero h1 {
-            font-size: 2.2rem;
+            font-size: 2rem;
             font-weight: 700;
             color: var(--primary-d);
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.4rem;
         }
 
-        /* 合并卡片 - 透明玻璃效果 */
+        /* 合并卡片 */
         .combined-card {
             background: var(--card-bg);
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
-            border-radius: 36px;
+            border-radius: 28px;
             box-shadow: var(--shadow);
-            margin: 1.5rem auto 2rem;
-            padding: 1rem 1.5rem;
+            margin: 0 auto 1.5rem;
+            padding: 0.8rem 1.5rem;
             display: flex;
-            flex-direction: column;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
             gap: 0.8rem;
-            width: fit-content;
-            max-width: 100%;
             border: 1px solid var(--border);
+            max-width: 700px;
         }
 
         .card-top { text-align: left; }
 
         .tagline {
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             font-weight: 700;
             color: var(--primary-d);
         }
 
         .version-info {
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             color: var(--text-light);
             display: flex;
             align-items: center;
-            gap: 0.3rem;
-            margin-top: 0.15rem;
+            gap: 0.25rem;
+            margin-top: 0.1rem;
         }
 
-        .version-info i { font-size: 1rem; color: var(--primary); }
+        .version-info i { font-size: 0.9rem; color: var(--primary); }
 
-        .card-bottom {
+        .ip-box {
             display: flex;
-            flex-wrap: wrap;
             align-items: center;
-            justify-content: space-between;
             gap: 0.6rem;
-            background: rgba(161, 132, 220, 0.06);
-            border-radius: 28px;
-            padding: 0.5rem 1.2rem;
-            transition: background 0.3s;
-        }
-
-        .ip-section { display: flex; flex-direction: column; }
-
-        .ip-label {
-            font-size: 0.65rem;
-            opacity: 0.6;
-            color: var(--text-light);
-            line-height: 1.2;
         }
 
         .ip-address {
-            font-size: 1.4rem;
+            font-size: 1.2rem;
             font-weight: 800;
             color: var(--primary-d);
-            line-height: 1.2;
         }
 
-        .copy-button {
+        .copy-btn {
             background: var(--primary);
             border: none;
-            border-radius: 24px;
-            padding: 0.4rem 1.2rem;
-            font-size: 0.9rem;
+            border-radius: 18px;
+            padding: 0.35rem 1rem;
+            font-size: 0.85rem;
             font-weight: 600;
             color: white;
             cursor: pointer;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.4rem;
-            transition: all 0.2s;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-        }
-
-        .copy-button:hover {
-            background: var(--primary-d);
-            transform: translateY(-2px);
-        }
-
-        /* 服务器状态 - 原版MC风格 */
-        .server-status-container {
             display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 1rem;
-            margin-bottom: 2rem;
+            align-items: center;
+            gap: 0.3rem;
+            transition: all 0.2s;
         }
 
+        .copy-btn:hover {
+            background: var(--primary-d);
+            transform: translateY(-1px);
+        }
+
+        /* 服务器状态 */
         .server-card {
             background: var(--card-bg);
             backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border-radius: 20px;
-            padding: 1rem 1.5rem;
             border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 0.8rem 1.2rem;
+            margin-bottom: 1.5rem;
             display: flex;
             align-items: center;
             gap: 1rem;
-            min-width: 280px;
             transition: all 0.3s;
         }
 
         .server-icon {
-            width: 48px;
-            height: 48px;
+            width: 44px;
+            height: 44px;
             background: linear-gradient(135deg, var(--primary), var(--primary-d));
-            border-radius: 12px;
+            border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.5rem;
+            font-size: 1.3rem;
         }
 
         .server-info { flex: 1; }
 
         .server-name {
             font-weight: 700;
-            color: var(--text);
-            font-size: 0.95rem;
-        }
-
-        .server-motd {
-            font-size: 0.8rem;
-            color: var(--text-light);
-            margin-top: 0.1rem;
-        }
-
-        .server-stats {
-            display: flex;
-            gap: 0.8rem;
-            margin-top: 0.4rem;
-        }
-
-        .stat-badge {
-            background: rgba(161, 132, 220, 0.1);
-            padding: 0.2rem 0.6rem;
-            border-radius: 12px;
-            font-size: 0.75rem;
-            color: var(--text);
+            font-size: 0.9rem;
             display: flex;
             align-items: center;
-            gap: 0.3rem;
+            gap: 0.4rem;
         }
 
         .online-dot {
@@ -305,15 +253,30 @@
             box-shadow: 0 0 6px var(--success);
         }
 
-        .online-dot.offline { background: var(--error); }
+        .online-dot.offline { background: #f44336; }
 
-        .server-actions {
-            display: flex;
-            flex-direction: column;
-            gap: 0.3rem;
+        .server-desc {
+            font-size: 0.75rem;
+            color: var(--text-light);
+            margin-top: 0.05rem;
         }
 
-        .action-btn {
+        .server-tags {
+            display: flex;
+            gap: 0.4rem;
+            margin-top: 0.3rem;
+            flex-wrap: wrap;
+        }
+
+        .tag {
+            background: rgba(161, 132, 220, 0.1);
+            padding: 0.15rem 0.5rem;
+            border-radius: 8px;
+            font-size: 0.65rem;
+            color: var(--text);
+        }
+
+        .refresh-btn {
             background: rgba(161, 132, 220, 0.1);
             border: 1px solid var(--border);
             border-radius: 8px;
@@ -327,70 +290,70 @@
             transition: all 0.2s;
         }
 
-        .action-btn:hover {
+        .refresh-btn:hover {
             background: var(--primary-l);
             color: var(--primary-d);
         }
 
-        /* 功能卡片 */
+        /* 功能网格 - 简化版 */
         .section-title {
-            font-size: 1.3rem;
-            margin-bottom: 1rem;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 0.8rem;
             display: flex;
             align-items: center;
-            gap: 0.5rem;
-            color: var(--text);
+            gap: 0.4rem;
         }
 
         .section-title i { color: var(--primary-d); }
 
         .card-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-            gap: 1rem;
-            margin-bottom: 2rem;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 0.8rem;
+            margin-bottom: 1.5rem;
         }
 
         .card {
             background: var(--card-bg);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
+            backdrop-filter: blur(8px);
             border: 1px solid var(--border);
-            border-radius: 16px;
-            padding: 1rem;
-            transition: all 0.3s;
+            border-radius: 14px;
+            padding: 0.8rem 1rem;
+            transition: all 0.2s;
             cursor: pointer;
         }
 
         .card:hover {
-            transform: translateY(-3px);
+            transform: translateY(-2px);
             box-shadow: var(--shadow);
         }
 
         .card-icon {
-            width: 40px;
-            height: 40px;
+            width: 36px;
+            height: 36px;
             background: linear-gradient(135deg, var(--primary), var(--primary-d));
-            border-radius: 10px;
+            border-radius: 8px;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-bottom: 0.7rem;
+            margin-bottom: 0.5rem;
         }
 
-        .card-icon i { font-size: 1.2rem; color: white; }
+        .card-icon i { font-size: 1rem; color: white; }
 
-        .card h3 { font-size: 0.95rem; color: var(--text); margin-bottom: 0.3rem; }
+        .card h3 { font-size: 0.9rem; color: var(--text); }
 
-        .card p { font-size: 0.8rem; color: var(--text-light); line-height: 1.5; }
+        .card p { font-size: 0.75rem; color: var(--text-light); margin-top: 0.15rem; line-height: 1.4; }
 
-        .card .tag {
+        .card .badge {
             display: inline-block;
-            padding: 0.15rem 0.5rem;
-            background: rgba(161, 132, 220, 0.12);
-            border-radius: 10px;
-            font-size: 0.65rem;
-            margin-top: 0.5rem;
+            padding: 0.1rem 0.4rem;
+            background: rgba(161, 132, 220, 0.1);
+            border-radius: 6px;
+            font-size: 0.6rem;
+            margin-top: 0.4rem;
             color: var(--primary-d);
         }
 
@@ -401,77 +364,46 @@
             color: var(--text-light);
             font-size: 0.75rem;
             border-top: 1px solid var(--border);
-            margin-top: 2rem;
+            margin-top: 1.5rem;
         }
 
         .footer a { color: var(--primary-d); text-decoration: none; }
 
         /* 移动端 */
         @media (max-width: 768px) {
-            .sidebar { transform: translateX(-100%); }
-            .main-content { margin-left: 0; padding: 1rem; }
-            .hero h1 { font-size: 1.6rem; }
-            .server-card { min-width: 100%; }
+            .top-bar { padding: 0 1rem; }
+            .nav-item { padding: 0.4rem 0.7rem; font-size: 0.8rem; }
+            .main-content { padding: 70px 1rem 1rem; }
+            .combined-card { flex-direction: column; text-align: center; }
+            .card-top { text-align: center; }
         }
     </style>
 </head>
 <body>
-    <!-- 左侧导航 -->
-    <nav class="sidebar">
-        <div class="sidebar-logo">
-            <span>Cozily</span>
+    <!-- 顶部导航 -->
+    <header class="top-bar">
+        <a href="#" class="logo">Cozily</a>
+
+        <nav class="nav">
+            <a href="#" class="nav-item active">首页</a>
+            <a href="#" class="nav-item">综合导航</a>
+            <a href="#" class="nav-item">神人榜</a>
+            <a href="#" class="nav-item">攻略指南</a>
+        </nav>
+
+        <div class="right-tools">
+            <button class="theme-btn" onclick="toggleTheme()">
+                <i class="mdi mdi-weather-sunny" id="themeIcon"></i>
+            </button>
         </div>
-
-        <a href="#" class="nav-item active">
-            <i class="mdi mdi-home"></i>
-            <span>首页</span>
-        </a>
-        <a href="#" class="nav-item">
-            <i class="mdi mdi-map-marker"></i>
-            <span>服务器地标</span>
-        </a>
-        <a href="#" class="nav-item">
-            <i class="mdi mdi-timeline"></i>
-            <span>发展历程</span>
-        </a>
-        <a href="#" class="nav-item">
-            <i class="mdi mdi-compass"></i>
-            <span>综合导航</span>
-        </a>
-        <a href="#" class="nav-item">
-            <i class="mdi mdi-trophy"></i>
-            <span>神人榜</span>
-        </a>
-        <a href="#" class="nav-item">
-            <i class="mdi mdi-account-group"></i>
-            <span>团队介绍</span>
-        </a>
-        <a href="#" class="nav-item">
-            <i class="mdi mdi-help-circle"></i>
-            <span>常见问题</span>
-        </a>
-        <a href="#" class="nav-item">
-            <i class="mdi mdi-book"></i>
-            <span>攻略指南</span>
-        </a>
-        <a href="#" class="nav-item">
-            <i class="mdi mdi-package-variant"></i>
-            <span>资源中心</span>
-        </a>
-
-        <button class="theme-toggle" onclick="toggleTheme()">
-            <i class="mdi mdi-weather-sunny" id="themeIcon"></i>
-            <span id="themeText">切换主题</span>
-        </button>
-    </nav>
+    </header>
 
     <!-- 主内容 -->
     <main class="main-content">
-        <!-- Hero -->
+        <!-- Hero + IP卡片 -->
         <section class="hero">
             <h1>鼠鼠安乐窝</h1>
 
-            <!-- 合并卡片 -->
             <div class="combined-card">
                 <div class="card-top">
                     <div class="tagline">欢迎来到CozilyMC！</div>
@@ -480,130 +412,94 @@
                     </div>
                 </div>
 
-                <div class="card-bottom">
-                    <div class="ip-section">
-                        <span class="ip-label">服务器地址</span>
-                        <strong class="ip-address">mc.cozily.top</strong>
-                    </div>
-                    <button class="copy-button" onclick="copyIP('mc.cozily.top')">
-                        <i class="mdi mdi-content-copy"></i> 复制IP
+                <div class="ip-box">
+                    <span class="ip-address">mc.cozily.top</span>
+                    <button class="copy-btn" onclick="copyIP('mc.cozily.top')">
+                        <i class="mdi mdi-content-copy"></i> 复制
                     </button>
                 </div>
             </div>
         </section>
 
-        <!-- 服务器状态 - 原版MC风格 -->
-        <section class="server-status-container">
-            <!-- 主服务器 -->
-            <div class="server-card">
-                <div class="server-icon">🎮</div>
-                <div class="server-info">
-                    <div class="server-name">
-                        <span class="online-dot online"></span>
-                        鼠鼠安乐窝
-                    </div>
-                    <div class="server-motd">生电生存 · 纯净原版</div>
-                    <div class="server-stats">
-                        <span class="stat-badge">
-                            <i class="mdi mdi-account-multiple"></i> 24/100
-                        </span>
-                        <span class="stat-badge">
-                            <i class="mdi mdi-signal"></i> 12ms
-                        </span>
-                        <span class="stat-badge">
-                            1.21.4 Purpur
-                        </span>
-                    </div>
+        <!-- 服务器状态 -->
+        <div class="server-card">
+            <div class="server-icon">🎮</div>
+            <div class="server-info">
+                <div class="server-name">
+                    <span class="online-dot online"></span>
+                    鼠鼠安乐窝
                 </div>
-                <div class="server-actions">
-                    <button class="action-btn"><i class="mdi mdi-refresh"></i> 刷新</button>
+                <div class="server-desc">生电生存 · 纯净原版</div>
+                <div class="server-tags">
+                    <span class="tag">24/100</span>
+                    <span class="tag">12ms</span>
+                    <span class="tag">1.21.4 Purpur</span>
                 </div>
             </div>
+            <button class="refresh-btn">
+                <i class="mdi mdi-refresh"></i> 刷新
+            </button>
+        </div>
 
-            <!-- 测试服务器 -->
-            <div class="server-card">
-                <div class="server-icon">🧪</div>
-                <div class="server-info">
-                    <div class="server-name">
-                        <span class="online-dot offline"></span>
-                        测试服
-                    </div>
-                    <div class="server-motd">版本测试 · 建筑预览</div>
-                    <div class="server-stats">
-                        <span class="stat-badge">
-                            <i class="mdi mdi-account-multiple"></i> 0/20
-                        </span>
-                        <span class="stat-badge">
-                            <i class="mdi mdi-signal"></i> --
-                        </span>
-                        <span class="stat-badge">
-                            1.21.4
-                        </span>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- 功能导航 -->
+        <!-- 快速入口 -->
         <h2 class="section-title">
             <i class="mdi mdi-navigation"></i>
-            快速导航
+            快速入口
         </h2>
         <div class="card-grid">
             <div class="card">
                 <div class="card-icon"><i class="mdi mdi-map"></i></div>
                 <h3>🏰 服务器地标</h3>
-                <p>探索玩家建筑的精彩世界，发现令人惊叹的生存建筑作品</p>
-                <span class="tag">128 个地标</span>
+                <p>探索玩家建筑的精彩世界</p>
+                <span class="badge">128 个地标</span>
             </div>
 
             <div class="card">
                 <div class="card-icon"><i class="mdi mdi-trophy"></i></div>
                 <h3>⭐ 神人榜</h3>
-                <p>服务器建筑大师排行榜，展示最优秀的建筑作品</p>
-                <span class="tag">Top 50</span>
+                <p>建筑大师排行榜</p>
+                <span class="badge">Top 50</span>
             </div>
 
             <div class="card">
                 <div class="card-icon"><i class="mdi mdi-compass"></i></div>
                 <h3>🧭 综合导航</h3>
-                <p>一站式获取所有服务器相关链接和资源</p>
-                <span class="tag">持续更新</span>
+                <p>服务器相关链接和资源</p>
+                <span class="badge">持续更新</span>
             </div>
 
             <div class="card">
                 <div class="card-icon"><i class="mdi mdi-account-group"></i></div>
                 <h3>👥 团队介绍</h3>
-                <p>认识为服务器运营付出努力的团队成员</p>
-                <span class="tag">管理组</span>
+                <p>认识幕后运营团队</p>
+                <span class="badge">管理组</span>
             </div>
 
             <div class="card">
                 <div class="card-icon"><i class="mdi mdi-help-circle"></i></div>
                 <h3>❓ 常见问题</h3>
-                <p>新手常见问题解答，快速上手指南</p>
-                <span class="tag">FAQ</span>
+                <p>新手入门指南</p>
+                <span class="badge">FAQ</span>
             </div>
 
             <div class="card">
                 <div class="card-icon"><i class="mdi mdi-book-open"></i></div>
                 <h3>📖 攻略指南</h3>
-                <p>服务器建筑技巧，大师经验分享</p>
-                <span class="tag">进阶教程</span>
+                <p>建筑技巧与经验分享</p>
+                <span class="badge">进阶教程</span>
             </div>
         </div>
 
         <!-- 页脚 -->
         <footer class="footer">
             <p>© 2025-2026 CozilyMC · Minecraft™ 是 Mojang Studios 和 Microsoft 的商标</p>
-            <p style="margin-top: 0.3rem;">
+            <p style="margin-top: 0.25rem;">
                 <a href="#">隐私政策</a> · <a href="#">使用条款</a> · <a href="#">联系我们</a>
             </p>
         </footer>
     </main>
 
     <script>
-        // 主题切换
         function toggleTheme() {
             const body = document.body;
             const icon = document.getElementById('themeIcon');
@@ -617,7 +513,6 @@
             }
         }
 
-        // 复制IP
         function copyIP(ip) {
             navigator.clipboard.writeText(ip).then(() => {
                 alert('已复制: ' + ip);
