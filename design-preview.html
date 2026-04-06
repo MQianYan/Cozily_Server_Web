@@ -15,7 +15,7 @@
             --bg: #ffffff;
             --text: #1a1a1a;
             --text-light: #666666;
-            --card-bg: rgba(255,255,255,0.85);
+            --card-bg: rgba(255,255,255,0.9);
             --border: rgba(0,0,0,0.08);
             --shadow: 0 4px 24px rgba(0,0,0,0.06);
         }
@@ -24,7 +24,7 @@
             --bg: #0a0a0f;
             --text: #f0f0f0;
             --text-light: #888;
-            --card-bg: rgba(30,30,45,0.9);
+            --card-bg: rgba(30,30,45,0.95);
             --border: rgba(255,255,255,0.08);
             --shadow: 0 4px 24px rgba(0,0,0,0.4);
         }
@@ -36,7 +36,8 @@
             background: var(--bg);
             color: var(--text);
             line-height: 1.6;
-            transition: all 0.3s;
+            transition: background 0.3s, color 0.3s;
+            min-height: 100vh;
         }
 
         /* 顶部导航 */
@@ -126,22 +127,6 @@
         .hero {
             text-align: center;
             padding: 3rem 0 4rem;
-            position: relative;
-        }
-
-        .hero-bg {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: clamp(4rem, 15vw, 12rem);
-            font-weight: 800;
-            color: var(--purple);
-            opacity: 0.06;
-            white-space: nowrap;
-            letter-spacing: 0.1em;
-            user-select: none;
-            pointer-events: none;
         }
 
         .hero h1 {
@@ -149,14 +134,12 @@
             font-weight: 800;
             color: var(--purple);
             margin-bottom: 0.5rem;
-            position: relative;
         }
 
         .hero p {
             font-size: 1.1rem;
             color: var(--text-light);
             margin-bottom: 2rem;
-            position: relative;
         }
 
         /* 服务器状态卡片 */
@@ -172,6 +155,7 @@
             display: flex;
             align-items: center;
             gap: 1rem;
+            transition: all 0.3s;
         }
 
         .server-icon {
@@ -273,32 +257,55 @@
             font-weight: 700;
         }
 
-        /* 卡片网格 */
-        .card-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-            gap: 1rem;
+        /* 翻转卡片 - MiMo效果 */
+        .flip-card {
+            position: relative;
+            border-radius: 16px;
+            overflow: hidden;
+            cursor: pointer;
+            height: 180px;
         }
 
-        .card {
+        .flip-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.4s ease;
+            transform-style: preserve-3d;
+        }
+
+        .flip-card:hover .flip-card-inner {
+            transform: rotateX(180deg);
+        }
+
+        .flip-front, .flip-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 16px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 1.25rem;
+        }
+
+        .flip-front {
             background: var(--card-bg);
             backdrop-filter: blur(10px);
             border: 1px solid var(--border);
-            border-radius: 16px;
-            padding: 1.25rem;
-            transition: all 0.25s;
-            cursor: pointer;
-            text-decoration: none;
-            color: var(--text);
-        }
-
-        .card:hover {
-            transform: translateY(-3px);
             box-shadow: var(--shadow);
-            border-color: var(--purple);
+            align-items: flex-start;
         }
 
-        .card-icon {
+        .flip-back {
+            background: linear-gradient(135deg, var(--purple), var(--purple-dark));
+            transform: rotateX(180deg);
+            color: white;
+            text-align: left;
+        }
+
+        .flip-front .card-icon {
             width: 40px;
             height: 40px;
             background: linear-gradient(135deg, var(--purple), var(--purple-dark));
@@ -309,21 +316,51 @@
             margin-bottom: 0.85rem;
         }
 
-        .card-icon i {
+        .flip-front .card-icon i {
             font-size: 1.1rem;
             color: white;
         }
 
-        .card h3 {
+        .flip-front h3 {
             font-size: 0.95rem;
             font-weight: 700;
             margin-bottom: 0.25rem;
         }
 
-        .card p {
+        .flip-front p {
             font-size: 0.8rem;
             color: var(--text-light);
             line-height: 1.5;
+        }
+
+        .flip-back p {
+            font-size: 0.85rem;
+            line-height: 1.6;
+        }
+
+        .flip-back .flip-label {
+            font-size: 0.7rem;
+            opacity: 0.8;
+            margin-bottom: 0.5rem;
+        }
+
+        /* 卡片网格 */
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1rem;
+        }
+
+        .card-grid-2 {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+        }
+
+        @media (max-width: 600px) {
+            .card-grid-2 {
+                grid-template-columns: 1fr;
+            }
         }
 
         /* 列表 */
@@ -397,7 +434,6 @@
             .nav-links { display: none; }
             .main { padding: 80px 1rem 2rem; }
             .hero h1 { font-size: 1.8rem; }
-            .hero-bg { font-size: 3rem; }
             .server-card { flex-direction: column; text-align: center; }
             .server-tags { justify-content: center; }
         }
@@ -428,7 +464,6 @@
     <main class="main">
         <!-- Hero -->
         <section class="hero">
-            <div class="hero-bg">COZILYCOZILYCOZILYCOZILY</div>
             <h1>鼠鼠安乐窝</h1>
             <p>Minecraft 高质量生存建筑服务器</p>
 
@@ -452,7 +487,7 @@
             </div>
         </section>
 
-        <!-- 快速入口 -->
+        <!-- 快速入口 - 翻转卡片 -->
         <section class="section">
             <div class="section-header">
                 <span class="section-num">01</span>
@@ -460,33 +495,65 @@
             </div>
 
             <div class="card-grid">
-                <a href="#" class="card">
-                    <div class="card-icon"><i class="mdi mdi-map"></i></div>
-                    <h3>🏰 服务器地标</h3>
-                    <p>探索玩家建筑的精彩世界</p>
-                </a>
+                <div class="flip-card">
+                    <div class="flip-card-inner">
+                        <div class="flip-front">
+                            <div class="card-icon"><i class="mdi mdi-map"></i></div>
+                            <h3>🏰 服务器地标</h3>
+                            <p>探索玩家建筑的精彩世界</p>
+                        </div>
+                        <div class="flip-back">
+                            <p class="flip-label">探索精彩</p>
+                            <p>发现服务器上令人惊叹的生存建筑作品，与玩家创意零距离接触</p>
+                        </div>
+                    </div>
+                </div>
 
-                <a href="#" class="card">
-                    <div class="card-icon"><i class="mdi mdi-trophy"></i></div>
-                    <h3>⭐ 神人榜</h3>
-                    <p>建筑大师排行榜</p>
-                </a>
+                <div class="flip-card">
+                    <div class="flip-card-inner">
+                        <div class="flip-front">
+                            <div class="card-icon"><i class="mdi mdi-trophy"></i></div>
+                            <h3>⭐ 神人榜</h3>
+                            <p>建筑大师排行榜</p>
+                        </div>
+                        <div class="flip-back">
+                            <p class="flip-label">荣耀时刻</p>
+                            <p>见证建筑大师的杰作，学习技巧，提升自己的建造水平</p>
+                        </div>
+                    </div>
+                </div>
 
-                <a href="#" class="card">
-                    <div class="card-icon"><i class="mdi mdi-compass"></i></div>
-                    <h3>🧭 综合导航</h3>
-                    <p>一站式资源汇总</p>
-                </a>
+                <div class="flip-card">
+                    <div class="flip-card-inner">
+                        <div class="flip-front">
+                            <div class="card-icon"><i class="mdi mdi-compass"></i></div>
+                            <h3>🧭 综合导航</h3>
+                            <p>一站式资源汇总</p>
+                        </div>
+                        <div class="flip-back">
+                            <p class="flip-label">资源中心</p>
+                            <p>聚合服务器相关链接、资源下载、コミュニティ入口</p>
+                        </div>
+                    </div>
+                </div>
 
-                <a href="#" class="card">
-                    <div class="card-icon"><i class="mdi mdi-account-group"></i></div>
-                    <h3>👥 团队介绍</h3>
-                    <p>认识幕后运营团队</p>
-                </a>
+                <div class="flip-card">
+                    <div class="flip-card-inner">
+                        <div class="flip-front">
+                            <div class="card-icon"><i class="mdi mdi-account-group"></i></div>
+                            <h3>👥 团队介绍</h3>
+                            <p>认识幕后运营团队</p>
+                        </div>
+                        <div class="flip-back">
+                            <p class="flip-label">幕后英雄</p>
+                            <p>了解为服务器付出努力的团队成员，一起打造更好的游戏环境</p>
+                        </div>
+                    </div>
+                </div>
             </div>
         </section>
 
-        <!-- 服务 -->
+        <!-- 服务列表 -->
         <section class="section">
             <div class="section-header">
                 <span class="section-num">02</span>
