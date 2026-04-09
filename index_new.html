@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CozilyMC | 鼠鼠安乐窝</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@500;700&family=Noto+Sans+SC:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@mdi/font@7.4.47/css/materialdesign-icons.min.css">
+    
+    <style>
+        :root {
+            --primary-purple: #b19cd9;
+            --on-primary: #ffffff;
+            --surface: #120d1d;
+            --nav-bg: rgba(255, 255, 255, 0.08);
+            --glass-border: rgba(255, 255, 255, 0.15);
+            --text-main: #ffffff;
+            --text-sub: rgba(255, 255, 255, 0.7);
+            --transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            --success: #4caf50;
+        }
+
+        /* 暗色模式全局变色 */
+        [data-theme="light"] {
+            --surface: #F8F7FF;
+            --nav-bg: rgba(255, 255, 255, 0.7);
+            --glass-border: rgba(0, 0, 0, 0.05);
+            --text-main: #1D1D1F;
+            --text-sub: #666370;
+            --primary-purple: #9D8DF1;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Google Sans', 'Noto Sans SC', sans-serif;
+        }
+
+        body {
+            background-color: var(--surface);
+            color: var(--text-main);
+            overflow-x: hidden;
+            line-height: 1.6;
+            transition: background-color 0.5s ease;
+        }
+
+        /* 星空网格背景 */
+        .bg-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: radial-gradient(var(--primary-purple) 1px, transparent 1px);
+            background-size: 40px 40px;
+            opacity: 0.15;
+            z-index: -1;
+        }
+
+        /* --- Google 风格分段式液态玻璃导航栏 --- */
+        .nav-anchor {
+            position: fixed;
+            top: 20px;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: center;
+            z-index: 1000;
+            padding: 0 20px;
+        }
+
+        .nav-container {
+            background: var(--nav-bg);
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            height: 64px;
+            width: 100%;
+            max-width: 850px;
+            border-radius: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 8px 0 28px;
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+        }
+
+        .logo {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--primary-purple);
+            letter-spacing: -0.5px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 5px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-main);
+            font-size: 0.9rem;
+            font-weight: 500;
+            padding: 10px 18px;
+            border-radius: 100px;
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover {
+            background: rgba(177, 156, 217, 0.2);
+            color: var(--primary-purple);
+        }
+
+        .nav-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .icon-btn {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            border: none;
+            background: transparent;
+            color: var(--text-main);
+            font-size: 1.2rem;
+        }
+
+        /* --- Hero 区域 --- */
+        .hero {
+            min-height: 85vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 120px 20px 60px;
+            background: linear-gradient(to bottom, rgba(18, 13, 29, 0.4), var(--surface)), 
+                        url('https://images.unsplash.com/photo-1627398242454-45a1465c2479?auto=format&fit=crop&w=1600&q=80') center/cover;
+        }
+
+        .hero h1 {
+            font-size: clamp(3rem, 10vw, 5rem);
+            margin-bottom: 15px;
+            font-weight: 700;
+            text-shadow: 0 0 30px rgba(177, 156, 217, 0.5);
+            letter-spacing: -2px;
+        }
+
+        .hero > p {
+            font-size: 1.25rem;
+            color: var(--text-sub);
+            max-width: 600px;
+            margin-bottom: 40px;
+        }
+
+        /* --- IP 地址组件：分段式胶囊设计 --- */
+        .hero-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .ip-bar {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 8px 8px 8px 30px;
+            border-radius: 100px;
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+        }
+
+        .ip-val {
+            font-family: 'Monaco', monospace;
+            font-weight: 700;
+            color: var(--primary-purple);
+            font-size: 1.1rem;
+        }
+
+        .copy-btn {
+            background: var(--primary-purple);
+            color: #120d1d;
+            padding: 12px 30px;
+            border-radius: 100px;
+            border: none;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .copy-btn:hover {
+            transform: scale(1.05);
+            background: #ffffff;
+        }
+
+        .copy-btn.copied {
+            background: var(--success) !important;
+            color: white !important;
+        }
+
+        /* --- 服务器状态卡片 --- */
+        .server-status-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(15px);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 20px 35px;
+            display: flex;
+            align-items: center;
+            gap: 25px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            transition: var(--transition);
+        }
+
+        .server-status-card:hover {
+            border-color: var(--primary-purple);
+            transform: translateY(-3px);
+        }
+
+        .status-icon-wrapper {
+            position: relative;
+        }
+
+        .server-status-icon {
+            width: 52px;
+            height: 52px;
+            border-radius: 14px;
+            background: linear-gradient(135deg, var(--primary-purple), #9D8DF1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.6rem;
+        }
+
+        .online-dot {
+            position: absolute;
+            bottom: -2px;
+            right: -2px;
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            border: 3px solid var(--surface);
+        }
+
+        .online-dot.online {
+            background: var(--success);
+            box-shadow: 0 0 8px var(--success);
+        }
+
+        .online-dot.offline {
+            background: #f44336;
+        }
+
+        .status-info {
+            text-align: left;
+        }
+
+        .status-name {
+            font-size: 1.1rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 4px;
+        }
+
+        .status-motd {
+            font-size: 0.85rem;
+            color: var(--text-sub);
+            max-width: 280px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .status-stats {
+            display: flex;
+            gap: 12px;
+            margin-left: auto;
+        }
+
+        .stat-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 8px 16px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 14px;
+            min-width: 70px;
+        }
+
+        .stat-value {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--primary-purple);
+        }
+
+        .stat-label {
+            font-size: 0.7rem;
+            color: var(--text-sub);
+            margin-top: 2px;
+        }
+
+        .refresh-btn {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            padding: 10px;
+            color: var(--text-sub);
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .refresh-btn:hover {
+            background: var(--primary-purple);
+            color: white;
+            border-color: var(--primary-purple);
+        }
+
+        .refresh-btn.loading i {
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        /* 状态加载中 */
+        .loading {
+            opacity: 0.5;
+        }
+
+        /* --- 特色卡片：Google 式层级 --- */
+        .features {
+            max-width: 1000px;
+            margin: 80px auto 100px;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--glass-border);
+            padding: 40px;
+            border-radius: 32px;
+            text-align: center;
+            transition: var(--transition);
+        }
+
+        .card:hover {
+            background: rgba(177, 156, 217, 0.08);
+            transform: translateY(-10px);
+            border-color: var(--primary-purple);
+        }
+
+        .card i {
+            font-size: 2.5rem;
+            color: var(--primary-purple);
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        footer {
+            text-align: center;
+            padding: 60px;
+            opacity: 0.5;
+            font-size: 0.8rem;
+            border-top: 1px solid var(--glass-border);
+        }
+
+        /* 移动端适配 */
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .hero h1 { font-size: 3rem; }
+            .ip-bar { flex-direction: column; border-radius: 20px; padding: 20px; width: 90%; }
+            .server-status-card { 
+                flex-direction: column; 
+                border-radius: 20px; 
+                padding: 20px;
+                width: 90%;
+            }
+            .status-stats { 
+                margin-left: 0; 
+                width: 100%; 
+                justify-content: center;
+            }
+            .status-info { text-align: center; }
+            .status-motd { max-width: 100%; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="bg-overlay"></div>
+
+    <div class="nav-anchor">
+        <nav class="nav-container">
+            <div class="logo">CozilyMC</div>
+            
+            <div class="nav-links">
+                <a href="#">首页</a>
+                <a href="#">规则</a>
+                <a href="#">地图</a>
+                <a href="#">社区</a>
+            </div>
+
+            <div class="nav-actions">
+                <button class="icon-btn" onclick="toggleTheme()" id="theme-icon">
+                    <i class="mdi mdi-weather-night"></i>
+                </button>
+                <button class="icon-btn"><i class="mdi mdi-account-outline"></i></button>
+            </div>
+        </nav>
+    </div>
+
+    <section class="hero">
+        <h1>鼠鼠安乐窝</h1>
+        <p>探索、建造、征服。在一个充满魔法与诗意的淡紫色世界中开启你的旅程。</p>
+        
+        <div class="hero-content">
+            <div class="ip-bar">
+                <span class="ip-val" id="ip">mc.cozily.top</span>
+                <button class="copy-btn" onclick="copyIp()">
+                    <i class="mdi mdi-content-copy"></i> 复制 IP 进入
+                </button>
+            </div>
+
+            <!-- 服务器状态卡片 -->
+            <div class="server-status-card" id="serverStatusCard">
+                <div class="status-icon-wrapper">
+                    <div class="server-status-icon">
+                        <i class="mdi mdi-cube-outline"></i>
+                    </div>
+                    <span class="online-dot" id="onlineDot"></span>
+                </div>
+                
+                <div class="status-info">
+                    <div class="status-name">
+                        <span id="serverName">鼠鼠安乐窝</span>
+                    </div>
+                    <div class="status-motd" id="motdText">正在获取服务器信息...</div>
+                </div>
+
+                <div class="status-stats">
+                    <div class="stat-item">
+                        <span class="stat-value" id="playerCount">--</span>
+                        <span class="stat-label">在线玩家</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-value" id="pingLatency">--</span>
+                        <span class="stat-label">延迟 ms</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-value" id="serverVersion">--</span>
+                        <span class="stat-label">版本</span>
+                    </div>
+                </div>
+
+                <button class="refresh-btn" onclick="fetchServerStatus()" id="refreshBtn" title="刷新状态">
+                    <i class="mdi mdi-refresh"></i>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <section class="features">
+        <div class="card">
+            <i class="mdi mdi-crystal-ball"></i>
+            <h3>纯净生存</h3>
+            <p>保留最原始的乐趣，搭配适量插件，让生存回归本质且不乏味。</p>
+        </div>
+        <div class="card">
+            <i class="mdi mdi-auto-fix"></i>
+            <h3>极致生电</h3>
+            <p>高性能服务器支持大规模红石设施，拒绝卡顿，流畅体验。</p>
+        </div>
+        <div class="card">
+            <i class="mdi mdi-heart-outline"></i>
+            <h3>和谐社区</h3>
+            <p>严格的防熊规则与友善的鼠鼠们，在这里寻找你的游戏伙伴。</p>
+        </div>
+    </section>
+
+    <footer>
+        &copy; 2026 CozilyMC Server. 不属于 Mojang Studios 官方网站。
+    </footer>
+
+    <script>
+        // ===== 配置 =====
+        const serverHost = 'mc.cozily.top';
+        const serverPort = 25565;
+
+        // ===== DOM 元素 =====
+        const motdText = document.getElementById('motdText');
+        const onlineDot = document.getElementById('onlineDot');
+        const playerCount = document.getElementById('playerCount');
+        const pingLatency = document.getElementById('pingLatency');
+        const serverVersion = document.getElementById('serverVersion');
+        const refreshBtn = document.getElementById('refreshBtn');
+
+        // ===== 复制 IP 功能 =====
+        function copyIp() {
+            const ip = document.getElementById('ip').innerText;
+            navigator.clipboard.writeText(ip).then(() => {
+                const btn = document.querySelector('.copy-btn');
+                btn.classList.add('copied');
+                btn.innerHTML = '<i class="mdi mdi-check"></i> 已复制！';
+                setTimeout(() => {
+                    btn.classList.remove('copied');
+                    btn.innerHTML = '<i class="mdi mdi-content-copy"></i> 复制 IP 进入';
+                }, 2000);
+            });
+        }
+
+        // ===== 暗色/亮色模式切换 =====
+        function toggleTheme() {
+            const html = document.documentElement;
+            const icon = document.querySelector('#theme-icon i');
+            if (html.getAttribute('data-theme') === 'light') {
+                html.removeAttribute('data-theme');
+                icon.className = 'mdi mdi-weather-night';
+            } else {
+                html.setAttribute('data-theme', 'light');
+                icon.className = 'mdi mdi-white-balance-sunny';
+            }
+        }
+
+        // ===== 服务器状态获取 =====
+        function setLoading(isLoading) {
+            const elements = [playerCount, pingLatency, serverVersion, motdText];
+            if (isLoading) {
+                elements.forEach(el => el.classList.add('loading'));
+                refreshBtn.classList.add('loading');
+            } else {
+                elements.forEach(el => el.classList.remove('loading'));
+                refreshBtn.classList.remove('loading');
+            }
+        }
+
+        async function fetchServerStatus() {
+            setLoading(true);
+            
+            const apis = [
+                `https://api.mcsrvstat.us/2/${serverHost}:${serverPort}`,
+                `https://api.mcsrvstat.us/2/${serverHost}`,
+                `https://mcapi.us/server/status?ip=${serverHost}&port=${serverPort}`
+            ];
+            
+            let success = false;
+            
+            for (const apiUrl of apis) {
+                try {
+                    const controller = new AbortController();
+                    const timeout = setTimeout(() => controller.abort(), 5000);
+                    
+                    const response = await fetch(apiUrl, { signal: controller.signal });
+                    clearTimeout(timeout);
+                    
+                    const data = await response.json();
+                    
+                    let online = false;
+                    let playersOnline = 0, playersMax = 0;
+                    let ping = null;
+                    let version = '';
+                    let motd = '';
+                    
+                    if (apiUrl.includes('mcsrvstat.us')) {
+                        online = data.online;
+                        if (online) {
+                            playersOnline = data.players?.online || 0;
+                            playersMax = data.players?.max || 0;
+                            ping = data.debug?.ping || null;
+                            version = data.version?.name || data.version || '未知';
+                            motd = data.motd?.clean?.join(' ') || data.motd?.html?.[0] || 'Minecraft 服务器';
+                        }
+                    } else if (apiUrl.includes('mcapi.us')) {
+                        online = data.status === 'success' && data.online;
+                        if (online) {
+                            playersOnline = data.players?.now || 0;
+                            playersMax = data.players?.max || 0;
+                            ping = data.server?.ping || null;
+                            version = data.server?.name || '未知';
+                            motd = data.motd || 'Minecraft 服务器';
+                        }
+                    }
+                    
+                    if (online) {
+                        // 更新 UI
+                        onlineDot.className = 'online-dot online';
+                        playerCount.textContent = `${playersOnline}/${playersMax}`;
+                        pingLatency.textContent = ping !== null ? ping : '--';
+                        serverVersion.textContent = version.replace(/§[a-f0-9k-or]/gi, '').substring(0, 8);
+                        motdText.textContent = motd.replace(/§[a-f0-9k-or]/gi, '').substring(0, 30);
+                        success = true;
+                        break;
+                    }
+                    
+                } catch (err) {
+                    console.log(`API ${apiUrl} 失败:`, err.message);
+                    continue;
+                }
+            }
+            
+            if (!success) {
+                onlineDot.className = 'online-dot offline';
+                playerCount.textContent = '--';
+                pingLatency.textContent = '--';
+                serverVersion.textContent = '--';
+                motdText.textContent = '服务器离线或无法连接';
+            }
+            
+            setLoading(false);
+        }
+
+        // 页面加载时自动获取状态
+        document.addEventListener('DOMContentLoaded', () => {
+            fetchServerStatus();
+        });
+
+        // 每60秒自动刷新一次
+        setInterval(fetchServerStatus, 60000);
+    </script>
+</body>
+</html>
