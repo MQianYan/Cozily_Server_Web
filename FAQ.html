@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FAQ - 常见问题 | CozilyMC</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@500;700;800&family=Noto+Sans+SC:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@mdi/font@7.4.47/css/materialdesignicons.min.css">
+    
+    <style>
+        :root {
+            --primary-purple: #b19cd9;
+            --surface: #0a0a0c;
+            --nav-bg: rgba(255, 255, 255, 0.08);
+            --glass-bg: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --text-main: #ffffff;
+            --text-sub: rgba(255, 255, 255, 0.6);
+            --transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            --blob-color-1: #1a237e;
+            --blob-color-2: #4a148c;
+        }
+
+        [data-theme="light"] {
+            --surface: #f0f2f5;
+            --nav-bg: rgba(255, 255, 255, 0.4);
+            --glass-bg: rgba(255, 255, 255, 0.5);
+            --glass-border: rgba(255, 255, 255, 0.5);
+            --text-main: #1d1d1f;
+            --text-sub: #6e6e73;
+            --primary-purple: #9D8DF1;
+            --blob-color-1: #d1d8ff;
+            --blob-color-2: #ffdee9;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Google Sans', 'Noto Sans SC', sans-serif; }
+
+        body {
+            background-color: var(--surface);
+            color: var(--text-main);
+            overflow-x: hidden;
+            transition: var(--transition);
+            min-height: 100vh;
+        }
+
+        /* --- 动态光晕背景 (同步 index) --- */
+        .blobs { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; filter: blur(80px); opacity: 0.6; transition: var(--transition); }
+        .blob { position: absolute; width: 600px; height: 600px; border-radius: 50%; animation: move 20s infinite alternate; transition: var(--transition); }
+        .blob-1 { background: var(--blob-color-1); top: -150px; right: -150px; }
+        .blob-2 { background: var(--blob-color-2); bottom: -150px; left: -150px; animation-delay: -5s; }
+        @keyframes move { from { transform: translate(0, 0) scale(1); } to { transform: translate(-100px, 100px) scale(1.2); } }
+
+        /* --- 导航栏同步 (同步 index) --- */
+        .header-container {
+            position: fixed; top: 20px; left: 0; width: 100%;
+            display: flex; justify-content: center; z-index: 1000; padding: 0 15px;
+        }
+
+        .glass-nav {
+            width: 100%; max-width: 900px; height: 64px;
+            display: grid; grid-template-columns: 1fr auto 1fr; align-items: center;
+            padding: 0 10px 0 24px;
+            background: var(--nav-bg);
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            border: 1px solid var(--glass-border);
+            border-radius: 100px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+            transition: var(--transition);
+        }
+
+        .nav-left { display: flex; align-items: center; }
+        .nav-center { display: flex; gap: 4px; align-items: center; justify-content: center; height: 100%; }
+        .nav-right { display: flex; align-items: center; justify-content: flex-end; }
+        .logo { font-size: 1.1rem; font-weight: 800; color: var(--primary-purple); letter-spacing: -0.5px; }
+
+        .nav-btn {
+            padding: 0 18px; border-radius: 100px;
+            text-decoration: none; color: var(--text-main); font-size: 0.95rem; font-weight: 500;
+            transition: var(--transition);
+            display: flex; align-items: center; height: 44px; line-height: 44px;
+        }
+        .nav-btn:hover, .nav-btn.active { background: rgba(177, 156, 217, 0.15); color: var(--primary-purple); }
+
+        .theme-toggle {
+            background: var(--glass-bg); border: 1px solid var(--glass-border);
+            cursor: pointer; width: 44px; height: 44px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            color: var(--text-main); font-size: 1.2rem; transition: var(--transition);
+        }
+
+        /* --- FAQ 主体内容 --- */
+        .faq-container {
+            max-width: 900px;
+            margin: 160px auto 100px;
+            padding: 0 24px;
+        }
+
+        .faq-header { margin-bottom: 50px; }
+        .faq-header h1 {
+            font-size: 3.5rem; font-weight: 800; margin-bottom: 25px;
+            background: linear-gradient(180deg, var(--text-main) 0%, rgba(125,125,125,0.4) 100%);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            letter-spacing: -2px;
+        }
+
+        /* 搜索框与按钮检索区域 */
+        .controls-group {
+            display: flex; flex-direction: column; gap: 20px; max-width: 600px;
+        }
+
+        .search-wrapper { position: relative; width: 100%; }
+        .search-input {
+            width: 100%; padding: 16px 24px 16px 50px;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 100px;
+            color: var(--text-main);
+            font-size: 1rem;
+            backdrop-filter: blur(10px);
+            transition: var(--transition);
+        }
+        .search-input:focus { outline: none; border-color: var(--primary-purple); background: rgba(177, 156, 217, 0.05); }
+        .search-wrapper i { position: absolute; left: 20px; top: 50%; transform: translateY(-50%); color: var(--text-sub); font-size: 1.2rem; }
+
+        /* 分类按钮样式 */
+        .filter-tags { display: flex; gap: 10px; flex-wrap: wrap; }
+        .filter-btn {
+            padding: 8px 20px; border-radius: 100px;
+            background: var(--glass-bg); border: 1px solid var(--glass-border);
+            color: var(--text-sub); font-size: 0.85rem; font-weight: 500;
+            cursor: pointer; transition: var(--transition);
+            backdrop-filter: blur(5px);
+        }
+        .filter-btn:hover { background: rgba(255,255,255,0.05); color: var(--text-main); }
+        .filter-btn.active { background: var(--primary-purple); color: #fff; border-color: var(--primary-purple); box-shadow: 0 5px 15px rgba(177, 156, 217, 0.3); }
+
+        /* --- FAQ 列表 (核心优化动画) --- */
+        .faq-list { display: flex; flex-direction: column; gap: 16px; margin-top: 40px; }
+        .faq-item {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            transition: var(--transition);
+            backdrop-filter: blur(10px);
+        }
+        .faq-item:hover { border-color: rgba(177, 156, 217, 0.3); }
+
+        .faq-question {
+            padding: 24px; cursor: pointer; user-select: none;
+            display: flex; justify-content: space-between; align-items: center;
+            font-weight: 700; font-size: 1.1rem;
+        }
+        
+        /* 核心动画优化：使用 Grid 技巧替代 max-height */
+        .faq-answer-container {
+            display: grid;
+            grid-template-rows: 0fr; /* 默认状态：行高为 0 */
+            transition: grid-template-rows 0.4s cubic-bezier(0.4, 0, 0.2, 1); /* 平滑过渡动画 */
+        }
+        .faq-answer-content {
+            overflow: hidden; /* 隐藏折叠内容 */
+        }
+        .faq-answer {
+            padding: 0 24px 24px 24px; /* 展开后的内边距 */
+            color: var(--text-sub); line-height: 1.8; font-size: 0.95rem;
+        }
+
+        /* 激活状态 */
+        .faq-item.active { border-color: var(--primary-purple); background: rgba(177, 156, 217, 0.05); }
+        
+        /* 关键：激活时行高变为 1fr，自动计算实际高度 */
+        .faq-item.active .faq-answer-container { grid-template-rows: 1fr; } 
+
+        .faq-item i.chevron { transition: transform 0.4s; color: var(--primary-purple); }
+        .faq-item.active i.chevron { transform: rotate(180deg); }
+
+        /* --- 页脚同步 --- */
+        footer {
+            background: rgba(0,0,0,0.2); border-top: 1px solid var(--glass-border);
+            padding: 60px 20px; text-align: center; margin-top: auto;
+        }
+        .footer-content p { color: var(--text-sub); font-size: 0.85rem; line-height: 2; }
+
+        @media (max-width: 768px) {
+            .glass-nav { grid-template-columns: auto 1fr auto; padding: 0 10px; }
+            .nav-btn { padding: 0 10px; font-size: 0.85rem; }
+            .faq-header h1 { font-size: 2.5rem; }
+            .faq-container { margin-top: 120px; padding: 0 20px; }
+            .faq-question { padding: 20px; font-size: 1rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="blobs">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+    </div>
+
+    <header class="header-container">
+        <nav class="glass-nav">
+            <div class="nav-left"><div class="logo">✦ CozilyMC</div></div>
+            <div class="nav-center">
+                <a href="index.html" class="nav-btn">首页</a>
+                <a href="zonghe.html" class="nav-btn">综合</a>
+                <a href="Group.html" class="nav-btn">团队</a>
+                <a href="faq.html" class="nav-btn active">FAQ</a>
+            </div>
+            <div class="nav-right">
+                <button class="theme-toggle" onclick="toggleTheme()" id="themeBtn">
+                    <i class="mdi mdi-weather-night" id="themeIcon"></i>
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <main class="faq-container">
+        <div class="faq-header">
+            <h1>F&Q</h1>
+            <div class="controls-group">
+                <div class="search-wrapper">
+                    <i class="mdi mdi-magnify"></i>
+                    <input type="text" class="search-input" id="faqSearch" placeholder="输入关键词搜索...">
+                </div>
+                <div class="filter-tags" id="filterTags">
+                    <button class="filter-btn active" data-filter="all">全部</button>
+                    <button class="filter-btn" data-filter="join">加入</button>
+                    <button class="filter-btn" data-filter="play">玩法</button>
+                    <button class="filter-btn" data-filter="rule">规章</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="faq-list" id="faqList">
+            <div class="faq-item" data-category="join">
+                <div class="faq-question">
+                    <span>1</span>
+                    <i class="mdi mdi-chevron-down chevron"></i>
+                </div>
+                <div class="faq-answer-container">
+                    <div class="faq-answer-content">
+                        <div class="faq-answer">
+                            2
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="faq-item" data-category="join">
+                <div class="faq-question">
+                    <span>正版和离线版客户端都能加入吗？</span>
+                    <i class="mdi mdi-chevron-down chevron"></i>
+                </div>
+                <div class="faq-answer-container">
+                    <div class="faq-answer-content">
+                        <div class="faq-answer">
+                            那包的呀兄弟
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="faq-item" data-category="play">
+                <div class="faq-question">
+                    <span>服务器可以使用哪些客户端模组（Mod）？</span>
+                    <i class="mdi mdi-chevron-down chevron"></i>
+                </div>
+                <div class="faq-answer-container">
+                    <div class="faq-answer-content">
+                        <div class="faq-answer">
+                            我们允许且推荐使用辅助生存类模组，如：投影（Litematica）、迷你地图（Xaero's）、小地图（JourneyMap）、整理（Inventory Profiles Next）、记分板（Tweakeroo，需遵守特定规则）等。严禁使用任何破坏平衡的作弊类 Mod（如 Xray、KillAura）。
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="faq-item" data-category="rule">
+                <div class="faq-question">
+                    <span>服务器对于公共设施（主城/地狱交通）有什么规定？</span>
+                    <i class="mdi mdi-chevron-down chevron"></i>
+                </div>
+                <div class="faq-answer-container">
+                    <div class="faq-answer-content">
+                        <div class="faq-answer">
+                            公共设施是大家共同努力的结晶。严禁在主城区域或地狱交通干线附近随意放置私人方块、甚至破坏已有建筑。如因生电机器需要修改交通网，请务必提前与机器设计者或管理员沟通。熊孩子行为将被永久 ban 且回档。
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+             <div class="faq-item" data-category="rule">
+                <div class="faq-question">
+                    <span>对于自动机器和红石卡顿的处理原则是什么？</span>
+                    <i class="mdi mdi-chevron-down chevron"></i>
+                </div>
+                <div class="faq-answer-container">
+                    <div class="faq-answer-content">
+                        <div class="faq-answer">
+                            生电服鼓励自动化，但一切以服务器整体 TPS 稳定为第一要务。<br>
+                            1. **防卡顿设计**：所有大规模机器必须具备手动开关或自动掉落物清理装置，严禁无限挂机产生大量掉落物导致卡顿。<br>
+                            2. **机器合并**：相同功能的机器（如同一种作物农场）鼓励合并建造，减少实体和红石更新负载。<br>
+                            3. **管理员介入**：当检测到某处机器严重拖慢 TPS 时，管理员有权在不通知的情况下直接关闭或拆除该机器，后续处理以保护服务器稳定为准则。请各位鼠鼠在建造前详细阅读“科学养鼠指南”。
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <p>© 2026 www.cozily.top | QQ 交流群: 749543572</p>
+            <p>CozilyMC 是一个独立的玩家社区。Minecraft™ 是 Mojang Studios 和 Microsoft Corporation 的商标。</p>
+            <p>本站及服务器未获 Mojang Studios 或 Microsoft 批准，亦不与其关联。我们致力于为玩家提供健康的竞技环境与正确的价值观。</p>
+        </div>
+    </footer>
+
+    <script>
+        // --- 核心逻辑 ---
+
+        // 主题切换
+        function toggleTheme() {
+            const html = document.documentElement;
+            const icon = document.getElementById('themeIcon');
+            if (html.getAttribute('data-theme') === 'light') {
+                html.removeAttribute('data-theme');
+                icon.className = 'mdi mdi-weather-night';
+                localStorage.setItem('theme', 'dark');
+            } else {
+                html.setAttribute('data-theme', 'light');
+                icon.className = 'mdi mdi-white-balance-sunny';
+                localStorage.setItem('theme', 'light');
+            }
+        }
+
+        // 折叠面板逻辑
+        document.querySelectorAll('.faq-question').forEach(q => {
+            q.addEventListener('click', () => {
+                const item = q.parentElement;
+                // 如果需要点击一个关闭其他，解冻下面这行
+                // document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('active'));
+                item.classList.toggle('active');
+            });
+        });
+
+        // --- 复合检索逻辑 ---
+        const searchInput = document.getElementById('faqSearch');
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const faqItems = document.querySelectorAll('.faq-item');
+
+        let currentSearchTerm = '';
+        let currentFilter = 'all';
+
+        // 执行过滤
+        function applyFilters() {
+            faqItems.forEach(item => {
+                const text = item.innerText.toLowerCase();
+                const category = item.dataset.category;
+                
+                const matchesSearch = text.includes(currentSearchTerm);
+                const matchesFilter = (currentFilter === 'all' || category === currentFilter);
+
+                if (matchesSearch && matchesFilter) {
+                    item.style.display = 'block';
+                } else {
+                    item.style.display = 'none';
+                    item.classList.remove('active'); // 隐藏时关闭折叠
+                }
+            });
+        }
+
+        // 搜索框事件
+        searchInput.addEventListener('input', (e) => {
+            currentSearchTerm = e.target.value.toLowerCase();
+            applyFilters();
+        });
+
+        // 分类按钮事件
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                // 更新按钮状态
+                filterBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                
+                currentFilter = btn.dataset.filter;
+                applyFilters();
+            });
+        });
+
+        // 页面初始化
+        window.onload = () => {
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'light') {
+                document.documentElement.setAttribute('data-theme', 'light');
+                document.getElementById('themeIcon').className = 'mdi mdi-white-balance-sunny';
+            }
+        };
+    </script>
+</body>
+</html>

@@ -2,333 +2,229 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5, user-scalable=yes">
-    <title>404 - 鼠鼠安乐窝 | Minecraft服务器</title>
-    <meta name="description" content="页面未找到 - 鼠鼠安乐窝 Minecraft服务器">
-
-    <!-- 字体 & 图标 (与主页完全一致) -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;700&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 - 页面走丢了 | CozilyMC</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@500;700;800&family=Noto+Sans+SC:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@mdi/font@7.4.47/css/materialdesignicons.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-
+    
     <style>
-        /* ===== 完全保留顶部栏的样式 ===== */
+        /* --- 完全复用 index 核心变量 --- */
         :root {
-            --primary:    #D7BDE2;      /* 淡紫主色 */
-            --primary-d:  #A084DC;      /* 深紫 */
-            --primary-l:  #E6D0F2;      /* 浅紫 */
-            --bg:         #F8F5FC;      /* 背景 */
-            --card-bg:    rgba(255,255,255,0.78);
-            --text:       #2D1B47;
-            --text-light: #5A4A6E;
-            --border:     rgba(161,132,220,0.28);
-            --shadow:     0 8px 32px rgba(161,132,220,0.18);
+            --primary-purple: #b19cd9;
+            --surface: #0a0a0c;
+            --nav-bg: rgba(255, 255, 255, 0.08);
+            --glass-bg: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --text-main: #ffffff;
+            --text-sub: rgba(255, 255, 255, 0.6);
+            --transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            --blob-color-1: #1a237e;
+            --blob-color-2: #4a148c;
         }
 
-        [data-theme="dark"] {
-            --primary:    #A084DC;
-            --primary-d:  #7B5EB8;
-            --primary-l:  #D7BDE2;
-            --bg:         #1A1425;
-            --card-bg:    rgba(42,33,64,0.82);
-            --text:       #E3D8F2;
-            --text-light: #C4B3E0;
-            --border:     rgba(177,156,217,0.20);
-            --shadow:     0 8px 32px rgba(0,0,0,0.50);
+        [data-theme="light"] {
+            --surface: #f0f2f5;
+            --nav-bg: rgba(255, 255, 255, 0.4);
+            --glass-bg: rgba(255, 255, 255, 0.5);
+            --glass-border: rgba(255, 255, 255, 0.5);
+            --text-main: #1d1d1f;
+            --text-sub: #6e6e73;
+            --blob-color-1: #d1d8ff;
+            --blob-color-2: #ffdee9;
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Google Sans', 'Noto Sans SC', sans-serif; }
 
         body {
-            font-family: 'Noto Sans SC', 'Quicksand', system-ui, sans-serif;
-            background: var(--bg);
-            color: var(--text);
-            min-height: 100vh;
-            transition: background 0.4s, color 0.4s;
-        }
-
-        /* ===== 完全复用顶部栏 ===== */
-        .top-bar {
-            background: var(--card-bg);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            box-shadow: var(--shadow);
-            border-bottom: 1px solid var(--border);
-            padding: 0.5rem 1.5rem;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
+            background-color: var(--surface);
+            color: var(--text-main);
+            overflow: hidden;
+            transition: var(--transition);
+            height: 100vh;
             display: flex;
-            align-items: center;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            gap: 0.5rem;
+            flex-direction: column;
         }
 
-        .logo {
-            font-size: 1.8rem;
-            font-weight: 700;
-            background: linear-gradient(135deg, var(--primary), var(--primary-d));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            display: flex;
-            align-items: center;
-            gap: 0.4rem;
+        /* --- 动态光晕背景 (完全复用) --- */
+        .blobs { 
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
+            z-index: -1; filter: blur(80px); opacity: 0.6;
+            transition: var(--transition);
+        }
+        .blob { position: absolute; width: 600px; height: 600px; border-radius: 50%; animation: move 20s infinite alternate; transition: var(--transition); }
+        .blob-1 { background: var(--blob-color-1); top: -150px; right: -150px; }
+        .blob-2 { background: var(--blob-color-2); bottom: -150px; left: -150px; animation-delay: -5s; }
+        @keyframes move { from { transform: translate(0, 0) scale(1); } to { transform: translate(-100px, 100px) scale(1.2); } }
+
+        /* --- 导航栏：模式切换靠右, FAQ 垂直居中 (完全复用 index 结构) --- */
+        .header-container {
+            position: fixed; top: 20px; left: 0; width: 100%;
+            display: flex; justify-content: center; z-index: 1000; padding: 0 15px;
         }
 
-        .logo i {
-            font-size: 2rem;
-            color: var(--primary);
+        .glass-nav {
+            width: 100%; max-width: 900px; height: 64px;
+            display: grid; grid-template-columns: 1fr auto 1fr; align-items: center;
+            padding: 0 10px 0 24px;
+            background: var(--nav-bg);
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            border: 1px solid var(--glass-border);
+            border-radius: 100px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+            transition: var(--transition);
         }
 
-        .nav {
-            display: flex;
-            list-style: none;
-            gap: 0.3rem;
-            flex-wrap: wrap;
+        .nav-left { display: flex; align-items: center; }
+        .nav-center { display: flex; gap: 4px; align-items: center; justify-content: center; }
+        .nav-right { display: flex; align-items: center; justify-content: flex-end; }
+        .logo { font-size: 1.1rem; font-weight: 800; color: var(--primary-purple); letter-spacing: -0.5px; }
+
+        .nav-btn {
+            padding: 0 18px; border-radius: 100px;
+            text-decoration: none; color: var(--text-main); font-size: 0.95rem; font-weight: 500;
+            transition: var(--transition);
+            display: flex; align-items: center; height: 44px; line-height: 44px;
+        }
+        .nav-btn:hover { color: var(--primary-purple); background: rgba(177, 156, 217, 0.1); }
+
+        .theme-toggle {
+            background: var(--glass-bg); border: 1px solid var(--glass-border);
+            cursor: pointer; width: 44px; height: 44px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            color: var(--text-main); font-size: 1.2rem; transition: var(--transition);
         }
 
-        .nav a {
-            color: var(--text-light);
-            text-decoration: none;
-            font-weight: 500;
-            font-size: 1rem;
-            transition: all 0.3s cubic-bezier(0.2, 0, 0, 1);
-            position: relative;
-            padding: 0.4rem 0.8rem;
-            border-radius: 999px;
-            background: transparent;
-            border: 1px solid transparent;
-            white-space: nowrap;
-        }
-
-        .nav a:hover {
-            background: rgba(215, 189, 226, 0.15);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-            border: 1px solid rgba(215, 189, 226, 0.3);
-            color: var(--primary-d);
-            transform: translateY(-1px);
-            box-shadow: 0 2px 8px rgba(161, 132, 220, 0.15);
-        }
-
-        .right-tools {
-            display: flex;
-            align-items: center;
-            gap: 0.8rem;
-        }
-
-        .theme-toggle, .join-btn {
-            background: none;
-            border: none;
-            font-size: 1.5rem;
-            cursor: pointer;
-            color: var(--text-light);
-            transition: all 0.3s;
-        }
-
-        .theme-toggle:hover {
-            color: var(--primary-d);
-            transform: scale(1.1);
-        }
-
-        .join-btn {
-            background: var(--primary);
-            color: var(--text);
-            padding: 0.5rem 1.2rem;
-            border-radius: 999px;
-            font-size: 0.9rem;
-            font-weight: 500;
-            text-decoration: none;
-        }
-
-        .join-btn:hover {
-            background: var(--primary-d);
-            transform: translateY(-1px);
-            box-shadow: var(--shadow);
-        }
-
-        /* ===== 404 内容区 - 极简风格，无圆角卡片，只有文字 ===== */
-        .error-container {
-            max-width: 800px;
+        /* --- 404 内容：左对齐于导航栏垂线 --- */
+        .error-main {
+            flex: 1;
+            width: 100%;
+            max-width: 900px; /* 对齐导航栏宽度 */
             margin: 0 auto;
-            padding: 5rem 2rem;
-            min-height: calc(100vh - 160px); /* 保证 footer 在底部 */
             display: flex;
             flex-direction: column;
             justify-content: center;
-        }
-
-        .error-content {
-            max-width: 600px;
+            padding: 0 24px; /* 对齐导航栏内边距 */
         }
 
         .error-code {
-            font-size: 6rem;
-            font-weight: 700;
-            line-height: 1;
-            color: var(--text);
-            margin-bottom: 0.5rem;
-            letter-spacing: -2px;
+            font-size: clamp(8rem, 20vw, 12rem);
+            font-weight: 800;
+            line-height: 0.9;
+            margin-left: -10px; /* 视觉补偿，使数字左侧完全贴合垂线 */
+            background: linear-gradient(180deg, var(--primary-purple) 0%, rgba(177, 156, 217, 0.2) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 0 30px rgba(177, 156, 217, 0.2));
+            transition: var(--transition);
         }
 
-        .error-message {
-            font-size: 2rem;
-            font-weight: 500;
-            color: var(--text-light);
-            margin-bottom: 1.5rem;
-            border-left: 4px solid var(--primary);
-            padding-left: 1.2rem;
+        .error-msg {
+            font-size: 1.5rem;
+            color: var(--text-main);
+            margin: 20px 0 40px;
+            max-width: 600px;
+            line-height: 1.6;
+            transition: var(--transition);
         }
 
-        .error-desc {
-            font-size: 1rem;
-            color: var(--text-light);
-            margin-bottom: 2.5rem;
-            line-height: 1.8;
+        .btn-group { display: flex; gap: 20px; }
+        .btn {
+            padding: 16px 32px; border-radius: 100px; text-decoration: none;
+            font-weight: 700; transition: var(--transition);
+            display: flex; align-items: center; gap: 10px;
         }
+        .btn-primary { background: var(--primary-purple); color: #fff; box-shadow: 0 10px 30px rgba(177, 156, 217, 0.3); }
+        .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 15px 40px rgba(177, 156, 217, 0.5); }
+        .btn-secondary { background: var(--glass-bg); border: 1px solid var(--glass-border); color: var(--text-main); }
 
-        .error-desc strong {
-            color: var(--primary-d);
-            font-weight: 600;
-        }
-
-        .error-links {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 2rem;
-            align-items: center;
-        }
-
-        .error-links a {
-            color: var(--primary-d);
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 1rem;
-            border-bottom: 2px solid transparent;
-            transition: border-color 0.2s;
-            padding-bottom: 2px;
-        }
-
-        .error-links a:hover {
-            border-bottom-color: var(--primary);
-            color: var(--primary);
-        }
-
-        .error-links .home-link {
-            color: var(--text);
-            background: var(--primary);
-            padding: 0.6rem 1.5rem;
-            border-radius: 999px;  /* 保留按钮圆角，但它是独立元素，不影响整体简约感 */
-            border-bottom: none;
-        }
-
-        .error-links .home-link:hover {
-            background: var(--primary-d);
-            color: white;
-            border-bottom: none;
-        }
-
+        /* --- 页脚同步 --- */
         footer {
-            text-align: center;
-            padding: 2rem;
-            color: var(--text-light);
-            border-top: 1px solid var(--border);
-            font-size: 0.9rem;
+            background: rgba(0,0,0,0.1); border-top: 1px solid var(--glass-border);
+            padding: 40px 20px; text-align: center; transition: var(--transition);
         }
+        .footer-content p { color: var(--text-sub); font-size: 0.8rem; line-height: 1.8; }
 
         @media (max-width: 768px) {
-            .top-bar {
-                padding: 0.4rem 1rem;
-            }
-            .error-code {
-                font-size: 4.5rem;
-            }
-            .error-message {
-                font-size: 1.6rem;
-            }
-            .error-container {
-                padding: 3rem 1.5rem;
-            }
+            .glass-nav { grid-template-columns: auto 1fr auto; padding: 0 10px; }
+            .nav-btn { padding: 0 10px; font-size: 0.85rem; }
+            .error-main { padding: 0 20px; }
+            .error-code { font-size: 6rem; }
+            .btn-group { flex-direction: column; width: fit-content; }
         }
     </style>
 </head>
 <body>
-    <!-- ===== 完全保留的顶部栏（包含日夜切换功能） ===== -->
-    <div class="top-bar">
-        <div class="logo"><i class="1"></i> Cozily</div>
 
-        <div class="nav">
-            <a href="index.html">首页</a>
-            <a href="dibiao.html">玩家地标</a>
-            <a href="licheng.html">服务器历程</a>
-            <a href="zonghe.html">综合导航</a>
-            <a href="shenrenbang.html">神人榜</a>
-            <a href="tuandui.html">团队介绍</a>
-            <a href="faq.html">常见问题</a>
-            <a href="t.html">测试界面</a>
-        </div>
-
-        <div class="right-tools">
-            <button class="theme-toggle" id="themeToggle" title="切换日夜模式">
-                <i class="mdi mdi-weather-night"></i>
-            </button>
-            <a href="https://qm.qq.com/q/VTUeknT88Q" target="_blank" class="join-btn">加入交流群</a>
-        </div>
+    <div class="blobs">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
     </div>
 
-    <!-- ===== 极简404内容区：没有圆角卡片，只有纯文字和链接 ===== -->
-    <div class="error-container">
-        <div class="error-content">
-            <div class="error-code">404</div>
-            <div class="error-message">页面找不到了</div>
-            <div class="error-desc">
-                您访问的地址可能已被移动或删除。<br>
-                或许页面还在更新...
-                Page is 404 Not Found
+    <header class="header-container">
+        <nav class="glass-nav">
+            <div class="nav-left"><div class="logo">✦ CozilyMC</div></div>
+            <div class="nav-center">
+                <a href="index.html" class="nav-btn">首页</a>
+                <a href="zonghe.html" class="nav-btn">综合</a>
+                <a href="Group.html" class="nav-btn">团队</a>
+                <a href="faq.html" class="nav-btn">FAQ</a>
             </div>
-            <div class="error-links">
-                <a href="index.html" class="home-link">返回首页</a>
-                <a href="https://qm.qq.com/q/VTUeknT88Q" target="_blank">反馈问题</a>
-                <a href="javascript:history.back()">后退</a>
+            <div class="nav-right">
+                <button class="theme-toggle" onclick="toggleTheme()" id="themeBtn">
+                    <i class="mdi mdi-weather-night" id="themeIcon"></i>
+                </button>
             </div>
-        </div>
-    </div>
+        </nav>
+    </header>
 
-    <!-- 页脚 (简约) -->
+    <main class="error-main">
+        <div class="error-code">404</div>
+        <p class="error-msg">
+            这里什么都没有，<br>
+            看来末影人把你要找的页面搬走了。
+        </p>
+        <div class="btn-group">
+            <a href="index.html" class="btn btn-primary">
+                <i class="mdi mdi-home"></i> 返回首页
+            </a>
+            <a href="javascript:history.back()" class="btn btn-secondary">
+                <i class="mdi mdi-undo-variant"></i> 回到上一页
+            </a>
+        </div>
+    </main>
+
     <footer>
-        <p>© 2025 www.cozily.top | Page for GitHub.io | QQ交流群:749543572</p>
-        <p></p>
-        <p>CozilyMC 是一个独立的团队。Minecraft™ 是 Mojang Studios 和 Microsoft Corporation 的商标及其游戏标识。</p>
-        <p>CozilyMC 未获Mojang Studios或Microsoft公司批准，也未与其有任何关联。</p>
-        <p>我们的团队致力于为玩家提供良好的游戏环境，并愿意维护，保证正确的价值观</p>
-        <p>Page is 404 Not Found</p>
+        <div class="footer-content">
+            <p>© 2026 www.cozily.top | QQ 交流群: 749543572</p>
+            <p>CozilyMC 是一个独立的玩家社区。Minecraft™ 是 Mojang Studios 和 Microsoft Corporation 的商标。</p>
+            <p>本站及服务器未获 Mojang Studios 或 Microsoft 批准，亦不与其关联。我们致力于为玩家提供健康的竞技环境与正确的价值观。</p>
+        </div>
     </footer>
 
     <script>
-        // ===== 日夜模式切换（完全保留） =====
-        const themeToggle = document.getElementById('themeToggle');
-        const savedTheme = localStorage.getItem('theme') || 'light';
-        document.documentElement.setAttribute('data-theme', savedTheme);
-        themeToggle.innerHTML = savedTheme === 'dark' 
-            ? '<i class="mdi mdi-white-balance-sunny"></i>' 
-            : '<i class="mdi mdi-weather-night"></i>';
+        function toggleTheme() {
+            const html = document.documentElement;
+            const icon = document.getElementById('themeIcon');
+            if (html.getAttribute('data-theme') === 'light') {
+                html.removeAttribute('data-theme');
+                icon.className = 'mdi mdi-weather-night';
+                localStorage.setItem('theme', 'dark');
+            } else {
+                html.setAttribute('data-theme', 'light');
+                icon.className = 'mdi mdi-white-balance-sunny';
+                localStorage.setItem('theme', 'light');
+            }
+        }
 
-        themeToggle.addEventListener('click', () => {
-            let theme = document.documentElement.getAttribute('data-theme');
-            theme = theme === 'dark' ? 'light' : 'dark';
-            document.documentElement.setAttribute('data-theme', theme);
-            localStorage.setItem('theme', theme);
-            themeToggle.innerHTML = theme === 'dark' 
-                ? '<i class="mdi mdi-white-balance-sunny"></i>' 
-                : '<i class="mdi mdi-weather-night"></i>';
-        });
+        window.onload = () => {
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'light') {
+                document.documentElement.setAttribute('data-theme', 'light');
+                document.getElementById('themeIcon').className = 'mdi mdi-white-balance-sunny';
+            }
+        };
     </script>
 </body>
 </html>
